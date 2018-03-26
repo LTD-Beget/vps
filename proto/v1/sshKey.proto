@@ -1,0 +1,95 @@
+syntax = 'proto3';
+
+package beget.vps.v1.sshKey;
+
+import "google/api/annotations.proto";
+import "vps/proto/v1/structures.proto";
+
+service SshKeyService {
+    rpc add (AddRequest) returns (AddResponse) {
+        option (google.api.http) = {
+			post: "/v1/vps/sshKey"
+			body: "*"
+		};
+    }
+
+    rpc getAll (GetAllRequest) returns (GetAllResponse) {
+        option (google.api.http) = {
+			get: "/v1/vps/sshKey"
+		};
+    }
+
+    rpc remove (RemoveRequest) returns (RemoveResponse) {
+        option (google.api.http) = {
+			delete: "/v1/vps/sshKey/{id}"
+		};
+    }
+}
+
+message AddRequest {
+    // Имя ключа (для удобства пользователя)
+    string name = 1;
+
+    // Публичный ключ в формате, описанном в https://tools.ietf.org/html/rfc4253#section-6.6
+    string public_key = 2;
+}
+
+message AddResponse {
+    oneof result {
+        structures.SshKeyInfo key = 1;
+        Error error = 2;
+    }
+
+    message Error {
+        Code code = 1;
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR= 0;
+
+            // Имя невалидно (например, пустое)
+            INVALID_NAME = 1;
+
+            // Ключ с таким отпечатком уже существует
+            KEY_EXISTS = 2;
+
+            // Публичный ключ невалиден
+            INVALID_PUBLIC_KEY = 3;
+        }
+    }
+}
+
+message GetAllRequest {}
+
+message GetAllResponse {
+    repeated structures.SshKeyInfo keys = 1;
+}
+
+message RemoveRequest {
+    // Идентификатор ключа
+    uint32 id = 1;
+
+    // Принудительно удалить, даже если используется в VPS
+    bool force = 2;
+}
+
+message RemoveResponse {
+    oneof result {
+        structures.SshKeyInfo key = 1;
+        Error error = 2;
+    }
+
+    message Error {
+        Code code = 1;
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR = 0;
+
+            // В данный момент ключ испольузется в VPS (для игнорирования, нужно удалять с `force = true`)
+            KEY_IN_USE = 1;
+        }
+    }
+}

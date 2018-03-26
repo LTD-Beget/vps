@@ -1,0 +1,15 @@
+syntax = 'proto3';
+
+package beget.vps.v1.structures;
+
+// Описание публичного ssh-ключа, добавленного пользователем в систему
+message SshKeyInfo {
+    // Идентификатор ключа
+    uint32 id = 1;
+
+    // Имя ключа (для удобства пользователя)
+    string name = 2;
+
+    // Отпечаток сохраненного публичного ключа
+    string fingerprint = 3;
+}

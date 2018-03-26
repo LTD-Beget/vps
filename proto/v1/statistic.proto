@@ -1,0 +1,87 @@
+syntax = 'proto3';
+
+package beget.vps.v1.statistic;
+
+import "google/api/annotations.proto";
+
+service StatisticService {
+    rpc getCpu (GetCpuRequest) returns (GetCpuResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/statistic/cpu/{id}"
+        };
+    }
+
+    rpc getMemory (GetMemoryRequest) returns (GetMemoryResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/statistic/memory/{id}"
+        };
+    }
+
+    rpc getDisk (GetDiskRequest) returns (GetDiskResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/statistic/disk/{id}"
+        };
+    }
+
+    rpc getNetwork (GetNetworkRequest) returns (GetNetworkResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/statistic/network/{id}"
+        };
+    }
+}
+
+message GetCpuRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+    Period period = 2;
+}
+
+message GetCpuResponse {
+    SeriesData cpu = 2;
+}
+
+message GetMemoryRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+    Period period = 2;
+}
+
+message GetMemoryResponse {
+    SeriesData memory = 1;
+}
+
+message GetDiskRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+    Period period = 2;
+}
+
+message GetDiskResponse {
+    SeriesData data_read = 1;
+    SeriesData data_write = 2;
+}
+
+
+message GetNetworkRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+    Period period = 2;
+}
+
+message GetNetworkResponse {
+    SeriesData data_rx = 1;
+    SeriesData data_tx = 2;
+}
+
+message SeriesData {
+    repeated string date = 1;
+    repeated double value = 2;
+}
+
+enum Period {
+    UNKNOWN = 0;
+    HOUR = 1;
+    DAY = 2;
+    WEEK = 3;
+    MONTH = 4;
+}
