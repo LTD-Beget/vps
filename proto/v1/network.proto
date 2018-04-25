@@ -1,0 +1,91 @@
+syntax = 'proto3';
+
+package beget.vps.v1.network;
+
+import "google/api/annotations.proto";
+import "vps/proto/v1/structures.proto";
+
+service NetworkService {
+    // Заказ дополнительных IP-адресов для пользователя
+    rpc orderIpAddress (OrderIpAddressRequest) returns (OrderIpAddressResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/network"
+        };
+    }
+
+    // Отмена заказа дополнительного IP адреса пользователя
+    rpc removeIpAddress (RemoveIpAddressRequest) returns (RemoveIpAddressResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/network/{ip}"
+        };
+    }
+}
+
+message OrderIpAddressRequest {
+    // Идентификатор VPS, к которому следует добавить дополнительный IP-адрес
+    // Поле не является обязательным
+    string id = 1;
+}
+
+message OrderIpAddressResponse {
+    oneof result {
+        // Успешый заказ дополнительного IP-адресоа
+        string ip_address = 1;
+
+        // Произошла ошибка при заказе дополнительного IP-адреса
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Недостаточно средств на счету
+            INSUFFICIENT_FUNDS = 1;
+
+            // Достигнут лимит резервации IP-адресов для пользователя
+            CUSTOMER_IP_LIMIT_REACHED = 2;
+
+            // Произошла ошибка при добавлении дополнительного IP адреса внутри гостевой ОС
+            GUEST_OS_ADD_IP_ADDRESS_FAILED = 3;
+        }
+    }
+}
+
+message RemoveIpAddressRequest {
+    // IP-адрес
+    string ip_address = 1;
+}
+
+message RemoveIpAddressResponse {
+    oneof result {
+        // Успешое удаление дополнительного IP-адресоа
+        string ip_address = 1;
+
+        // Произошла ошибка при заказе дополнительного IP-адреса
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Произошла ошибка при удалении дополнительного IP адреса внутри гостевой ОС
+            GUEST_OS_REMOVE_IP_ADDRESS_FAILED = 1;
+        }
+    }
+}
