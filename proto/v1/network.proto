@@ -19,6 +19,12 @@ service NetworkService {
             delete: "/v1/vps/network/{ip}"
         };
     }
+
+    rpc getNetworkInfo (GetNetworkInfoRequest) returns (GetNetworkInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/network"
+        };
+    }
 }
 
 message OrderIpAddressRequest {
@@ -88,4 +94,16 @@ message RemoveIpAddressResponse {
             GUEST_OS_REMOVE_IP_ADDRESS_FAILED = 1;
         }
     }
+}
+
+message GetNetworkInfoRequest {
+
+}
+
+message GetNetworkInfoResponse {
+    // Основные IP-адреса пользователя
+    repeated structures.IpInfo ip = 1;
+
+    // Дополнительные IP-адреса пользователя
+    repeated structures.AdditionalIpInfo additional_ip = 2;
 }
