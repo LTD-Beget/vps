@@ -136,9 +136,23 @@ service ManageService {
         };
     }
 
-    rpc resetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {
+    rpc resetPassword (ResetPasswordRequest) returns (ResetPasswordResponse) {
         option (google.api.http) = {
             put: "/v1/vps/{id}/password"
+        };
+    }
+
+    // Прикрепление дополнительного IP адреса пользователя к VPS
+    rpc attachIpAddress (AttachIpAddressRequest) returns (AttachIpAddressResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/{id}/network/{ip_address}"
+        };
+    }
+
+    // Открепление дополнительного IP адреса пользователя от VPS
+    rpc detachIpAddress (DetachIpAddressRequest) returns (DetachIpAddressResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/network/detach/{ip_address}"
         };
     }
 }
@@ -759,6 +773,9 @@ message VpsInfo {
 
     // VPS находится в состоянии разблокировки
     bool unblocking = 17;
+
+    // Информация о дополнительных IP-адресах VPS
+    repeated string additional_ip_address = 18;
 }
 
 // Текущий статус Vps
@@ -801,4 +818,69 @@ message VpsConfiguration {
 
     // Доступен ли для заказа пользователем
     bool available = 8;
+}
+
+message AttachIpAddressRequest {
+    // Идентификатор VPS
+    string id = 1;
+
+    // IP-адрес
+    string ip_address = 2;
+}
+
+message AttachIpAddressResponse {
+    oneof result {
+        // Успешное прикрепление дополнительного IP-адреса
+        VpsInfo vps = 1;
+
+        // Произошла ошибка при прикреплении дополнительного IP-адреса
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Произошла ошибка при добавлении дополнительного IP адреса внутри гостевой ОС
+            GUEST_OS_ADD_IP_ADDRESS_FAILED = 1;
+        }
+    }
+}
+
+message DetachIpAddressRequest {
+    // IP-адрес
+    string ip_address = 1;
+}
+
+message DetachIpAddressResponse {
+    oneof result {
+        // Успешное открепление дополнительного IP-адреса
+        VpsInfo vps = 1;
+
+        // Произошла ошибка при откреплении дополнительного IP-адреса
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Произошла ошибка при удалении дополнительного IP адреса внутри гостевой ОС
+            GUEST_OS_REMOVE_IP_ADDRESS_FAILED = 1;
+        }
+    }
 }
