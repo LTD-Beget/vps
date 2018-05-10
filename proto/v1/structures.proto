@@ -13,3 +13,22 @@ message SshKeyInfo {
     // Отпечаток сохраненного публичного ключа
     string fingerprint = 3;
 }
+
+message IpInfo {
+    // Основной IP-адрес VPS
+    string ip = 1;
+
+    // MAC-адрес
+    string mac = 2;
+
+    // Идентификатор VPS, к которому привязан дополнительный IP-адрес
+    string vps_id = 3;
+}
+
+message AdditionalIpInfo {
+    // Дополнительный IP-адрес, принадлежащий пользователю
+    string ip = 1;
+
+    // Идентификатор VPS, к которому привязан дополнительный IP-адрес
+    string vps_id = 2;
+}
