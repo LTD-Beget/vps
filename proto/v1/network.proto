@@ -16,7 +16,7 @@ service NetworkService {
     // Отмена заказа дополнительного IP адреса пользователя
     rpc removeIpAddress (RemoveIpAddressRequest) returns (RemoveIpAddressResponse) {
         option (google.api.http) = {
-            delete: "/v1/vps/network/{ip}"
+            delete: "/v1/vps/network/{ip_address}"
         };
     }
 
