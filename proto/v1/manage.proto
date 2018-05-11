@@ -146,6 +146,7 @@ service ManageService {
     rpc attachIpAddress (AttachIpAddressRequest) returns (AttachIpAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/network/{ip_address}"
+            body: "*"
         };
     }
 
@@ -153,6 +154,7 @@ service ManageService {
     rpc detachIpAddress (DetachIpAddressRequest) returns (DetachIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/detach/{ip_address}"
+            body: "*"
         };
     }
 }
