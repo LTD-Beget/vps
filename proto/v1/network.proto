@@ -10,6 +10,7 @@ service NetworkService {
     rpc orderIpAddress (OrderIpAddressRequest) returns (OrderIpAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/network"
+            body: "*"
         };
     }
 
@@ -17,6 +18,7 @@ service NetworkService {
     rpc removeIpAddress (RemoveIpAddressRequest) returns (RemoveIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/{ip_address}"
+            body: "*"
         };
     }
 
