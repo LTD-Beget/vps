@@ -154,7 +154,6 @@ service ManageService {
     rpc detachIpAddress (DetachIpAddressRequest) returns (DetachIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/detach/{ip_address}"
-            body: "*"
         };
     }
 }

@@ -18,7 +18,6 @@ service NetworkService {
     rpc removeIpAddress (RemoveIpAddressRequest) returns (RemoveIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/{ip_address}"
-            body: "*"
         };
     }
 
