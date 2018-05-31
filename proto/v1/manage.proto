@@ -157,8 +157,8 @@ service ManageService {
         };
     }
 
-    // Доступ к пользовательской машине через SSH-ключи BeGet
-    rpc allowSshAccess (AllowSshAccessRequest) returns (AllowSshAccessResponse) {
+    // Изменение возможности доступа к пользовательской машине через SSH-ключи BeGet
+    rpc changeSshAccess (ChangeSshAccessRequest) returns (ChangeSshAccessResponse) {
         option (google.api.http) = {
             put: "/v1/vps/{id}/ssh/access"
             body: "*"
@@ -902,7 +902,7 @@ message DetachIpAddressResponse {
     }
 }
 
-message AllowSshAccessRequest {
+message ChangeSshAccessRequest {
     // Идентификатор VPS
     string id = 1;
 
@@ -911,7 +911,7 @@ message AllowSshAccessRequest {
     bool beget_ssh_access_allowed = 2;
 }
 
-message AllowSshAccessResponse {
+message ChangeSshAccessResponse {
     oneof result {
         // Успешное открепление дополнительного IP-адреса
         VpsInfo vps = 1;
@@ -927,9 +927,15 @@ message AllowSshAccessResponse {
         // Сообщение об ошибке
         string message = 2;
 
+        // Дополнительная информация
+        string extra = 3;
+
         enum Code {
             // Внутренняя ошибка сервера
             INTERNAL_ERROR = 0;
+
+            // Произошла ошибка при попытке внести изменения в authorized_keys в гостевой ОС
+            GUEST_OS_ERROR = 1;
         }
     }
 }
