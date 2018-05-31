@@ -164,6 +164,12 @@ service ManageService {
             body: "*"
         };
     }
+
+    rpc getFileManagerSettings (GetFileManagerSettingsRequest) returns (GetFileManagerSettingsResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/{id}/fm"
+        };
+    }
 }
 
 message CreateVpsRequest {
@@ -936,6 +942,42 @@ message ChangeSshAccessResponse {
 
             // Произошла ошибка при попытке внести изменения в authorized_keys в гостевой ОС
             GUEST_OS_ERROR = 1;
+        }
+    }
+}
+
+message GetFileManagerSettingsRequest {
+    // Vps uuid
+    string id = 1;
+}
+
+message GetFileManagerSettingsResponse {
+    oneof result {
+        Credentials credentials = 1;
+        Error error = 2;
+    }
+
+    message Credentials {
+        string type = 1;
+        string user = 2;
+        string host = 3;
+        uint32 connection_id = 4;
+        string path = 5;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR = 0;
+
+            // Доступ к серверу по ssh для бегета запрещен
+            SSH_ACCESS_NOT_ALLOWED = 1;
         }
     }
 }
