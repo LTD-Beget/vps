@@ -218,6 +218,9 @@ message GetAvailableSoftwareResponse {
         // Список ID образов, для которых возможна установка этого ПО
         repeated uint32 image_id = 8;
 
+        // Список дополнительных полей, которые необходимо передать для установки ПО
+        repeated string variable = 9;
+
         enum Type {
             PANEL = 0;
             SOFTWARE = 1;
@@ -292,8 +295,8 @@ message CreateVpsRequest {
     // Необходимо для использования пользователем файлового менеджера
     bool beget_ssh_access_allowed = 8;
 
-    // Список ID ПО, которое нужно установить
-    repeated uint32 software_id = 9;
+    // Информация о ПО, которое необходимо установить
+    repeated SoftwareInstallInfo software = 10;
 }
 
 
@@ -628,8 +631,8 @@ message ReinstallRequest {
     // Пароль (должен включать минимум 1 upper, 1 lower, 1 digit, 1 special char. Мин длина - 8 символов)
     string password = 4;
 
-    // Список ID ПО, которое нужно установить
-    repeated uint32 software_id = 5;
+    // Информация о ПО, которое необходимо установить
+    repeated SoftwareInstallInfo software = 6;
 }
 
 message ReinstallResponse {
@@ -1080,4 +1083,12 @@ message GetFileManagerSettingsResponse {
             SSH_ACCESS_NOT_ALLOWED = 1;
         }
     }
+}
+
+message SoftwareInstallInfo {
+    // ID устанавливаемого ПО
+    uint32 id = 1;
+
+    // Дополнительные переменные для установки
+    map<string,string> variable = 2;
 }
