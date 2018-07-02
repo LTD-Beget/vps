@@ -689,6 +689,9 @@ message ReinstallResponse {
 
             // Недостаточно ресурсов на для устанавливаемого ПО на выбранном тарифном плане
             SOFTWARE_NOT_ENOUGH_RESOURCES = 7;
+
+            // Некорректные остальные параметры конфигурации (public_key, operating_system_id, configuration_name)
+            INVALID_PARAMS = 8;
         }
     }
 }
