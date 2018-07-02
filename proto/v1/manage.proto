@@ -357,6 +357,9 @@ message CreateVpsResponse {
 
             // Недостаточно ресурсов на для устанавливаемого ПО на выбранном тарифном плане
             SOFTWARE_NOT_ENOUGH_RESOURCES = 10;
+
+            // Пропущены обязательные переменные для устанавливаемого ПО
+            SOFTWARE_VARIABLE_REQUIRED = 11;
         }
     }
 }
@@ -692,6 +695,9 @@ message ReinstallResponse {
 
             // Некорректные остальные параметры конфигурации (public_key, operating_system_id, configuration_name)
             INVALID_PARAMS = 8;
+
+            // Пропущены обязательные переменные для устанавливаемого ПО
+            SOFTWARE_VARIABLE_REQUIRED = 9;
         }
     }
 }
