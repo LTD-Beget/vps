@@ -324,6 +324,10 @@ message CreateVpsResponse {
         Code code = 1;
         string message = 2;
 
+        oneof extra {
+            SoftwareVariableError variable_error = 3;
+        }
+
         enum Code {
             // Внутренняя ошибка (извиняемся и просим повторить попозже)
             INTERNAL_ERROR = 0;
@@ -358,8 +362,16 @@ message CreateVpsResponse {
             // Недостаточно ресурсов на для устанавливаемого ПО на выбранном тарифном плане
             SOFTWARE_NOT_ENOUGH_RESOURCES = 10;
 
-            // Пропущены обязательные переменные для устанавливаемого ПО
+            // Пропущены обязательные переменные для устанавливаемого ПО. Подбробности в
             SOFTWARE_VARIABLE_REQUIRED = 11;
+
+            // Переменная для устанавливаемого ПО. Подробности содержатся в `variable_error`
+            SOFTWARE_VARIABLE_INVALID = 12;
+        }
+
+        message SoftwareVariableError {
+            uint32 id = 1;
+            repeated string variable_name = 2;
         }
     }
 }
@@ -668,6 +680,10 @@ message ReinstallResponse {
         Code code = 1;
         string message = 2;
 
+        oneof extra {
+            SoftwareVariableError variable_error = 3;
+        }
+
         enum Code {
             // Внутренняя ошибка (извиняемся и просим повторить попозже)
             INTERNAL_ERROR = 0;
@@ -698,6 +714,14 @@ message ReinstallResponse {
 
             // Пропущены обязательные переменные для устанавливаемого ПО
             SOFTWARE_VARIABLE_REQUIRED = 9;
+
+            // Переменная для устанавливаемого ПО. Подробности содержатся в `variable_error`
+            SOFTWARE_VARIABLE_INVALID = 10;
+        }
+
+        message SoftwareVariableError {
+            uint32 id = 1;
+            repeated string variable_name = 2;
         }
     }
 }
