@@ -1003,6 +1003,9 @@ message VpsConfiguration {
 
     // Доступен ли для заказа пользователем
     bool available = 8;
+
+    // Является ли конфигурация персональной
+    bool custom = 9;
 }
 
 message AttachIpAddressRequest {
