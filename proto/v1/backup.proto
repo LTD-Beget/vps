@@ -6,19 +6,25 @@ import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
 service BackupService {
-    rpc getBackupFileList (GetBackupFileListRequest) returns (GetBackupFileListResponse) {
+    rpc getOrders (GetOrdersRequest) returns (GetOrdersResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/{id}/backup/{copy_id}"
-		};
+            get: "/v1/vps/{id}/backup/orders"
+        };
     }
     rpc getAvailableCopies (GetAvailableCopiesRequest) returns (GetAvailableCopiesResponse) {
         option (google.api.http) = {
 			get: "/v1/vps/{id}/backup"
 		};
     }
+    rpc getBackupFileList (GetBackupFileListRequest) returns (GetBackupFileListResponse) {
+        option (google.api.http) = {
+			get: "/v1/vps/{id}/backup/{copy_id}"
+		};
+    }
     rpc restoreFile (RestoreFileRequest) returns (RestoreFileResponse) {
         option (google.api.http) = {
 			post: "/v1/vps/{id}/backup/{copy_id}/restore"
+			body: "*"
 		};
     }
 }
@@ -92,4 +98,13 @@ message RestoreFileResponse {
             INTERNAL_ERROR = 0;
         }
     }
+}
+
+message GetOrdersRequest {
+    // Идентификатор VPS (uuid)
+    string id = 1;
+}
+
+message GetOrdersResponse {
+    repeated structures.OrderInfo order = 1;
 }
