@@ -99,7 +99,13 @@ message OrderInfo {
     repeated string path = 6;
 
     // Статус завершения
-    string status = 7;
+    OrderStatus status = 7;
+
+    enum OrderStatus {
+        PROCESSING = 0;
+        COMPLETED = 1;
+        ERROR = 2;
+    }
 
     enum OrderType {
         DOWNLOAD = 0;

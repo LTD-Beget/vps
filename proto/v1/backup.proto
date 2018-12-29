@@ -80,7 +80,7 @@ message RestoreFileRequest {
 message RestoreFileResponse {
     oneof result {
         // Восстановление завершилось успешно
-        uint64 restore_id = 1;
+        structures.OrderInfo order = 1;
 
         // Произошла ошибка при восстановлении файлов
         Error error = 2;
@@ -102,6 +102,9 @@ message RestoreFileResponse {
 
             // Передан некорректный список файлов для восстановления
             INVALID_PATH_LIST = 2;
+
+            // Уже существует активная задача на восстановление
+            ALREADY_RESTORING = 3;
         }
     }
 }
