@@ -90,7 +90,7 @@ message OrderInfo {
     string date_copy_create = 4;
 
     // Дата завершения задания (RFC3339)
-    string date_finish = 5;
+    string date_complete = 5;
 
     // Список путей для восстановления/скачивания
     repeated string path = 6;
