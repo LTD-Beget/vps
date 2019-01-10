@@ -32,3 +32,80 @@ message AdditionalIpInfo {
     // Идентификатор VPS, к которому привязан дополнительный IP-адрес
     string vps_id = 2;
 }
+
+message FileInfo {
+    // Является ли файл символической ссылкой
+    bool is_link = 1;
+
+    // Является ли файл директорией
+    bool is_dir = 2;
+
+    // Название файла
+    bytes name = 3;
+
+    // Расширение файла, если оно есть
+    bytes ext = 4;
+
+    // Путь к файлу
+    bytes path = 5;
+
+    // Владелец файла
+    string owner = 6;
+
+    // Группа владельца
+    string group = 7;
+
+    // Размер файла в байтах
+    uint64 size = 8;
+
+    // Время изменения (unix timestamp)
+    double mtime = 9;
+
+    // Время изменения в читаемом виде
+    string mtime_str = 10;
+
+    // Права на файл, например, "777"
+    string mode = 11;
+}
+
+message CopyInfo {
+    // Идентификатор копии
+    uint64 id = 1;
+
+    // Дата создания копии в RFC3339
+    string date = 2;
+}
+
+message OrderInfo {
+    // Идентификатор задания
+    uint64 id = 1;
+
+    // Тип задания - восстановление или скачивание
+    OrderType type = 2;
+
+    // Дата создания задания (RFC3339)
+    string date_create = 3;
+
+    // Дата создания копии (RFC3339)
+    string date_copy_create = 4;
+
+    // Дата завершения задания (RFC3339)
+    string date_complete = 5;
+
+    // Список путей для восстановления/скачивания
+    repeated string path = 6;
+
+    // Статус завершения
+    OrderStatus status = 7;
+
+    enum OrderStatus {
+        PROCESSING = 0;
+        COMPLETED = 1;
+        ERROR = 2;
+    }
+
+    enum OrderType {
+        DOWNLOAD = 0;
+        RESTORE = 1;
+    }
+}

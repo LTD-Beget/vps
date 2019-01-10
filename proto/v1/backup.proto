@@ -1,0 +1,119 @@
+syntax = 'proto3';
+
+package beget.vps.v1.backup;
+
+import "google/api/annotations.proto";
+import "vps/proto/v1/structures.proto";
+
+service BackupService {
+    rpc getOrders (GetOrdersRequest) returns (GetOrdersResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/{id}/backup/orders"
+        };
+    }
+    rpc getAvailableCopies (GetAvailableCopiesRequest) returns (GetAvailableCopiesResponse) {
+        option (google.api.http) = {
+			get: "/v1/vps/{id}/backup"
+		};
+    }
+    rpc getBackupFileList (GetBackupFileListRequest) returns (GetBackupFileListResponse) {
+        option (google.api.http) = {
+			get: "/v1/vps/{id}/backup/{copy_id}"
+		};
+    }
+    rpc restoreFile (RestoreFileRequest) returns (RestoreFileResponse) {
+        option (google.api.http) = {
+			post: "/v1/vps/{id}/backup/{copy_id}/restore"
+			body: "*"
+		};
+    }
+}
+
+message GetBackupFileListRequest {
+    // Идентификатор VPS (uuid)
+    string id = 1;
+
+    // Идентификатор копии
+    uint64 copy_id = 2;
+
+    // Путь для отображения
+    string path = 3;
+}
+
+message GetBackupFileListResponse {
+    // Список файлов
+    repeated structures.FileInfo file = 1;
+}
+
+message GetAvailableCopiesRequest {
+    // Идентификатор VPS (uuid)
+    string id = 1;
+}
+
+message GetAvailableCopiesResponse {
+    // Список копий
+    repeated structures.CopyInfo copy = 1;
+}
+
+message RestoreFileRequest {
+    // Идентификатор VPS (uuid)
+    string id = 1;
+
+    // Идентификатор копии
+    uint64 copy_id = 2;
+
+    // Список путей для восстановления
+    repeated string path = 3;
+
+    // Режим восстановления - полное или только файлы
+    Mode mode = 4;
+
+    // Восстановление без выключения VPS
+    bool affect_live = 5;
+
+    enum Mode {
+        MODE_FULL = 0;
+        MODE_FILE = 1;
+    }
+}
+
+message RestoreFileResponse {
+    oneof result {
+        // Восстановление завершилось успешно
+        structures.OrderInfo order = 1;
+
+        // Произошла ошибка при восстановлении файлов
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Указан некорректный режим восстановления
+            INVALID_MODE = 1;
+
+            // Передан некорректный список файлов для восстановления
+            INVALID_PATH_LIST = 2;
+
+            // Уже существует активная задача на восстановление
+            ALREADY_RESTORING = 3;
+        }
+    }
+}
+
+message GetOrdersRequest {
+    // Идентификатор VPS (uuid)
+    string id = 1;
+}
+
+message GetOrdersResponse {
+    repeated structures.OrderInfo order = 1;
+}
