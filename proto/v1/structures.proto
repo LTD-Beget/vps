@@ -72,11 +72,8 @@ message CopyInfo {
     // Идентификатор копии
     uint64 id = 1;
 
-    // Идентификатор VPS
-    string vps_uuid = 2;
-
     // Дата создания копии в RFC3339
-    string date = 3;
+    string date = 2;
 }
 
 message OrderInfo {
