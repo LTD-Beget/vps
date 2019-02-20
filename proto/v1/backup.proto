@@ -23,7 +23,13 @@ service BackupService {
     }
     rpc restoreFile (RestoreFileRequest) returns (RestoreFileResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/{id}/backup/{copy_id}/restore"
+			post: "/v1/vps/{id}/backup/{copy_id}/file"
+			body: "*"
+		};
+    }
+    rpc restoreServer (RestoreServerRequest) returns (RestoreServerResponse) {
+        option (google.api.http) = {
+			post: "/v1/vps/{id}/backup/{copy_id}/server"
 			body: "*"
 		};
     }
@@ -65,16 +71,8 @@ message RestoreFileRequest {
     // Список путей для восстановления
     repeated string path = 3;
 
-    // Режим восстановления - полное или только файлы
-    Mode mode = 4;
-
     // Восстановление без выключения VPS
-    bool affect_live = 5;
-
-    enum Mode {
-        MODE_FULL = 0;
-        MODE_FILE = 1;
-    }
+    bool affect_live = 4;
 }
 
 message RestoreFileResponse {
@@ -105,6 +103,43 @@ message RestoreFileResponse {
 
             // Уже существует активная задача на восстановление
             ALREADY_RESTORING = 3;
+        }
+    }
+}
+
+message RestoreServerRequest {
+    // Идентификатор VPS, в который происходит восстановление (uuid)
+    string id = 1;
+
+    // Идентификатор копии
+    uint64 copy_id = 2;
+}
+
+message RestoreServerResponse {
+    oneof result {
+        // Восстановление завершилось успешно
+        structures.OrderInfo order = 1;
+
+        // Произошла ошибка при восстановлении файлов
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Уже существует активная задача на восстановление
+            ALREADY_RESTORING = 1;
+
+            // Конфигурация целевого сервера не соответствует конфигурации сервера в момент создания резервной копии
+            CONFIGURATION_NOT_ENOUGH = 2;
         }
     }
 }
