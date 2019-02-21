@@ -80,14 +80,14 @@ message OrderInfo {
     // Идентификатор задания
     uint64 id = 1;
 
-    // Тип задания - восстановление или скачивание
-    OrderType type = 2;
+    // Идентификатор VPS (uuid)
+    string vps_id = 2;
+
+    // Тип задания
+    OrderType type = 3;
 
     // Дата создания задания (RFC3339)
-    string date_create = 3;
-
-    // Дата создания копии (RFC3339)
-    string date_copy_create = 4;
+    string date_create = 4;
 
     // Дата завершения задания (RFC3339)
     string date_complete = 5;
@@ -97,6 +97,12 @@ message OrderInfo {
 
     // Статус завершения
     OrderStatus status = 7;
+
+    // Информация о соответствующей резервной копии
+    CopyInfo copy_info = 8;
+
+    // Операция производится без выключения VPS
+    bool affect_live = 9;
 
     enum OrderStatus {
         PROCESSING = 0;

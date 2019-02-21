@@ -8,7 +8,7 @@ import "vps/proto/v1/structures.proto";
 service BackupService {
     rpc getOrders (GetOrdersRequest) returns (GetOrdersResponse) {
         option (google.api.http) = {
-            get: "/v1/vps/{id}/backup/orders"
+            get: "/v1/vps/backup/orders"
         };
     }
     rpc getAvailableCopies (GetAvailableCopiesRequest) returns (GetAvailableCopiesResponse) {
@@ -145,8 +145,11 @@ message RestoreServerResponse {
 }
 
 message GetOrdersRequest {
-    // Идентификатор VPS (uuid)
-    string id = 1;
+    // Количество записей на страницу (от 1 до 100)
+    uint32 limit = 1;
+
+    // Смещение относительно нулевой (последней) записи
+    uint32 offset = 2;
 }
 
 message GetOrdersResponse {
