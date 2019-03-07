@@ -74,6 +74,9 @@ message CopyInfo {
 
     // Дата создания копии в RFC3339
     string date = 2;
+
+    // Информация об операционной системе, используемой на момент создания резервной копии
+    OperatingSystem operating_system = 3;
 }
 
 message OrderInfo {
@@ -114,4 +117,22 @@ message OrderInfo {
         DOWNLOAD = 0;
         RESTORE = 1;
     }
+}
+
+// Описывает ОС для установки на Vps (пара дистрибутив + версия)
+message OperatingSystem {
+    // Идентификатор ОС
+    uint32 id = 1;
+
+    // Системное имя дистрибутива (например, для группировки)
+    string distro_name = 2;
+
+    // Отображаемое имя дистрибутива
+    string distro_display_name = 3;
+
+    // Версия дистрибутива (отображаемое значение)
+    string version = 4;
+
+    // Доступна ли ОС для выбора пользователю (визуально)
+    bool active = 5;
 }

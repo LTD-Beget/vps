@@ -731,7 +731,7 @@ message GetAvailableConfigurationRequest {
 
 message GetAvailableConfigurationResponse {
     repeated VpsConfiguration configurations = 1;
-    repeated OperatingSystem operating_systems = 2;
+    repeated structures.OperatingSystem operating_systems = 2;
 }
 
 
@@ -884,25 +884,6 @@ message HistoryItem {
     }
 }
 
-// Описывает ОС для установки на Vps (пара дистрибутив + версия)
-message OperatingSystem {
-    // Идентификатор ОС
-    uint32 id = 1;
-
-    // Системное имя дистрибутива (например, для группировки)
-    string distro_name = 2;
-
-    // Отображаемое имя дистрибутива
-    string distro_display_name = 3;
-
-    // Версия дистрибутива (отображаемое значение)
-    string version = 4;
-
-    // Доступна ли ОС для выбора пользователю (визуально)
-    bool active = 5;
-}
-
-
 message VpsInfo {
     // Идентификатор Vps (uuid)
     string id = 1;
@@ -938,7 +919,7 @@ message VpsInfo {
     string date_create = 11;
 
     // Операционная система
-    OperatingSystem operating_system = 12;
+    structures.OperatingSystem operating_system = 12;
 
     // Основной IP-адрес
     string ip_address = 13;
