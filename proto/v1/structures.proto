@@ -80,6 +80,20 @@ message CopyInfo {
 
     // Общий размер резервной копии в байтах
     uint64 size = 4;
+
+    // Конфигурация, которая использовалась серверов в момент создания резервной копии
+    Configuration configuration = 5;
+
+    message Configuration {
+        // Количество ядер процессора, шт
+        uint32 cpu_count = 1;
+
+        // Объем дисковой квоты, Мб
+        uint32 disk_size = 2;
+
+        // Объем оперативной памяти, Мб
+        uint32 memory = 3;
+    }
 }
 
 message OrderInfo {
