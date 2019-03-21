@@ -73,6 +73,9 @@ message RestoreFileRequest {
 
     // Восстановление без выключения VPS
     bool affect_live = 4;
+
+    // Директория, в которую будет происходить восстановление. По-умолчанию - "/"
+    string target = 5;
 }
 
 message RestoreFileResponse {
@@ -103,6 +106,9 @@ message RestoreFileResponse {
 
             // Уже существует активная задача на восстановление
             ALREADY_RESTORING = 3;
+
+            // Передан некорректный путь к директории для восстановления
+            INVALID_TARGET = 4;
         }
     }
 }
