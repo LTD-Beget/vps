@@ -124,6 +124,9 @@ message OrderInfo {
     // Операция производится без выключения VPS
     bool affect_live = 9;
 
+    // Директория, в которую производилось восстановление (актуально для выборочного восстановления файлов)
+    string target = 10;
+
     enum OrderStatus {
         PROCESSING = 0;
         COMPLETED = 1;
