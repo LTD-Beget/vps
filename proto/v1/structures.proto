@@ -84,6 +84,9 @@ message CopyInfo {
     // Конфигурация, которая использовалась серверов в момент создания резервной копии
     Configuration configuration = 5;
 
+    // Идентификатор VPS (uuid)
+    string vps_id = 6;
+
     message Configuration {
         // Количество ядер процессора, шт
         uint32 cpu_count = 1;

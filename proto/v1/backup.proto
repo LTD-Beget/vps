@@ -13,7 +13,7 @@ service BackupService {
     }
     rpc getAvailableCopies (GetAvailableCopiesRequest) returns (GetAvailableCopiesResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/{id}/backup"
+			get: "/v1/vps/backup"
 		};
     }
     rpc getBackupFileList (GetBackupFileListRequest) returns (GetBackupFileListResponse) {
@@ -52,8 +52,6 @@ message GetBackupFileListResponse {
 }
 
 message GetAvailableCopiesRequest {
-    // Идентификатор VPS (uuid)
-    string id = 1;
 }
 
 message GetAvailableCopiesResponse {
