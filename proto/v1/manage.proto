@@ -414,6 +414,9 @@ message GetStatusesResponse {
 
         // Доступно ли управление VPS
         bool manage_enabled = 5;
+
+        // VPS находится в состоянии восстановления из резервной копии
+        bool restoring = 6;
     }
 }
 
