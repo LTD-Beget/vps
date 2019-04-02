@@ -936,6 +936,9 @@ message VpsInfo {
     // VPS находится в состоянии разблокировки
     bool unblocking = 17;
 
+    // VPS находится в состоянии восстановления из резервной копии
+    bool restoring = 20;
+
     // Информация о дополнительных IP-адресах VPS
     repeated string additional_ip_address = 18;
 
