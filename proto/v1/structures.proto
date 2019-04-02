@@ -136,10 +136,35 @@ message OrderInfo {
     // Директория, в которую производилось восстановление (актуально для выборочного восстановления файлов)
     string target = 10;
 
+    ErrorDetails error_details = 12;
+
+    message ErrorDetails {
+        oneof error {
+            FileError file_error = 1;
+        }
+
+        message FileError {
+            map<string, Code> error = 1; // <path, error_code>
+
+            enum Code {
+                // Внутренняя ошибка
+                INTERNAL_ERROR = 0;
+                // Нет прав на запись файла
+                PERMISSION_DENIED = 1;
+                // Может возникать, когда на файл установлен флаг immutable
+                FILE_EXISTS = 2;
+                // Невозможно записать файл из-за отсутствия места на диске
+                DISK_QUOTA_EXCEEDED = 3;
+            }
+        }
+    }
+
     enum OrderStatus {
         PROCESSING = 0;
         COMPLETED = 1;
         ERROR = 2;
+        // Завершено частично (см. error_details)
+        COMPLETED_PARTIALLY = 3;
     }
 
     enum OrderType {
