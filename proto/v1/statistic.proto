@@ -23,6 +23,12 @@ service StatisticService {
         };
     }
 
+    rpc getDiskUsage(GetDiskUsageRequest) returns (GetDiskUsageResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/statistic/disk-usage/{id}"
+        };
+    }
+
     rpc getNetwork (GetNetworkRequest) returns (GetNetworkResponse) {
         option (google.api.http) = {
             get: "/v1/vps/statistic/network/{id}"
@@ -71,6 +77,16 @@ message GetNetworkRequest {
 message GetNetworkResponse {
     SeriesData data_rx = 1;
     SeriesData data_tx = 2;
+}
+
+message GetDiskUsageRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+    Period period = 2;
+}
+
+message GetDiskUsageResponse {
+    SeriesData disk_usage = 1;
 }
 
 message SeriesData {
