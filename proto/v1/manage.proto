@@ -942,6 +942,9 @@ message VpsInfo {
     // VPS находится в состоянии восстановления из резервной копии
     bool restoring = 20;
 
+    // Использовано места на диске в данный момент, Мб
+    uint64 disk_usage = 21;
+
     // Информация о дополнительных IP-адресах VPS
     repeated string additional_ip_address = 18;
 
