@@ -46,6 +46,12 @@ service StatisticService {
             get: "/v1/vps/statistic/cpu-details/{id}"
         };
     }
+
+    rpc getProcessList (GetProcessListRequest) returns (GetProcessListResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/statistic/processes/{id}"
+        };
+    }
 }
 
 message GetCpuRequest {
@@ -129,6 +135,27 @@ message GetCpuDetailsResponse {
     repeated double iowait = 6;
     repeated double irq = 7;
     repeated double softirq = 8;
+}
+
+message GetProcessListRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+}
+
+message GetProcessListResponse {
+    repeated ProcessInfo process = 1;
+
+    message ProcessInfo {
+        uint32 pid = 1;
+        uint32 nice = 2;
+        uint64 virt = 3; // bytes
+        uint64 rss = 4; // bytes
+        string state = 5;
+        float cpu_percent = 6;
+        float mem_percent = 7;
+        float time_running = 8; // seconds
+        string name = 9;
+    }
 }
 
 message SeriesData {
