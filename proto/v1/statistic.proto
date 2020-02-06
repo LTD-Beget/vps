@@ -34,6 +34,18 @@ service StatisticService {
             get: "/v1/vps/statistic/network/{id}"
         };
     }
+
+    rpc getLoadAverage (GetLoadAverageRequest) returns (GetLoadAverageResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/statistic/load-average/{id}"
+        };
+    }
+
+    rpc getCpuDetails (GetCpuDetailsRequest) returns (GetCpuDetailsResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/statistic/cpu-details/{id}"
+        };
+    }
 }
 
 message GetCpuRequest {
@@ -87,6 +99,36 @@ message GetDiskUsageRequest {
 
 message GetDiskUsageResponse {
     SeriesData disk_usage = 1;
+}
+
+message GetLoadAverageRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+    Period period = 2;
+}
+
+message GetLoadAverageResponse {
+    repeated string date = 1;
+    repeated double la1 = 2;
+    repeated double la5 = 3;
+    repeated double la15 = 4;
+}
+
+message GetCpuDetailsRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+    Period period = 2;
+}
+
+message GetCpuDetailsResponse {
+    repeated string date = 1;
+    repeated double user = 2;
+    repeated double nice = 3;
+    repeated double system = 4;
+    repeated double idle = 5;
+    repeated double iowait = 6;
+    repeated double irq = 7;
+    repeated double softirq = 8;
 }
 
 message SeriesData {
