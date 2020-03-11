@@ -147,7 +147,7 @@ message GetProcessListResponse {
 
     message ProcessInfo {
         uint32 pid = 1;
-        uint32 nice = 2;
+        int32 nice = 2;
         uint64 virt = 3; // bytes
         uint64 rss = 4; // bytes
         string state = 5;
