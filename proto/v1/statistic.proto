@@ -155,6 +155,7 @@ message GetProcessListResponse {
         float mem_percent = 7;
         float time_running = 8; // seconds
         string name = 9;
+        string user = 10;
     }
 }
 
