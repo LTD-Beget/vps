@@ -1,0 +1,183 @@
+syntax = 'proto3';
+
+package beget.vps.v1.snapshot;
+
+import "google/api/annotations.proto";
+
+service SnapshotService {
+    // get all snapshots
+    rpc getAll (GetAllRequest) returns (GetAllResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/snapshot"
+        };
+    }
+
+    // create a snapshot
+    rpc create (CreateRequest) returns (CreateResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/snapshot"
+            body: "*"
+        };
+    }
+
+    // get restore list
+    rpc getAllRestores (GetAllRestoresRequest) returns (GetAllRestoresResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/snapshot/restore"
+        };
+    }
+
+    // create a restore for the snapshot
+    rpc restore (RestoreRequest) returns (RestoreResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/snapshot/{id}/restore"
+            body: "*"
+        };
+    }
+
+    // remove the snapshot
+    rpc remove (RemoveRequest) returns (RemoveResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/snapshot/{id}"
+        };
+    }
+}
+
+
+message GetAllRequest {
+}
+
+message GetAllResponse {
+    repeated Snapshot snapshot = 1;
+}
+
+message CreateRequest {
+    string vps_id = 1;
+}
+
+message CreateResponse {
+    oneof response {
+        Snapshot snapshot = 1;
+        Error error = 2;
+    }
+    message Error {
+        string message = 1;
+        Code code = 2;
+        enum Code {
+            INTERNAL_ERROR = 0;
+
+            // already creating this vps snapshot
+            ALREADY_CREATING = 1;
+
+            // must be positive balance
+            INSUFFICIENT_FUNDS = 2;
+        }
+    }
+}
+
+message GetAllRestoresRequest {
+    // snapshot id. Optional, full list at 0/null
+    uint64 id = 1;
+}
+
+message GetAllRestoresResponse {
+    repeated Restore restore = 1;
+}
+
+message RestoreRequest {
+    // snapshot id
+    uint64 id = 1;
+
+    // target vps to restore
+    string vps_id = 2;
+}
+
+message RestoreResponse {
+    oneof response {
+        Restore restore = 1;
+        Error error = 2;
+    }
+    message Error {
+        string message = 1;
+        Code code = 2;
+        enum Code {
+            INTERNAL_ERROR = 0;
+
+            // snapshot already in restoring with this target
+            ALREADY_RESTORING = 1;
+
+            // snapshot creating in progress
+            SNAPSHOT_NOT_DONE = 2;
+
+            // saved snapshot configuration is higher than target
+            CONFIGURATION_NOT_ENOUGH = 3;
+        }
+    }
+}
+
+message RemoveRequest {
+    uint64 id = 1;
+}
+
+message RemoveResponse {
+    oneof response {
+        Snapshot snapshot = 1;
+        Error error = 2;
+    }
+    message Error {
+        string message = 1;
+        Code code = 2;
+        enum Code {
+            INTERNAL_ERROR = 0;
+
+            // snapshot is creating or restoring or removing
+            SNAPSHOT_NOT_DONE = 1;
+
+            // snapshot now in restoring
+            SNAPSHOT_IS_RESTORING = 2;
+        }
+    }
+}
+
+message Snapshot {
+    // snapshot id
+    uint64 id = 1;
+
+    // vps id (uuid)
+    string vps_id = 2;
+
+    // W3C
+    string date_create = 3;
+
+    // bytes
+    uint64 size = 4;
+
+    Status status = 5;
+
+    enum Status {
+        CREATING = 0;
+        DONE = 1;
+        RESTORING = 2;
+    }
+}
+
+message Restore {
+    // restore order id
+    uint64 id = 1;
+
+    // snapshot id
+    uint64 snapshot_id = 2;
+
+    // target vps id
+    string vps_id = 3;
+
+    // start restore datetime (RFC3339)
+    string date_create = 4;
+
+    Status status = 5;
+
+    enum Status {
+        PROCESSING = 0;
+        COMPLETED = 1;
+    }
+}
