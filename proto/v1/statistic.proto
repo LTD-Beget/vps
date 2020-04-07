@@ -143,19 +143,39 @@ message GetProcessListRequest {
 }
 
 message GetProcessListResponse {
-    repeated ProcessInfo process = 1;
+    oneof result {
+        ProcessList processes = 1;
+        Error error = 2;
+    }
 
-    message ProcessInfo {
-        uint32 pid = 1;
-        int32 nice = 2;
-        uint64 virt = 3; // bytes
-        uint64 rss = 4; // bytes
-        string state = 5;
-        float cpu_percent = 6;
-        float mem_percent = 7;
-        float time_running = 8; // seconds
-        string name = 9;
-        string user = 10;
+    message ProcessList {
+        repeated ProcessInfo process = 1;
+
+        message ProcessInfo {
+            uint32 pid = 1;
+            int32 nice = 2;
+            uint64 virt = 3; // bytes
+            uint64 rss = 4; // bytes
+            string state = 5;
+            float cpu_percent = 6;
+            float mem_percent = 7;
+            float time_running = 8; // seconds
+            string name = 9;
+            string user = 10;
+        }
+    }
+
+    message Error {
+        Code code = 1;
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            _ = 0;
+
+            // Не удалось получить информацию из гостевого агента
+            GUEST_AGENT_UNAVAILABLE = 1;
+        }
     }
 }
 
