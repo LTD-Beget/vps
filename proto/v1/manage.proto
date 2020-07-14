@@ -185,6 +185,40 @@ service ManageService {
 			get: "/v1/vps/software"
 		};
     }
+
+    rpc checkSoftwareRequirements (CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/{id}/software/requirements"
+            body: "*"
+        };
+    }
+}
+
+message CheckSoftwareRequirementsRequest {
+    // Идентификатор Vps (uuid)
+    string id = 1;
+
+    // Идентификатор ОС
+    uint32 operating_system_id = 2;
+
+    // Информация о желаемом ПО
+    SoftwareInstallInfo info = 3;
+}
+
+message CheckSoftwareRequirementsResponse {
+    Error error = 2;
+
+    message Error {
+        oneof type {
+            WordpressError wordpress_error = 1;
+        }
+
+        enum WordpressError {
+           _ = 0;
+           DOMAIN_NOT_REGISTERED = 1;
+           WRONG_NS_RECORD = 2;
+        }
+    }
 }
 
 message GetAvailableSoftwareRequest {
