@@ -188,21 +188,18 @@ service ManageService {
 
     rpc checkSoftwareRequirements (CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
         option (google.api.http) = {
-            post: "/v1/vps/{id}/software/requirements"
+            post: "/v1/vps/software/requirements"
             body: "*"
         };
     }
 }
 
 message CheckSoftwareRequirementsRequest {
-    // Идентификатор Vps (uuid)
-    string id = 1;
-
     // Идентификатор ОС
-    uint32 operating_system_id = 2;
+    uint32 operating_system_id = 1;
 
     // Информация о желаемом ПО
-    SoftwareInstallInfo info = 3;
+    SoftwareInstallInfo info = 2;
 }
 
 message CheckSoftwareRequirementsResponse {
