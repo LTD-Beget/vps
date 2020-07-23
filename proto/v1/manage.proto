@@ -212,8 +212,14 @@ message CheckSoftwareRequirementsResponse {
 
         enum WordpressError {
            _ = 0;
+           // Домен не зарегистрирован
            DOMAIN_NOT_REGISTERED = 1;
+           
+           // Домен зарегистрирован через бегет и у него не наши NS-записи
            WRONG_NS_RECORD = 2;
+
+           // Домен зарегистрирован у стороннего регистратора и не делегирован нам
+           DOMAIN_NOT_DELEGATED = 3;
         }
     }
 }
