@@ -220,6 +220,9 @@ message CheckSoftwareRequirementsResponse {
 
            // Домен зарегистрирован у стороннего регистратора и не делегирован нам
            DOMAIN_NOT_DELEGATED = 3;
+
+           // Переданный домен не является fqdn
+           INVALID_DOMAIN = 4;
         }
     }
 }
