@@ -296,8 +296,13 @@ message CreateVpsRequest {
     // Идентификатор конфигурации (required)
     string configuration_id = 4;
 
-    // Идентификатор ОС (required)
-    uint32 operating_system_id = 5;
+    oneof source {
+        // Идентификатор ОС
+        uint32 operating_system_id = 5;
+
+        // Идентификатор снапшота, который восстановится в новую Vps
+        uint64 snapshot_id = 11;
+    }
 
     // ID публичных ssh-ключей (предварительно созданные в системе)
     repeated uint32 ssh_keys = 6;
