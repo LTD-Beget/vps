@@ -3,6 +3,7 @@ syntax = 'proto3';
 package beget.vps.v1.snapshot;
 
 import "google/api/annotations.proto";
+import "vps/proto/v1/structures.proto";
 
 service SnapshotService {
     // get all snapshots
@@ -53,6 +54,12 @@ message GetAllResponse {
 
 message CreateRequest {
     string vps_id = 1;
+
+    // Пользовательский комментарий к снапшоту
+    string description = 2;
+
+    // останавливать ли vps для создания снапшота
+    bool stop = 3;
 }
 
 message CreateResponse {
@@ -154,6 +161,18 @@ message Snapshot {
 
     Status status = 5;
 
+    // Информация об операционной системе, используемой на момент создания резервной копии
+    structures.OperatingSystem operating_system = 6;
+
+    // Пользовательский комментарий к снапшоту
+    string description = 7;
+
+    // минимальная конфигурация для восстановления
+    RequiredConfiguration configuration = 8;
+
+    // Цена в день
+    double price_day = 9;
+
     enum Status {
         CREATING = 0;
         DONE = 1;
@@ -180,4 +199,15 @@ message Restore {
         PROCESSING = 0;
         COMPLETED = 1;
     }
+}
+
+message RequiredConfiguration {
+    // Количество ядер процессора, шт
+    uint32 cpu_count = 1;
+
+    // Объем дисковой квоты, Мб
+    uint32 disk_size = 2;
+
+    // Объем оперативной памяти, Мб
+    uint32 memory = 3;
 }
