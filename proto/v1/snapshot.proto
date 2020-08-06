@@ -59,7 +59,7 @@ message CreateRequest {
     string description = 2;
 
     // останавливать ли vps для создания снапшота
-    bool stop = 3;
+    bool consistent = 3;
 }
 
 message CreateResponse {
