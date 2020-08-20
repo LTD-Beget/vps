@@ -223,6 +223,9 @@ message CheckSoftwareRequirementsResponse {
 
            // Переданный домен не является fqdn
            INVALID_DOMAIN = 4;
+
+           // Домен зарегистрирован меньше 12 часов назад
+           DOMAIN_IS_NEW = 5;
         }
     }
 }
