@@ -55,6 +55,7 @@ service SnapshotService {
     rpc edit (EditRequest) returns (EditResponse) {
         option (google.api.http) = {
             put: "/v1/vps/snapshot/{id}"
+            body: "*"
         };
     }
 }
