@@ -238,14 +238,17 @@ message Restore {
     // target vps name
     string vps_name = 4;
 
+    // restore type: existing or new vps
+    TargetType target_type = 5;
+
     // start restore datetime (RFC3339)
-    string date_create = 5;
+    string date_create = 6;
 
     // finish restore datetime (RFC3339)
-    string date_finish = 6;
+    string date_finish = 7;
 
     // current restore status
-    Status status = 7;
+    Status status = 8;
 
     enum TargetType {
         // restore to existing vps
