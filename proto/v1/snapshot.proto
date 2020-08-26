@@ -21,6 +21,14 @@ service SnapshotService {
         };
     }
 
+    // create cost calculator for snapshot creating
+    rpc createCalculator (CreateCalculatorRequest) returns (CreateCalculatorResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/snapshot/calculator"
+            body: "*"
+        };
+    }
+
     // get restore list
     rpc getAllRestores (GetAllRestoresRequest) returns (GetAllRestoresResponse) {
         option (google.api.http) = {
@@ -42,8 +50,14 @@ service SnapshotService {
             delete: "/v1/vps/snapshot/{id}"
         };
     }
-}
 
+    // edit snapshot user fields
+    rpc edit (EditRequest) returns (EditResponse) {
+        option (google.api.http) = {
+            put: "/v1/vps/snapshot/{id}"
+        };
+    }
+}
 
 message GetAllRequest {
 }
@@ -53,12 +67,13 @@ message GetAllResponse {
 }
 
 message CreateRequest {
+    // vps id (uuid)
     string vps_id = 1;
 
-    // Пользовательский комментарий к снапшоту
+    // user title for snapshot
     string description = 2;
 
-    // останавливать ли vps для создания снапшота
+    // stop vps before snapshot?
     bool consistent = 3;
 }
 
@@ -82,8 +97,18 @@ message CreateResponse {
     }
 }
 
+message CreateCalculatorRequest {
+    // vps id (uuid)
+    string vps_id = 2;
+}
+
+message CreateCalculatorResponse {
+    // cost per day in rub
+    double price_day = 10;
+}
+
 message GetAllRestoresRequest {
-    // snapshot id. Optional, full list at 0/null
+    // snapshot id. Optional, full list at 0
     uint64 id = 1;
 }
 
@@ -123,6 +148,7 @@ message RestoreResponse {
 }
 
 message RemoveRequest {
+    // snapshot id
     uint64 id = 1;
 }
 
@@ -146,6 +172,19 @@ message RemoveResponse {
     }
 }
 
+message EditRequest {
+    // snapshot id
+    uint64 id = 1;
+
+    // user title for snapshot
+    string description = 2;
+}
+
+message EditResponse {
+    // snapshot
+    Snapshot snapshot = 1;
+}
+
 message Snapshot {
     // snapshot id
     uint64 id = 1;
@@ -153,30 +192,35 @@ message Snapshot {
     // vps id (uuid)
     string vps_id = 2;
 
-    // W3C
-    string date_create = 3;
+    // vps name
+    string vps_name = 3;
+
+    // snapshot create date W3C
+    string date_create = 4;
 
     // bytes
-    uint64 size = 4;
+    uint64 size = 5;
 
-    Status status = 5;
+    // current snapshot status
+    Status status = 6;
 
-    // Информация об операционной системе, используемой на момент создания резервной копии
-    structures.OperatingSystem operating_system = 6;
+    // source vps OS info at create time
+    structures.OperatingSystem operating_system = 7;
 
-    // Пользовательский комментарий к снапшоту
-    string description = 7;
+    // user title for snapshot
+    string description = 8;
 
-    // минимальная конфигурация для восстановления
-    RequiredConfiguration configuration = 8;
+    // required vps configuration for restoring
+    RequiredConfiguration configuration = 9;
 
-    // Цена в день
-    double price_day = 9;
+    // cost per day in rub
+    double price_day = 10;
 
     enum Status {
         CREATING = 0;
         DONE = 1;
         RESTORING = 2;
+        DELETED = 3;
     }
 }
 
@@ -184,30 +228,48 @@ message Restore {
     // restore order id
     uint64 id = 1;
 
-    // snapshot id
-    uint64 snapshot_id = 2;
+    // source snapshot
+    Snapshot snapshot = 2;
 
     // target vps id
     string vps_id = 3;
 
-    // start restore datetime (RFC3339)
-    string date_create = 4;
+    // target vps name
+    string vps_name = 4;
 
-    Status status = 5;
+    // start restore datetime (RFC3339)
+    string date_create = 5;
+
+    // finish restore datetime (RFC3339)
+    string date_finish = 6;
+
+    // current restore status
+    Status status = 7;
+
+    enum TargetType {
+        // restore to existing vps
+        EXISTING_VPS = 0;
+
+        // create vps from snapshot
+        NEW_VPS = 1;
+    }
 
     enum Status {
+        // in create process
         PROCESSING = 0;
+
+        // finished
         COMPLETED = 1;
     }
 }
 
 message RequiredConfiguration {
-    // Количество ядер процессора, шт
+    // CPU cores
     uint32 cpu_count = 1;
 
-    // Объем дисковой квоты, Мб
+    // disk size, Mb
     uint32 disk_size = 2;
 
-    // Объем оперативной памяти, Мб
+    // RAM, Mb
     uint32 memory = 3;
 }
