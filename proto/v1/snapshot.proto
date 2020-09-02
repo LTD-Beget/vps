@@ -147,6 +147,9 @@ message RestoreResponse {
 
             // saved snapshot configuration is higher than target
             CONFIGURATION_NOT_ENOUGH = 3;
+
+            // vps must be running or stopped
+            UNSUITABLE_VPS_STATUS = 4;
         }
     }
 }
