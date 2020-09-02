@@ -94,6 +94,9 @@ message CreateResponse {
 
             // must be positive balance
             INSUFFICIENT_FUNDS = 2;
+
+            // vps must be running or stopped
+            UNSUITABLE_VPS_STATUS = 3;
         }
     }
 }
@@ -245,7 +248,7 @@ message Restore {
     string date_create = 6;
 
     // finish restore datetime (RFC3339)
-    string date_finish = 7;
+    string date_complete = 7;
 
     // current restore status
     Status status = 8;
@@ -262,7 +265,7 @@ message Restore {
         // in create process
         PROCESSING = 0;
 
-        // finished
+        // restore completed
         COMPLETED = 1;
     }
 }
