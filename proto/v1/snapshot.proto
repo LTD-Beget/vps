@@ -108,7 +108,10 @@ message CreateCalculatorRequest {
 
 message CreateCalculatorResponse {
     // cost per day in rub
-    double price_day = 10;
+    double price_day = 1;
+
+    // cost per day for gb in rub
+    double price_day_gb = 2;
 }
 
 message GetAllRestoresRequest {
