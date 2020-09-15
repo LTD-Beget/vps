@@ -185,6 +185,49 @@ service ManageService {
 			get: "/v1/vps/software"
 		};
     }
+
+    rpc checkSoftwareRequirements (CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/software/requirements"
+            body: "*"
+        };
+    }
+}
+
+message CheckSoftwareRequirementsRequest {
+    // Идентификатор ОС
+    uint32 operating_system_id = 1;
+
+    // Информация о желаемом ПО
+    SoftwareInstallInfo info = 2;
+}
+
+message CheckSoftwareRequirementsResponse {
+    Error error = 2;
+
+    message Error {
+        oneof type {
+            WordpressError wordpress_error = 1;
+        }
+
+        enum WordpressError {
+           _ = 0;
+           // Домен не зарегистрирован
+           DOMAIN_NOT_REGISTERED = 1;
+           
+           // Домен зарегистрирован через бегет и у него не наши NS-записи
+           WRONG_NS_RECORD = 2;
+
+           // Домен зарегистрирован у стороннего регистратора и не делегирован нам
+           DOMAIN_NOT_DELEGATED = 3;
+
+           // Переданный домен не является fqdn
+           INVALID_DOMAIN = 4;
+
+           // Домен зарегистрирован меньше 12 часов назад
+           DOMAIN_IS_NEW = 5;
+        }
+    }
 }
 
 message GetAvailableSoftwareRequest {
