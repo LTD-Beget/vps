@@ -419,8 +419,8 @@ message CreateVpsResponse {
             // snapshot creating in progress
             SNAPSHOT_NOT_DONE = 13;
 
-            // saved snapshot configuration is higher than target
-            CONFIGURATION_NOT_ENOUGH = 14;
+            // snapshot configuration is higher than vps
+            SNAPSHOT_NOT_ENOUGH_CONFIGURATION = 14;
         }
 
         message SoftwareVariableError {
