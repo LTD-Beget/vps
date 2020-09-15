@@ -372,6 +372,12 @@ message CreateVpsResponse {
 
             // Переменная для устанавливаемого ПО. Подробности содержатся в `variable_error`
             SOFTWARE_VARIABLE_INVALID = 12;
+
+            // snapshot creating in progress
+            SNAPSHOT_NOT_DONE = 13;
+
+            // saved snapshot configuration is higher than target
+            CONFIGURATION_NOT_ENOUGH = 14;
         }
 
         message SoftwareVariableError {
