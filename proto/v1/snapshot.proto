@@ -139,9 +139,6 @@ message RestoreResponse {
         enum Code {
             INTERNAL_ERROR = 0;
 
-            // snapshot already in restoring with this target
-            ALREADY_RESTORING = 1;
-
             // snapshot creating in progress
             SNAPSHOT_NOT_DONE = 2;
 
