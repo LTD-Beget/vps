@@ -112,6 +112,9 @@ message CreateCalculatorResponse {
 
     // cost per day for gb in rub
     double price_day_gb = 2;
+
+    // size in gb
+    uint64 gb = 3;
 }
 
 message GetAllRestoresRequest {
