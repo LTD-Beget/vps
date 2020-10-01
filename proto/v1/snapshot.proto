@@ -114,7 +114,7 @@ message CreateCalculatorResponse {
     double price_day_gb = 2;
 
     // size in gb
-    uint32 gb = 3;
+    uint32 size = 3;
 }
 
 message GetAllRestoresRequest {
