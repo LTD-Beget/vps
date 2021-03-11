@@ -192,6 +192,12 @@ service ManageService {
             body: "*"
         };
     }
+
+    rpc unarchive (UnarchiveRequest) returns (UnarchiveResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/archive/{id}"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -1008,6 +1014,9 @@ message VpsInfo {
     // Согласие на доступ к пользовательской машине через SSH-ключи BeGet
     // Необходимо для использования пользователем файлового менеджера
     bool beget_ssh_access_allowed = 19;
+
+    // VPS заархивирована, управление невозможно
+    bool archived = 23;
 }
 
 // Текущий статус Vps
@@ -1200,4 +1209,13 @@ message SoftwareInstallInfo {
 
     // Дополнительные переменные для установки
     map<string,string> variable = 2;
+}
+
+message UnarchiveRequest {
+    // Vps uuid
+    string id = 1;
+}
+
+message UnarchiveResponse {
+    VpsInfo vps = 1;
 }
