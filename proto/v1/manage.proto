@@ -477,6 +477,9 @@ message GetStatusesResponse {
 
         // VPS находится в состоянии восстановления из резервной копии
         bool restoring = 6;
+
+        // VPS заархивирована, управление невозможно
+        bool archive = 7;
     }
 }
 
