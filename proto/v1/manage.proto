@@ -479,7 +479,10 @@ message GetStatusesResponse {
         bool restoring = 6;
 
         // VPS заархивирована, управление невозможно
-        bool archive = 7;
+        bool archived = 7;
+
+        // VPS разблокируется после отключения по оплате или архивации
+        bool unblocking = 8;
     }
 }
 
