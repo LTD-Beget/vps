@@ -483,6 +483,9 @@ message GetStatusesResponse {
 
         // VPS разблокируется после отключения по оплате или архивации
         bool unblocking = 8;
+
+        // VPS в процессе разархивации
+        bool unarchiving = 9;
     }
 }
 
@@ -1023,6 +1026,9 @@ message VpsInfo {
 
     // VPS заархивирована, управление невозможно
     bool archived = 23;
+
+    // VPS в процессе разархивации
+    bool unarchiving = 24;
 }
 
 // Текущий статус Vps
