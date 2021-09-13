@@ -190,3 +190,22 @@ message OperatingSystem {
     // Доступна ли ОС для выбора пользователю (визуально)
     bool active = 5;
 }
+
+message PrivateNetwork {
+    // Идентификатор сети
+    string id = 1;
+
+    // IP адрес подсети, например, 10.0.0.0
+    string subnet = 2;
+
+    // Маска подсети
+    uint32 mask = 3;
+}
+
+message AttachedPrivateNetwork {
+    // Сведения о приватной сети
+    PrivateNetwork network = 1;
+
+    // IP адреса из вышеуказанной сети
+    repeated string ip = 2;
+}
