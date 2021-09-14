@@ -381,8 +381,8 @@ message CreateVpsRequest {
     // Информация о ПО, которое необходимо установить
     repeated SoftwareInstallInfo software = 10;
 
-    // ID приватных сетей, которые необходимо добавить
-    repeated string private_networks = 12;
+    // Приватные сети, к которым необходимо подключить VPS
+    repeated PrivateNetworkInfo private_networks = 12;
 }
 
 
@@ -759,8 +759,8 @@ message ReinstallRequest {
     // Информация о ПО, которое необходимо установить
     repeated SoftwareInstallInfo software = 6;
 
-    // ID приватных сетей, которые необходимо добавить
-    repeated string private_networks = 12;
+    // Приватные сети, к которым необходимо подключить VPS
+    repeated PrivateNetworkInfo private_networks = 12;
 }
 
 message ReinstallResponse {
@@ -1325,4 +1325,9 @@ message UnarchiveRequest {
 
 message UnarchiveResponse {
     VpsInfo vps = 1;
+}
+
+message PrivateNetworkInfo {
+    // ID сети
+    string id = 1;
 }
