@@ -26,6 +26,13 @@ service NetworkService {
             get: "/v1/vps/network"
         };
     }
+
+    rpc createPrivateNetwork (CreatePrivateNetworkRequest) returns (CreatePrivateNetworkResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/private-network"
+            body: "*"
+        };
+    }
 }
 
 message OrderIpAddressRequest {
@@ -107,4 +114,36 @@ message GetNetworkInfoResponse {
 
     // Дополнительные IP-адреса пользователя
     repeated structures.AdditionalIpInfo additional_ip = 2;
+
+    // Приватные сети пользователя
+    repeated structures.PrivateNetwork private_network = 3;
+}
+
+message CreatePrivateNetworkRequest {
+
+}
+
+message CreatePrivateNetworkResponse {
+    oneof result {
+        //
+        structures.PrivateNetwork network = 1;
+
+        // Произошла ошибка при заказе дополнительного IP-адреса
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+            // Достигнут лимит на число приватных сетей для пользователя
+            LIMIT_REACHED = 1;
+        }
+    }
 }
