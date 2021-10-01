@@ -9,117 +9,117 @@ service ManageService {
     // Отправляет команду на создание новой Vps и ее запуск (https://jira.beget.ru/browse/BH-327)
     rpc createVps (CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/server"
-			body: "*"
-		};
+            post: "/v1/vps/server"
+            body: "*"
+        };
     }
 
     // Возвращает досупные варианты конфигурации Vps (список ОС и тарифных планов)
     rpc getAvailableConfiguration (GetAvailableConfigurationRequest) returns (GetAvailableConfigurationResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/configuration"
-		};
+            get: "/v1/vps/configuration"
+        };
     }
 
     // Возвращает список Vps с некоторыми параметрами
     rpc getList (GetListRequest) returns (GetListResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/server/list"
-		};
+            get: "/v1/vps/server/list"
+        };
     }
 
     // Возвращает статусы всех Vps
     rpc getStatuses (GetStatusesRequest) returns (GetStatusesResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/server/statuses"
-		};
+            get: "/v1/vps/server/statuses"
+        };
     }
 
     // Возвращает информацию по одной конкретной Vps
     rpc getInfo (GetInfoRequest) returns (GetInfoResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/server/{id}"
-		};
+            get: "/v1/vps/server/{id}"
+        };
     }
 
     // Отправляет команду на запуск Vps
     rpc startVps (StartVpsRequest) returns (StartVpsResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/server/{id}/start"
-		};
+            post: "/v1/vps/server/{id}/start"
+        };
     }
 
     // Отправляет команду на остановку Vps
     rpc stopVps (StopVpsRequest) returns (StopVpsResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/server/{id}/stop"
-		};
+            post: "/v1/vps/server/{id}/stop"
+        };
     }
 
     // Отправляет команду на рестарт Vps
     rpc rebootVps (RebootVpsRequest) returns (RebootVpsResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/server/{id}/reboot"
-		};
+            post: "/v1/vps/server/{id}/reboot"
+        };
     }
 
     // Отправляет команду на рестарт Vps
     rpc resetVps (ResetVpsRequest) returns (ResetVpsResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/server/{id}/reset"
-		};
+            post: "/v1/vps/server/{id}/reset"
+        };
     }
 
     // Отправляет команду на удаление Vps
     rpc removeVps (RemoveVpsRequest) returns (RemoveVpsResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/server/{id}/remove"
-		};
+            post: "/v1/vps/server/{id}/remove"
+        };
     }
 
     // Отправляет команду на перевод Vps в rescue-режим
     rpc startRescue (StartRescueRequest) returns (StartRescueResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/server/{id}/rescue"
-		};
+            post: "/v1/vps/server/{id}/rescue"
+        };
     }
 
     // Отправляет запрос на отключение rescue-режима и перезагрузку Vps
     rpc stopRescue (StopRescueRequest) returns (StopRescueResponse) {
         option (google.api.http) = {
-			delete: "/v1/vps/server/{id}/rescue"
-		};
+            delete: "/v1/vps/server/{id}/rescue"
+        };
     }
 
     // Отправляет запрос на смену конфигурации Vps (с перезагрузкой)
     rpc changeConfiguration (ChangeConfigurationRequest) returns (ChangeConfigurationResponse) {
         option (google.api.http) = {
-			put: "/v1/vps/server/{id}/configuration"
-			body: "*"
-		};
+            put: "/v1/vps/server/{id}/configuration"
+            body: "*"
+        };
     }
 
     // Отправляет запрос на переустановку ОС (с перезагрузкой и уничтожением всех данных)
     rpc reinstall (ReinstallRequest) returns (ReinstallResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/server/{id}/reinstall"
-			body: "*"
-		};
+            post: "/v1/vps/server/{id}/reinstall"
+            body: "*"
+        };
     }
 
     // Обновляет информацию о Vps (которая отображается в панели)
     rpc updateInfo (UpdateInfoRequest) returns (UpdateInfoResponse) {
         option (google.api.http) = {
-			put: "/v1/vps/server/{id}/info"
-			body: "*"
-		};
+            put: "/v1/vps/server/{id}/info"
+            body: "*"
+        };
     }
 
     // Возвращат историю состояний VPS
     rpc getHistory (GetHistoryRequest) returns (GetHistoryResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/{id}/history"
-		};
+            get: "/v1/vps/{id}/history"
+        };
     }
 
     // Добавляет ssh-ключ к VPS
@@ -157,6 +157,21 @@ service ManageService {
         };
     }
 
+    // Добавляет VPS к приватной сети
+    rpc attachToPrivateNetwork (AttachToPrivateNetworkRequest) returns (AttachToPrivateNetworkResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/{id}/private-network/{network_id}"
+            body: "*"
+        };
+    }
+
+    // Удаляет VPS из приватной сети
+    rpc detachFromPrivateNetwork (DetachFromPrivateNetworkRequest) returns (DetachFromPrivateNetworkResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/{id}/private-network/{network_id}"
+        };
+    }
+
     // Изменение возможности доступа к пользовательской машине через SSH-ключи BeGet
     rpc changeSshAccess (ChangeSshAccessRequest) returns (ChangeSshAccessResponse) {
         option (google.api.http) = {
@@ -182,8 +197,8 @@ service ManageService {
     // Возвращает список доступного для установки ПО
     rpc getAvailableSoftware (GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/software"
-		};
+            get: "/v1/vps/software"
+        };
     }
 
     rpc checkSoftwareRequirements (CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
@@ -365,6 +380,9 @@ message CreateVpsRequest {
 
     // Информация о ПО, которое необходимо установить
     repeated SoftwareInstallInfo software = 10;
+
+    // Приватные сети, к которым необходимо подключить VPS
+    repeated PrivateNetworkInfo private_networks = 12;
 }
 
 
@@ -740,6 +758,9 @@ message ReinstallRequest {
 
     // Информация о ПО, которое необходимо установить
     repeated SoftwareInstallInfo software = 6;
+
+    // Приватные сети, к которым необходимо подключить VPS
+    repeated PrivateNetworkInfo private_networks = 12;
 }
 
 message ReinstallResponse {
@@ -1029,6 +1050,9 @@ message VpsInfo {
 
     // VPS в процессе разархивации
     bool unarchiving = 24;
+
+    // Приватные сети к которым подключена VPS
+    repeated structures.AttachedPrivateNetwork private_network = 25;
 }
 
 // Текущий статус Vps
@@ -1141,6 +1165,77 @@ message DetachIpAddressResponse {
     }
 }
 
+message AttachToPrivateNetworkRequest {
+    // Идентификатор VPS
+    string id = 1;
+
+    // Идентификатор сети
+    string network_id = 2;
+}
+
+message AttachToPrivateNetworkResponse {
+    oneof result {
+        // Успешное добавление к приватной сети
+        VpsInfo vps = 1;
+
+        // Произошла ошибка при добавлении к приватной сети
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Произошла ошибка при попытке внести изменения в конфигурацию адаптеров в гостевой ОС
+            GUEST_OS_ERROR = 1;
+
+            // В приватной сети не осталось свободных адресов
+            NO_AVAILABLE_ADDRESSES = 2;
+        }
+    }
+}
+
+message DetachFromPrivateNetworkRequest {
+    // Идентификатор VPS
+    string id = 1;
+
+    // Идентификатор сети
+    string network_id = 2;
+}
+
+message DetachFromPrivateNetworkResponse {
+    oneof result {
+        // Успешное удаление из приватной сети
+        VpsInfo vps = 1;
+
+        // Произошла ошибка при удалении из приватной сети
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Произошла ошибка при попытке внести изменения в конфигурацию адаптеров в гостевой ОС
+            GUEST_OS_ERROR = 1;
+        }
+    }
+}
+
 message ChangeSshAccessRequest {
     // Идентификатор VPS
     string id = 1;
@@ -1230,4 +1325,9 @@ message UnarchiveRequest {
 
 message UnarchiveResponse {
     VpsInfo vps = 1;
+}
+
+message PrivateNetworkInfo {
+    // ID сети
+    string id = 1;
 }

@@ -189,8 +189,7 @@ message OperatingSystem {
 
     // Доступна ли ОС для выбора пользователю (визуально)
     bool active = 5;
-
-    // Минимальные требования к конфигурации для установки
+     // Минимальные требования к конфигурации для установки
     Requirements requirements = 6;
 
     message Requirements {
@@ -203,4 +202,23 @@ message OperatingSystem {
         // Объем оперативной памяти, мб
         uint32 memory = 3;
     }
+}
+
+message PrivateNetwork {
+    // Идентификатор сети
+    string id = 1;
+
+    // IP адрес подсети, например, 10.0.0.0
+    string subnet = 2;
+
+    // Маска подсети
+    uint32 mask = 3;
+}
+
+message AttachedPrivateNetwork {
+    // Сведения о приватной сети
+    PrivateNetwork network = 1;
+
+    // IP адреса из вышеуказанной сети
+    repeated string ip = 2;
 }
