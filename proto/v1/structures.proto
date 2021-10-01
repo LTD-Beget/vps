@@ -189,6 +189,19 @@ message OperatingSystem {
 
     // Доступна ли ОС для выбора пользователю (визуально)
     bool active = 5;
+     // Минимальные требования к конфигурации для установки
+    Requirements requirements = 6;
+
+    message Requirements {
+        // Количество ядер процессора, шт
+        uint32 cpu_count = 1;
+
+        // Размер диска, мб
+        uint32 disk_size = 2;
+
+        // Объем оперативной памяти, мб
+        uint32 memory = 3;
+    }
 }
 
 message PrivateNetwork {
