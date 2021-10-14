@@ -445,6 +445,9 @@ message CreateVpsResponse {
 
             // snapshot configuration is higher than vps
             SNAPSHOT_NOT_ENOUGH_CONFIGURATION = 14;
+
+            // Некорректная конфигурация приватной сети
+            INVALID_PRIVATE_NETWORK_CONFIGURATION = 15;
         }
 
         message SoftwareVariableError {
@@ -758,9 +761,6 @@ message ReinstallRequest {
 
     // Информация о ПО, которое необходимо установить
     repeated SoftwareInstallInfo software = 6;
-
-    // Приватные сети, к которым необходимо подключить VPS
-    repeated PrivateNetworkInfo private_networks = 12;
 }
 
 message ReinstallResponse {
