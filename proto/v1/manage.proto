@@ -448,6 +448,18 @@ message CreateVpsResponse {
 
             // Некорректная конфигурация приватной сети
             INVALID_PRIVATE_NETWORK_CONFIGURATION = 15;
+
+            // Передан некорректный адрес
+            INVALID_ADDRESS = 16;
+
+            // Переданный адрес не соответствует подсети
+            ADDRESS_SUBNET_MISMATCH = 17;
+
+            // Переданный адрес уже выделен
+            ADDRESS_ALREADY_RESERVED = 18;
+
+            // Переданный адрес недоступен
+            ADDRESS_UNAVAILABLE = 19;
         }
 
         message SoftwareVariableError {
@@ -1171,6 +1183,9 @@ message AttachToPrivateNetworkRequest {
 
     // Идентификатор сети
     string network_id = 2;
+
+    // желаемый ip-адрес. Если пустая строка, то выберется случайный
+    string address = 3;
 }
 
 message AttachToPrivateNetworkResponse {
@@ -1198,6 +1213,18 @@ message AttachToPrivateNetworkResponse {
 
             // В приватной сети не осталось свободных адресов
             NO_AVAILABLE_ADDRESSES = 2;
+
+            // Передан некорректный адрес
+            INVALID_ADDRESS = 3;
+
+            // Переданный адрес не соответствует подсети
+            ADDRESS_SUBNET_MISMATCH = 4;
+
+            // Переданный адрес уже выделен
+            ADDRESS_ALREADY_RESERVED = 5;
+
+            // Переданный адрес недоступен
+            ADDRESS_UNAVAILABLE = 6;
         }
     }
 }
@@ -1330,4 +1357,6 @@ message UnarchiveResponse {
 message PrivateNetworkInfo {
     // ID сети
     string id = 1;
+    // желаемый ip-адрес. Если пустая строка, то выберется случайный
+    string address = 2;
 }
