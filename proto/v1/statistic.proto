@@ -95,6 +95,8 @@ message GetNetworkRequest {
 message GetNetworkResponse {
     SeriesData data_rx = 1;
     SeriesData data_tx = 2;
+    SeriesData data_rx_private = 3;
+    SeriesData data_tx_private = 4;
 }
 
 message GetDiskUsageRequest {
