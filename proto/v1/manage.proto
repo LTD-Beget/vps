@@ -233,11 +233,13 @@ message CheckSoftwareRequirementsResponse {
     Error error = 2;
 
     message Error {
+        DomainError wordpress_error = 1 ; // deprecated, use  domain_error instead
+
         oneof type {
-            WordpressError wordpress_error = 1;
+            DomainError domain_error = 2;
         }
 
-        enum WordpressError {
+        enum DomainError {
            _ = 0;
            // Домен не зарегистрирован
            DOMAIN_NOT_REGISTERED = 1;
