@@ -33,6 +33,13 @@ service NetworkService {
             body: "*"
         };
     }
+
+    rpc suggestPrivateAddress (SuggestPrivateAddressRequest) returns (SuggestPrivateAddressResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/private-network/{network_id}/suggested-address"
+            body: "*"
+            };
+        }
 }
 
 message OrderIpAddressRequest {
@@ -146,4 +153,13 @@ message CreatePrivateNetworkResponse {
             LIMIT_REACHED = 1;
         }
     }
+}
+
+message SuggestPrivateAddressRequest {
+    string network_id = 1;
+    string vps_id = 2; // can be empty
+}
+
+message SuggestPrivateAddressResponse {
+    string ip = 1;
 }
