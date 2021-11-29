@@ -213,6 +213,12 @@ service ManageService {
             delete: "/v1/vps/archive/{id}"
         };
     }
+
+    rpc reserveAppSubdomain(ReserveAppSubdomainRequest) returns (ReserveAppSubdomainResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/app_subdomain/reserve"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -1359,4 +1365,35 @@ message PrivateNetworkInfo {
     string id = 1;
     // желаемый ip-адрес. Если пустая строка, то выберется случайный
     string address = 2;
+}
+
+
+message ReserveAppSubdomainRequest {
+    oneof app_subdomain {
+        bool random = 1;
+        string concrete = 2;
+    }
+}
+
+message ReserveAppSubdomainResponse {
+    oneof result {
+        string app_subdomain = 1;
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR = 0;
+
+            // Поддомен уже зарезервирован
+            SUBDOMAIN_RESERVED = 1;
+        }
+    }
 }
