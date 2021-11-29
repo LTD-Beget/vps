@@ -217,6 +217,7 @@ service ManageService {
     rpc reserveAppSubdomain(ReserveAppSubdomainRequest) returns (ReserveAppSubdomainResponse) {
         option (google.api.http) = {
             post: "/v1/vps/app-subdomain/reserve"
+            body: "*"
         };
     }
 }
