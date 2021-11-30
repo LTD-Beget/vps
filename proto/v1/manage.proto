@@ -214,10 +214,9 @@ service ManageService {
         };
     }
 
-    rpc reserveAppSubdomain(ReserveAppSubdomainRequest) returns (ReserveAppSubdomainResponse) {
+    rpc reserveVpsSubdomain(ReserveVpsSubdomainRequest) returns (ReserveVpsSubdomainResponse) {
         option (google.api.http) = {
-            post: "/v1/vps/app-subdomain/reserve"
-            body: "*"
+            get: "/v1/vps/subdomain/reserve"
         };
     }
 }
@@ -1369,16 +1368,12 @@ message PrivateNetworkInfo {
 }
 
 
-message ReserveAppSubdomainRequest {
-    oneof app_subdomain {
-        bool random = 1;
-        string concrete = 2;
-    }
+message ReserveVpsSubdomainRequest {
 }
 
-message ReserveAppSubdomainResponse {
+message ReserveVpsSubdomainResponse {
     oneof result {
-        string app_subdomain = 1;
+        string vps_subdomain = 1;
         Error error = 2;
     }
 
