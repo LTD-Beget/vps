@@ -30,7 +30,6 @@ service NetworkService {
     rpc createPrivateNetwork (CreatePrivateNetworkRequest) returns (CreatePrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network"
-            body: "*"
         };
     }
 
@@ -111,9 +110,7 @@ message RemoveIpAddressResponse {
     }
 }
 
-message GetNetworkInfoRequest {
-
-}
+message GetNetworkInfoRequest {}
 
 message GetNetworkInfoResponse {
     // Основные IP-адреса пользователя
@@ -126,9 +123,7 @@ message GetNetworkInfoResponse {
     repeated structures.PrivateNetwork private_network = 3;
 }
 
-message CreatePrivateNetworkRequest {
-
-}
+message CreatePrivateNetworkRequest {}
 
 message CreatePrivateNetworkResponse {
     oneof result {
