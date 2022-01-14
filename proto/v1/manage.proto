@@ -1073,6 +1073,9 @@ message VpsInfo {
 
     // Приватные сети к которым подключена VPS
     repeated structures.AttachedPrivateNetwork private_network = 25;
+
+    // технический домен, если он есть
+    string technical_domain = 26;
 }
 
 // Текущий статус Vps
