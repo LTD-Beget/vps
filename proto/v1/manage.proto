@@ -1076,6 +1076,9 @@ message VpsInfo {
 
     // технический домен, если он есть
     string technical_domain = 26;
+
+    // домен, указанный при установке софта
+    string software_domain = 27;
 }
 
 // Текущий статус Vps
