@@ -213,6 +213,12 @@ service ManageService {
             delete: "/v1/vps/archive/{id}"
         };
     }
+
+    rpc reserveVpsSubdomain(ReserveVpsSubdomainRequest) returns (ReserveVpsSubdomainResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/subdomain/reserve"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -227,11 +233,13 @@ message CheckSoftwareRequirementsResponse {
     Error error = 2;
 
     message Error {
+        DomainError wordpress_error = 1 ; // deprecated, use  domain_error instead
+
         oneof type {
-            WordpressError wordpress_error = 1;
+            DomainError domain_error = 2;
         }
 
-        enum WordpressError {
+        enum DomainError {
            _ = 0;
            // Домен не зарегистрирован
            DOMAIN_NOT_REGISTERED = 1;
@@ -1065,6 +1073,12 @@ message VpsInfo {
 
     // Приватные сети к которым подключена VPS
     repeated structures.AttachedPrivateNetwork private_network = 25;
+
+    // технический домен, если он есть
+    string technical_domain = 26;
+
+    // домен, указанный при установке софта
+    string software_domain = 27;
 }
 
 // Текущий статус Vps
@@ -1359,4 +1373,31 @@ message PrivateNetworkInfo {
     string id = 1;
     // желаемый ip-адрес. Если пустая строка, то выберется случайный
     string address = 2;
+}
+
+
+message ReserveVpsSubdomainRequest {
+}
+
+message ReserveVpsSubdomainResponse {
+    oneof result {
+        string vps_subdomain = 1;
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR = 0;
+
+            // Поддомен уже зарезервирован
+            SUBDOMAIN_RESERVED = 1;
+        }
+    }
 }
