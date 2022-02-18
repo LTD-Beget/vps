@@ -825,6 +825,9 @@ message ReinstallResponse {
 
             // Переменная для устанавливаемого ПО. Подробности содержатся в `variable_error`
             SOFTWARE_VARIABLE_INVALID = 10;
+
+            // Пароль содержится в чёрном списке
+            BLACKLISTED_PASSWORD = 11;
         }
 
         message SoftwareVariableError {
