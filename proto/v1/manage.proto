@@ -468,6 +468,9 @@ message CreateVpsResponse {
 
             // Переданный адрес недоступен
             ADDRESS_UNAVAILABLE = 19;
+
+            // Пароль содержится в чёрном списке
+            BLACKLISTED_PASSWORD = 20;
         }
 
         message SoftwareVariableError {
