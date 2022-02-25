@@ -320,39 +320,7 @@ message GetInstalledSoftwareRequest {
 }
 
 message GetInstalledSoftwareResponse {
-    repeated InstalledSoftwareInfo software = 1;
-
-    message InstalledSoftwareInfo {
-        // Внутреннее имя (напр. redmine)
-        string name = 1;
-
-        // Отображаемое имя (напр. Redmine)
-        string display_name = 2;
-
-        // Версия (напр. 1.0.1)
-        string version = 3;
-
-        // Тип ПО (панель управления, обычное ПО)
-        Type type = 4;
-
-        // Адрес для доступа к ПО через http
-        string address = 5;
-
-        // Статус процесса установки ПО
-        Status status = 6;
-
-        enum Type {
-            PANEL = 0;
-            SOFTWARE = 1;
-        }
-
-        enum Status {
-            PENDING = 0;
-            INSTALLING = 1;
-            INSTALLED = 2;
-            ERROR = 3;
-        }
-    }
+    repeated structures.InstalledSoftwareInfo software = 1;
 }
 
 message CreateVpsRequest {
@@ -475,7 +443,13 @@ message CreateVpsResponse {
 
         message SoftwareVariableError {
             uint32 id = 1;
-            repeated string variable_name = 2;
+            repeated ValueError error = 2;
+
+            message ValueError {
+                string variable = 1;
+                string error_text_ru = 2;
+                string error_text_en = 3;
+            }
         }
     }
 }
@@ -840,7 +814,13 @@ message ReinstallResponse {
 
         message SoftwareVariableError {
             uint32 id = 1;
-            repeated string variable_name = 2;
+            repeated ValueError error = 2;
+
+            message ValueError {
+                string variable = 1;
+                string error_text_ru = 2;
+                string error_text_en = 3;
+            }
         }
     }
 }
@@ -1085,6 +1065,8 @@ message VpsInfo {
 
     // домен, указанный при установке софта
     string software_domain = 27;
+
+    structures.InstalledSoftwareInfo software = 28;
 }
 
 // Текущий статус Vps

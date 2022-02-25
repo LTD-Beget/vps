@@ -1,0 +1,135 @@
+syntax = 'proto3';
+
+package beget.vps.v1.marketplace;
+
+import "google/api/annotations.proto";
+
+service MarketplaceService {
+    // Возвращает список доступного для установки ПО
+    rpc getAvailableSoftware (GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/marketplace/software/list"
+        };
+    }
+}
+
+message GetAvailableSoftwareRequest {
+
+}
+
+message GetAvailableSoftwareResponse {
+    repeated SoftwareInfo software = 1;
+
+    message SoftwareInfo {
+        uint32 id = 1;
+
+        // Внутреннее имя (напр. redmine)
+        string name = 2;
+
+        // Отображаемое имя (напр. Redmine)
+        string display_name = 3;
+
+        // Версия (напр. 1.0.1)
+        string version = 4;
+
+        // Тип ПО (панель управления, обычное ПО)
+        Type type = 5;
+
+        // Описание ПО
+        string description = 6;
+        string description_en = 7;
+        // Дополнительное описание для конкретной версии ПО
+        string description_version = 8;
+        string description_version_en = 9;
+        // Категория ПО
+        string category_name = 10;
+        string category_name_en = 11;
+        // Ссылки на иконки
+        string icon_link = 12;
+        string icon_link_2x = 13;
+
+        // Список ID образов, для которых возможна установка этого ПО
+        repeated uint32 image_id = 14;
+
+        // Список дополнительных полей, которые необходимо передать для установки ПО
+        repeated string variable = 15;
+
+        // Описание полей доступных для заполнения
+        repeated FieldDesc field_data = 16;
+        // Минимальные требования к конфигурации для установки
+        Requirements requirements = 17;
+
+        message Requirements {
+            // Количество ядер процессора, шт
+            uint32 cpu_count = 1;
+
+            // Размер диска, мб
+            uint32 disk_size = 2;
+
+            // Объем оперативной памяти, мб
+            uint32 memory = 3;
+        }
+
+        enum Type {
+            PANEL = 0;
+            SOFTWARE = 1;
+        }
+    }
+}
+
+message FieldDesc {
+    oneof field {
+        PasswordField password_field = 1;
+        DomainField domain_field = 2;
+        TextField text_field = 3;
+        EmailField email_field = 4;
+    }
+}
+
+// Поле для паролей
+message PasswordField {
+    FieldCommon common = 1;
+    // Автоматическая генерация пароля
+    bool auto_generated = 2;
+}
+// Поле для почты
+message EmailField {
+    FieldCommon common = 1;
+}
+// Поле для текста
+message TextField {
+    FieldCommon common = 1;
+    // Можно ли редактировать
+    bool is_editable = 2;
+}
+
+message DomainField {
+    FieldCommon common = 1;
+    bool allow_tech_domain = 2;
+}
+
+// Общие параметры для различных типов полей (можно рассматривать как встроенный тип который расширяет другой)
+message FieldCommon {
+    // Системное имя переменной
+    string variable = 1;
+    // ЧП имя переменной
+    string label = 2;
+    string label_en = 3;
+    // Описание
+    string description = 4;
+    string description_en = 5;
+    // Значение по умолчанию
+    string default_value = 6;
+    // Является дополнительным параметром
+    bool is_additional = 7;
+    // Опциональность
+    bool is_required = 8;
+    // Является исключительным (используется только для определенного ПО)
+    bool is_custom = 9;
+    // Регулярное выражение для валидации (Если пустая строка то не требуется валидация)
+    string validation_regex = 10;
+
+    // Текст ошибки
+    string validation_error_text = 11;
+    string validation_error_text_en = 12;
+}
