@@ -259,6 +259,7 @@ message InstalledSoftwareInfo {
         INSTALLING = 1;
         INSTALLED = 2;
         ERROR = 3;
+        CANCEL = 4;
     }
 
     message FieldValue {
