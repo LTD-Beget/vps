@@ -222,3 +222,48 @@ message AttachedPrivateNetwork {
     // IP адреса из вышеуказанной сети
     repeated string ip = 2;
 }
+
+message InstalledSoftwareInfo {
+    // Внутреннее имя (напр. redmine)
+    string name = 1;
+
+    // Отображаемое имя (напр. Redmine)
+    string display_name = 2;
+
+    // Версия (напр. 1.0.1)
+    string version = 3;
+
+    // Тип ПО (панель управления, обычное ПО)
+    Type type = 4;
+
+    // Адрес для доступа к ПО через http
+    string address = 5;
+
+    // Статус процесса установки ПО
+    Status status = 6;
+
+    // Значение полей заполненный при установки ПО
+    repeated FieldValue field_value = 7;
+
+    // Cсылки на иконки
+    string icon_link = 8;
+    string icon_link_2x = 9;
+
+    enum Type {
+        PANEL = 0;
+        SOFTWARE = 1;
+    }
+
+    enum Status {
+        PENDING = 0;
+        INSTALLING = 1;
+        INSTALLED = 2;
+        ERROR = 3;
+    }
+
+    message FieldValue {
+        string label_ru = 1;
+        string label_en = 2;
+        string value = 3;
+    }
+}
