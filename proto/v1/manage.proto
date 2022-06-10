@@ -13,6 +13,7 @@ service ManageService {
     //
     // Создает новый облачный сервер с заданными параметрами.
     //
+    // TODO(comment)
     // Для получения доступных идентификаторов конфигурации `configuration_id`
     // и идентификаторов ОС `operating_system_id` необходимо использовать метод
     // "Получить доступные конфигурации VPS" из API "Облачные серверы".
@@ -175,6 +176,7 @@ service ManageService {
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
     //
+    // TODO(comment)
     // Для получения доступных идентификаторов конфигурации `configuration_id`
     // и идентификаторов ОС `operating_system_id` необходимо использовать метод
     // "Получить доступные конфигурации VPS" из API "Облачные серверы".
@@ -347,7 +349,7 @@ service ManageService {
     }
 
     // Получить список доступного для установки ПО
-    rpc getAvailableSoftware(GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
+    rpc getSoftwareList(GetSoftwareListRequest) returns (GetSoftwareListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/software"
         };
@@ -385,9 +387,6 @@ service ManageService {
 }
 
 message CheckSoftwareRequirementsRequest {
-    // Идентификатор ОС
-    uint32 operating_system_id = 1;
-
     // Выбранное ПО для установки
     SoftwareInstallInfo info = 2;
 }
@@ -429,11 +428,11 @@ message CheckSoftwareRequirementsResponse {
     }
 }
 
-message GetAvailableSoftwareRequest {
+message GetSoftwareListRequest {
 
 }
 
-message GetAvailableSoftwareResponse {
+message GetSoftwareListResponse {
     // Список с описанием установленного ПО
     repeated SoftwareInfo software = 1;
 
@@ -496,7 +495,7 @@ message GetInstalledSoftwareRequest {
 
 message GetInstalledSoftwareResponse {
     // Список установленного ПО на VPS
-    repeated structures.InstalledSoftwareInfo software = 1;
+    structures.InstalledSoftwareInfo software = 1;
 }
 
 message CreateVpsRequest {
@@ -514,8 +513,8 @@ message CreateVpsRequest {
 
     // Источник для диска сервера
     oneof source {
-        // Источник для диска сервера: идентификатор ОС
-        uint32 operating_system_id = 5;
+        // Информация о ПО, которое необходимо установить
+        SoftwareInstallInfo software = 5;
 
         // Источник для диска сервера: идентификатор снапшота, который восстановится в новую VPS
         uint64 snapshot_id = 11;
@@ -529,9 +528,6 @@ message CreateVpsRequest {
 
     // Открыть доступ к VPS файловому менеджеру
     bool beget_ssh_access_allowed = 8;
-
-    // Информация о ПО, которое необходимо установить (необязательное поле)
-    repeated SoftwareInstallInfo software = 10;
 
     // Приватные сети, к которым необходимо подключить VPS (необязательное поле)
     repeated PrivateNetworkInfo private_networks = 12;
@@ -571,7 +567,7 @@ message CreateVpsResponse {
             // Некорректное поле hostnames
             INVALID_HOSTNAME = 2;
 
-            // Некорректные остальные параметры конфигурации (public_key, operating_system_id, configuration_name)
+            // Некорректные остальные параметры конфигурации (public_key, configuration_name)
             INVALID_PARAMS = 3;
 
             // Недостаточно средств на счету
@@ -1000,17 +996,14 @@ message ReinstallRequest {
     // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
-    // Идентификатор ОС
-    uint32 operating_system_id = 2;
-
     // ID публичных ssh-ключей
     repeated uint32 ssh_keys = 3;
 
     // Пароль (должен включать минимум 1 upper, 1 lower, 1 digit, 1 special char. Мин длина - 8 символов)
     string password = 4;
 
-    // Информация о ПО, которое необходимо установить (необязательное поле)
-    repeated SoftwareInstallInfo software = 6;
+    // Информация о ПО, которое необходимо установить
+    SoftwareInstallInfo software = 6;
 }
 
 message ReinstallResponse {
@@ -1061,7 +1054,7 @@ message ReinstallResponse {
             // Недостаточно ресурсов для устанавливаемого ПО на выбранном тарифном плане
             SOFTWARE_NOT_ENOUGH_RESOURCES = 7;
 
-            // Некорректные остальные параметры конфигурации (public_key, operating_system_id, configuration_name)
+            // Некорректные остальные параметры конфигурации (public_key, configuration_name)
             INVALID_PARAMS = 8;
 
             // Пропущены обязательные переменные для устанавливаемого ПО
@@ -1101,9 +1094,6 @@ message GetAvailableConfigurationRequest {
 message GetAvailableConfigurationResponse {
     // Список доступных конфигураций VPS
     repeated VpsConfiguration configurations = 1;
-
-    // Список ОС
-    repeated structures.OperatingSystem operating_systems = 2;
 }
 
 
@@ -1335,9 +1325,6 @@ message VpsInfo {
 
     // Дата создания (в формате W3C)
     string date_create = 11;
-
-    // Операционная система
-    structures.OperatingSystem operating_system = 12;
 
     // Основной IP-адрес
     string ip_address = 13;

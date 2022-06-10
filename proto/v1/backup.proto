@@ -23,8 +23,8 @@ service BackupService {
     // Возвращает список резервных копий, доступных для восстановления.
     rpc getAvailableCopies(GetAvailableCopiesRequest) returns (GetAvailableCopiesResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/backup"
-		};
+            get: "/v1/vps/backup"
+        };
     }
 
     // Получить список файлов определенной копии
@@ -38,8 +38,8 @@ service BackupService {
     // "Получить список доступных резервных копий" из API "Облачные серверы".
     rpc getBackupFileList(GetBackupFileListRequest) returns (GetBackupFileListResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/{id}/backup/{copy_id}"
-		};
+            get: "/v1/vps/{id}/backup/{copy_id}"
+        };
     }
 
     // Восстановить файл/директорию из резервной копии
@@ -53,9 +53,9 @@ service BackupService {
     // "Получить список доступных резервных копий" из API "Облачные серверы".
     rpc restoreFile(RestoreFileRequest) returns (RestoreFileResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/{id}/backup/{copy_id}/file"
-			body: "*"
-		};
+            post: "/v1/vps/{id}/backup/{copy_id}/file"
+            body: "*"
+        };
     }
 
     // Восстановить сервер из резервной копии
@@ -69,9 +69,9 @@ service BackupService {
     // "Получить список доступных резервных копий" из API "Облачные серверы".
     rpc restoreServer(RestoreServerRequest) returns (RestoreServerResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/{id}/backup/{copy_id}/server"
-			body: "*"
-		};
+            post: "/v1/vps/{id}/backup/{copy_id}/server"
+            body: "*"
+        };
     }
 }
 

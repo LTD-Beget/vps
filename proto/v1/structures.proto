@@ -81,14 +81,14 @@ message CopyInfo {
     // Дата создания копии в RFC3339
     string date = 2;
 
-    // Информация об операционной системе, используемой на момент создания резервной копии
-    OperatingSystem operating_system = 3;
-
     // Общий размер резервной копии в байтах
     uint64 size = 4;
 
     // Конфигурация, которая использовалась сервером в момент создания резервной копии
     Configuration configuration = 5;
+
+    // TODO(comment)
+    structures.InstalledSoftwareInfo installed_software = 8;
 
     message Configuration {
         // Количество ядер процессора
@@ -189,38 +189,6 @@ message OrderInfo {
     }
 }
 
-// Описывает ОС для установки на VPS
-message OperatingSystem {
-    // Идентификатор ОС
-    uint32 id = 1;
-
-    // Системное имя дистрибутива
-    string distro_name = 2;
-
-    // Отображаемое имя дистрибутива
-    string distro_display_name = 3;
-
-    // Версия дистрибутива
-    string version = 4;
-
-    // Доступна ли ОС для выбора пользователю
-    bool active = 5;
-
-     // Минимальные требования к конфигурации для установки
-    Requirements requirements = 6;
-
-    message Requirements {
-        // Количество ядер процессора
-        uint32 cpu_count = 1;
-
-        // Размер диска в Мб
-        uint32 disk_size = 2;
-
-        // Объем оперативной памяти в Мб
-        uint32 memory = 3;
-    }
-}
-
 message PrivateNetwork {
     // Идентификатор сети
     string id = 1;
@@ -240,6 +208,39 @@ message AttachedPrivateNetwork {
     repeated string ip = 2;
 }
 
+message SoftwareMetadata {
+    // TODO(comment)
+
+    // новое ли ПО
+    bool is_new = 1;
+    // показываем ли ПО на главной сразу
+    bool is_pinned = 2;
+    // ссылка на иконку
+    string icon = 3;
+    // ссылка на иконку побольше
+    string icon2x = 4;
+    // ссылка на лого(еще больше чем иконки)
+    string logo = 5;
+    // ссылка на лого(побольше)
+    string logo2x = 6;
+    // первый цвет градиента в #hex формате
+    string primary_color = 7;
+    // второй цвет градиента в #hex формате
+    string secondary_color = 8;
+    // вес для сортировки софта на фронте
+    float weight = 9;
+}
+
+message SoftwareCategory {
+    // TODO(comment)
+
+    string sys_name = 1;
+    // название категории
+    string name = 2;
+    string name_en = 3;
+    bool is_main = 4;
+}
+
 message InstalledSoftwareInfo {
     // Внутреннее имя (напр. redmine)
     string name = 1;
@@ -250,9 +251,6 @@ message InstalledSoftwareInfo {
     // Версия (напр. 1.0.1)
     string version = 3;
 
-    // Тип ПО (панель управления, обычное ПО)
-    Type type = 4;
-
     // Адрес для доступа к ПО через http
     string address = 5;
 
@@ -262,19 +260,8 @@ message InstalledSoftwareInfo {
     // Значение полей заполненных при установке ПО
     repeated FieldValue field_value = 7;
 
-    // Ссылка на иконку
-    string icon_link = 8;
-
-    // Ссылка на иконку 2х
-    string icon_link_2x = 9;
-
-    enum Type {
-        // Панель управления
-        PANEL = 0;
-
-        // Остальное ПО
-        SOFTWARE = 1;
-    }
+    // TODO(comment)
+    SoftwareMetadata metadata = 8;
 
     enum Status {
         // Ожидает установки
@@ -302,5 +289,41 @@ message InstalledSoftwareInfo {
 
         // Значение
         string value = 3;
+
+        // TODO(comment)
+        Type type = 4;
+
+        // TODO(comment)
+        string variable = 5;
+
+        enum Type {
+            // TODO(comment)
+            UNKNOWN = 0;
+
+            // TODO(comment)
+            DOMAIN = 1;
+
+            // TODO(comment)
+            TEXT = 2;
+
+            // TODO(comment)
+            EMAIL = 3;
+
+            // TODO(comment)
+            PASSWORD = 4;
+        }
     }
+
+    // TODO(comment)
+    string description = 10;
+
+    // TODO(comment)
+    string description_en = 11;
+
+    // TODO(comment)
+    repeated SoftwareCategory category = 12;
+
+    // TODO(comment)
+    // Уникальный идентификатор в рамках списка ПО полученного через запрос MarketplaceService.getSoftwareList
+    string slug = 13;
 }

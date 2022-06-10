@@ -279,9 +279,6 @@ message Snapshot {
     // Статус снапшота
     Status status = 6;
 
-    // Исходная информация о ОС во время создания снапшота
-    structures.OperatingSystem operating_system = 7;
-
     // Описание снапшота
     string description = 8;
 
@@ -304,6 +301,9 @@ message Snapshot {
         // Удален
         DELETED = 3;
     }
+
+    // TODO(comment)
+    structures.InstalledSoftwareInfo installed_software = 11;
 }
 
 message Restore {
