@@ -267,4 +267,6 @@ message InstalledSoftwareInfo {
         string label_en = 2;
         string value = 3;
     }
+
+    string description = 10;
 }

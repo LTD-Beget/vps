@@ -232,6 +232,8 @@ message Snapshot {
         RESTORING = 2;
         DELETED = 3;
     }
+
+    structures.InstalledSoftwareInfo installed_software = 11;
 }
 
 message Restore {

@@ -41,15 +41,10 @@ message GetAvailableSoftwareResponse {
         // Дополнительное описание для конкретной версии ПО
         string description_version = 8;
         string description_version_en = 9;
-        // Категория ПО
-        string category_name = 10;
-        string category_name_en = 11;
+
         // Ссылки на иконки
         string icon_link = 12;
         string icon_link_2x = 13;
-
-        // Список ID образов, для которых возможна установка этого ПО
-        repeated uint32 image_id = 14;
 
         // Список дополнительных полей, которые необходимо передать для установки ПО
         repeated string variable = 15;
@@ -58,6 +53,13 @@ message GetAvailableSoftwareResponse {
         repeated FieldDesc field_data = 16;
         // Минимальные требования к конфигурации для установки
         Requirements requirements = 17;
+
+        repeated Category category = 18;
+
+        message Category {
+            string name = 1;
+            string name_en = 2;
+        }
 
         message Requirements {
             // Количество ядер процессора, шт
@@ -73,6 +75,7 @@ message GetAvailableSoftwareResponse {
         enum Type {
             PANEL = 0;
             SOFTWARE = 1;
+            OPERATING_SYSTEM = 2;
         }
     }
 }

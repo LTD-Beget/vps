@@ -337,8 +337,8 @@ message CreateVpsRequest {
     string configuration_id = 4;
 
     oneof source {
-        // Идентификатор ОС
-        uint32 operating_system_id = 5;
+        // Идентификатор софта
+        uint64 software_id = 5;
 
         // Идентификатор снапшота, который восстановится в новую Vps
         uint64 snapshot_id = 11;
