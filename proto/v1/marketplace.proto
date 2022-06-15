@@ -57,8 +57,11 @@ message GetAvailableSoftwareResponse {
         repeated Category category = 18;
 
         message Category {
-            string name = 1;
-            string name_en = 2;
+            // название категории
+            uint32 id = 1;
+            string name = 2;
+            string name_en = 3;
+            bool is_main = 4;
         }
 
         message Requirements {

@@ -310,6 +310,7 @@ message GetAvailableSoftwareResponse {
         enum Type {
             PANEL = 0;
             SOFTWARE = 1;
+            OPERATING_SYSTEM = 2;
         }
     }
 }
