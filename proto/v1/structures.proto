@@ -270,4 +270,15 @@ message InstalledSoftwareInfo {
     }
 
     string description = 10;
+    string description_en = 11;
+
+    repeated Category category = 12;
+
+    message Category {
+        // название категории
+        uint32 id = 1;
+        string name = 2;
+        string name_en = 3;
+        bool is_main = 4;
+    }
 }

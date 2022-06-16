@@ -748,8 +748,8 @@ message ReinstallRequest {
     // Идентификатор Vps (uuid)
     string id = 1;
 
-    // Идентификатор ОС (required)
-    uint32 operating_system_id = 2;
+    // Идентификатор софта (required)
+    uint64 software_id = 2;
 
     // ID публичных ssh-ключей (предварительно созданные в системе)
     repeated uint32 ssh_keys = 3;
