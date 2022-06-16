@@ -233,9 +233,6 @@ message InstalledSoftwareInfo {
     // Версия (напр. 1.0.1)
     string version = 3;
 
-    // Тип ПО (панель управления, обычное ПО)
-    Type type = 4;
-
     // Адрес для доступа к ПО через http
     string address = 5;
 
@@ -246,14 +243,7 @@ message InstalledSoftwareInfo {
     repeated FieldValue field_value = 7;
 
     // Cсылки на иконки
-    string icon_link = 8;
-    string icon_link_2x = 9;
-
-    enum Type {
-        PANEL = 0;
-        SOFTWARE = 1;
-        OPERATING_SYSTEM = 2;
-    }
+    PictureLinks icon_links = 8;
 
     enum Status {
         PENDING = 0;
@@ -274,9 +264,16 @@ message InstalledSoftwareInfo {
 
     repeated Category category = 12;
 
+    message PictureLinks {
+        string icon = 1;
+        string icon2x = 2;
+        string logo = 3;
+        string logo2x = 4;
+    }
+
     message Category {
+        string sys_name = 1;
         // название категории
-        uint32 id = 1;
         string name = 2;
         string name_en = 3;
         bool is_main = 4;

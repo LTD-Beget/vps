@@ -195,7 +195,7 @@ service ManageService {
     }
 
     // Возвращает список доступного для установки ПО
-    rpc getAvailableSoftware (GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
+    rpc getSoftwareList (GetSoftwareListRequest) returns (GetSoftwareListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/software"
         };
@@ -259,11 +259,11 @@ message CheckSoftwareRequirementsResponse {
     }
 }
 
-message GetAvailableSoftwareRequest {
+message GetSoftwareListRequest {
 
 }
 
-message GetAvailableSoftwareResponse {
+message GetSoftwareListResponse {
     repeated SoftwareInfo software = 1;
 
     message SoftwareInfo {
@@ -310,7 +310,6 @@ message GetAvailableSoftwareResponse {
         enum Type {
             PANEL = 0;
             SOFTWARE = 1;
-            OPERATING_SYSTEM = 2;
         }
     }
 }
