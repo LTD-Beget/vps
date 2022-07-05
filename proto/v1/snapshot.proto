@@ -214,9 +214,6 @@ message Snapshot {
     // current snapshot status
     Status status = 6;
 
-    // source vps OS info at create time
-    structures.OperatingSystem operating_system = 7;
-
     // user title for snapshot
     string description = 8;
 
