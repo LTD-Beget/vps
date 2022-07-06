@@ -225,6 +225,15 @@ message InstalledSoftwareInfo {
         string label_ru = 1;
         string label_en = 2;
         string value = 3;
+        Type type = 4;
+
+        enum Type {
+            UNKNOWN = 0;
+            DOMAIN = 1;
+            TEXT = 2;
+            EMAIL = 3;
+            PASSWORD = 4;
+        }
     }
 
     string description = 10;
