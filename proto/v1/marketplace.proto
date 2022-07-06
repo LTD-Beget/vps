@@ -3,6 +3,7 @@ syntax = 'proto3';
 package beget.vps.v1.marketplace;
 
 import "google/api/annotations.proto";
+import "vps/proto/v1/structures.proto";
 
 service MarketplaceService {
     // Возвращает список доступного для установки ПО
@@ -40,7 +41,7 @@ message GetAvailableSoftwareResponse {
         string description_version_en = 9;
 
         // Ссылки на иконки
-        PictureLinks icon_links = 10;
+        structures.SoftwarePictureLinks icon_links = 10;
 
         // Список дополнительных полей, которые необходимо передать для установки ПО
         repeated string variable = 15;
@@ -50,22 +51,7 @@ message GetAvailableSoftwareResponse {
         // Минимальные требования к конфигурации для установки
         Requirements requirements = 17;
 
-        repeated Category category = 18;
-
-        message PictureLinks {
-            string icon = 1;
-            string icon2x = 2;
-            string logo = 3;
-            string logo2x = 4;
-        }
-
-        message Category {
-            string sys_name = 1;
-            // название категории
-            string name = 2;
-            string name_en = 3;
-            bool is_main = 4;
-        }
+        repeated structures.SoftwareCategory category = 18;
 
         message Requirements {
             // Количество ядер процессора, шт

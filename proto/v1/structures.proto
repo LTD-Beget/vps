@@ -191,6 +191,21 @@ message AttachedPrivateNetwork {
     repeated string ip = 2;
 }
 
+message SoftwarePictureLinks {
+    string icon = 1;
+    string icon2x = 2;
+    string logo = 3;
+    string logo2x = 4;
+}
+
+message SoftwareCategory {
+    string sys_name = 1;
+    // название категории
+    string name = 2;
+    string name_en = 3;
+    bool is_main = 4;
+}
+
 message InstalledSoftwareInfo {
     // Внутреннее имя (напр. redmine)
     string name = 1;
@@ -211,7 +226,7 @@ message InstalledSoftwareInfo {
     repeated FieldValue field_value = 7;
 
     // Cсылки на иконки
-    PictureLinks icon_links = 8;
+    SoftwarePictureLinks icon_links = 8;
 
     enum Status {
         PENDING = 0;
@@ -239,20 +254,5 @@ message InstalledSoftwareInfo {
     string description = 10;
     string description_en = 11;
 
-    repeated Category category = 12;
-
-    message PictureLinks {
-        string icon = 1;
-        string icon2x = 2;
-        string logo = 3;
-        string logo2x = 4;
-    }
-
-    message Category {
-        string sys_name = 1;
-        // название категории
-        string name = 2;
-        string name_en = 3;
-        bool is_main = 4;
-    }
+    repeated SoftwareCategory category = 12;
 }
