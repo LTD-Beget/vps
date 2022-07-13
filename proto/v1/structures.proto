@@ -241,6 +241,7 @@ message InstalledSoftwareInfo {
         string label_en = 2;
         string value = 3;
         Type type = 4;
+        string variable = 5;
 
         enum Type {
             UNKNOWN = 0;
