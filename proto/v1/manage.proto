@@ -352,7 +352,7 @@ message CreateVpsRequest {
     bool beget_ssh_access_allowed = 8;
 
     // Информация о ПО, которое необходимо установить
-    repeated SoftwareInstallInfo software = 10;
+    SoftwareInstallInfo software = 10;
 
     // Приватные сети, к которым необходимо подключить VPS
     repeated PrivateNetworkInfo private_networks = 12;
@@ -754,7 +754,7 @@ message ReinstallRequest {
     string password = 4;
 
     // Информация о ПО, которое необходимо установить
-    repeated SoftwareInstallInfo software = 6;
+    SoftwareInstallInfo software = 6;
 }
 
 message ReinstallResponse {
@@ -1333,9 +1333,6 @@ message GetFileManagerSettingsResponse {
 }
 
 message SoftwareInstallInfo {
-    // ID устанавливаемого ПО
-    uint32 id = 1;
-
     // Дополнительные переменные для установки
     map<string,string> variable = 2;
 }
