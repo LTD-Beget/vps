@@ -335,7 +335,7 @@ message CreateVpsRequest {
 
     oneof source {
         // Идентификатор софта
-        uint64 software_id = 5;
+        SoftwareInstallInfo software = 5;
 
         // Идентификатор снапшота, который восстановится в новую Vps
         uint64 snapshot_id = 11;
@@ -350,9 +350,6 @@ message CreateVpsRequest {
     // Согласие на доступ к пользовательской машине через SSH-ключи BeGet
     // Необходимо для использования пользователем файлового менеджера
     bool beget_ssh_access_allowed = 8;
-
-    // Информация о ПО, которое необходимо установить
-    SoftwareInstallInfo software = 10;
 
     // Приватные сети, к которым необходимо подключить VPS
     repeated PrivateNetworkInfo private_networks = 12;
@@ -743,9 +740,6 @@ message ChangeConfigurationResponse {
 message ReinstallRequest {
     // Идентификатор Vps (uuid)
     string id = 1;
-
-    // Идентификатор софта (required)
-    uint64 software_id = 2;
 
     // ID публичных ssh-ключей (предварительно созданные в системе)
     repeated uint32 ssh_keys = 3;
@@ -1333,6 +1327,8 @@ message GetFileManagerSettingsResponse {
 }
 
 message SoftwareInstallInfo {
+    // ID устанавливаемого ПО
+    uint32 id = 1;
     // Дополнительные переменные для установки
     map<string,string> variable = 2;
 }
