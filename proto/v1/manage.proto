@@ -317,7 +317,7 @@ message GetInstalledSoftwareRequest {
 }
 
 message GetInstalledSoftwareResponse {
-    repeated structures.InstalledSoftwareInfo software = 1;
+    structures.InstalledSoftwareInfo software = 1;
 }
 
 message CreateVpsRequest {

@@ -7,18 +7,18 @@ import "vps/proto/v1/structures.proto";
 
 service MarketplaceService {
     // Возвращает список доступного для установки ПО
-    rpc getAvailableSoftware (GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
+    rpc getSoftwareList (GetSoftwareListRequest) returns (GetSoftwareListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/marketplace/software/list"
         };
     }
 }
 
-message GetAvailableSoftwareRequest {
+message GetSoftwareListRequest {
 
 }
 
-message GetAvailableSoftwareResponse {
+message GetSoftwareListResponse {
     repeated SoftwareInfo software = 1;
 
     message SoftwareInfo {
@@ -40,8 +40,8 @@ message GetAvailableSoftwareResponse {
         string description_version = 8;
         string description_version_en = 9;
 
-        // Ссылки на иконки
-        structures.SoftwarePictureLinks icon_links = 10;
+        // доп информация по софту
+        structures.SoftwareMetadata metadata = 10;
 
         // Список дополнительных полей, которые необходимо передать для установки ПО
         repeated string variable = 15;

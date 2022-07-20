@@ -191,11 +191,23 @@ message AttachedPrivateNetwork {
     repeated string ip = 2;
 }
 
-message SoftwarePictureLinks {
-    string icon = 1;
-    string icon2x = 2;
-    string logo = 3;
-    string logo2x = 4;
+message SoftwareMetadata {
+    // новое ли ПО
+    bool is_new = 1;
+    // показываем ли ПО на главной сразу
+    bool is_pinned = 2;
+    // ссылка на иконку
+    string icon = 3;
+    // ссылка на иконку побольше
+    string icon2x = 4;
+    // ссылка на лого(еще больше чем иконки)
+    string logo = 5;
+    // ссылка на лого(побольше)
+    string logo2x = 6;
+    // первый цвет градиента в #hex формате
+    string primary_color = 7;
+    // второй цвет градиента в #hex формате
+    string secondary_color = 8;
 }
 
 message SoftwareCategory {
@@ -225,8 +237,8 @@ message InstalledSoftwareInfo {
     // Значение полей заполненный при установки ПО
     repeated FieldValue field_value = 7;
 
-    // Cсылки на иконки
-    SoftwarePictureLinks icon_links = 8;
+    // Метадата
+    SoftwareMetadata metadata = 8;
 
     enum Status {
         PENDING = 0;
