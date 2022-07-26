@@ -37,8 +37,8 @@ message GetSoftwareListResponse {
         string description = 6;
         string description_en = 7;
         // Дополнительное описание для конкретной версии ПО
-        string description_version = 8;
-        string description_version_en = 9;
+        string description_version = 8 [deprecated = true];
+        string description_version_en = 9 [deprecated = true];
 
         // доп информация по софту
         structures.SoftwareMetadata metadata = 10;

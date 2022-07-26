@@ -230,7 +230,7 @@ message CheckSoftwareRequirementsResponse {
     Error error = 2;
 
     message Error {
-        DomainError wordpress_error = 1 ; // deprecated, use  domain_error instead
+        DomainError wordpress_error = 1 [deprecated = true];
 
         oneof type {
             DomainError domain_error = 2;

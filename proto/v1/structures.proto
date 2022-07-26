@@ -208,6 +208,8 @@ message SoftwareMetadata {
     string primary_color = 7;
     // второй цвет градиента в #hex формате
     string secondary_color = 8;
+    // вес для сортировки софта на фронте
+    uint32 weight = 9;
 }
 
 message SoftwareCategory {
@@ -268,4 +270,6 @@ message InstalledSoftwareInfo {
     string description_en = 11;
 
     repeated SoftwareCategory category = 12;
+
+    uint32 software_id = 13;
 }
