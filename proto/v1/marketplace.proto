@@ -53,6 +53,12 @@ message GetSoftwareListResponse {
 
         repeated structures.SoftwareCategory category = 18;
 
+        // Уникальный идентификатор в рамках возвращенной коллекции ПО для использования в URL (например, ubuntu-20-04)
+        string slug = 19;
+
+        // Имя страницы с описанием ПО в контетной части сайта marketplace
+        string documentation_slug = 20;
+
         message Requirements {
             // Количество ядер процессора, шт
             uint32 cpu_count = 1;
