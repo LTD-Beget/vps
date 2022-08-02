@@ -6,6 +6,8 @@ import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
 service SshKeyService {
+
+    // Добавить публичный SSH ключ
     rpc add (AddRequest) returns (AddResponse) {
         option (google.api.http) = {
 			post: "/v1/vps/sshKey"
@@ -13,12 +15,14 @@ service SshKeyService {
 		};
     }
 
+    // Получить список всех добавленных SSH ключей
     rpc getAll (GetAllRequest) returns (GetAllResponse) {
         option (google.api.http) = {
 			get: "/v1/vps/sshKey"
 		};
     }
 
+    // Удалить публичный SSH ключ
     rpc remove (RemoveRequest) returns (RemoveResponse) {
         option (google.api.http) = {
 			delete: "/v1/vps/sshKey/{id}"
@@ -27,34 +31,40 @@ service SshKeyService {
 }
 
 message AddRequest {
-    // Имя ключа (для удобства пользователя)
+    // Имя ключа
     string name = 1;
 
-    // Публичный ключ в формате, описанном в https://tools.ietf.org/html/rfc4253#section-6.6
+    // Публичный ключ в формате rfc4253
     string public_key = 2;
 }
 
 message AddResponse {
     oneof result {
+        // Информация о SSH ключе
         structures.SshKeyInfo key = 1;
+
+        // Произошла ошибка при добавлении SSH ключа
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
             // Внутренняя ошибка
             INTERNAL_ERROR= 0;
 
-            // Имя невалидно (например, пустое)
+            // Имя SSH ключа невалидно (например, пустое)
             INVALID_NAME = 1;
 
-            // Ключ с таким отпечатком уже существует
+            // SSH Ключ с таким отпечатком уже существует
             KEY_EXISTS = 2;
 
-            // Публичный ключ невалиден
+            // Публичный SSH ключ невалиден
             INVALID_PUBLIC_KEY = 3;
         }
     }
@@ -63,32 +73,39 @@ message AddResponse {
 message GetAllRequest {}
 
 message GetAllResponse {
+    // Информация о SSH ключах
     repeated structures.SshKeyInfo keys = 1;
 }
 
 message RemoveRequest {
-    // Идентификатор ключа
+    // Идентификатор SSH ключа
     uint32 id = 1;
 
-    // Принудительно удалить, даже если используется в VPS
+    // Принудительно удалить SSH ключ, даже если он на данный момент используется в какой либо VPS
     bool force = 2;
 }
 
 message RemoveResponse {
     oneof result {
+        // Информация о SSH ключе
         structures.SshKeyInfo key = 1;
+
+        // Произошла ошибка во время удаления SSH ключа
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
             // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // В данный момент ключ испольузется в VPS (для игнорирования, нужно удалять с `force = true`)
+            // В данный момент ключ испольузется в VPS
             KEY_IN_USE = 1;
         }
     }

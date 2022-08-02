@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
 service NetworkService {
-    // Заказ дополнительных IP-адресов для пользователя
+    // Заказать дополнительный IP-адрес
     rpc orderIpAddress (OrderIpAddressRequest) returns (OrderIpAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/network"
@@ -14,25 +14,28 @@ service NetworkService {
         };
     }
 
-    // Отмена заказа дополнительного IP адреса пользователя
+    // Удалить дополнительный IP адрес
     rpc removeIpAddress (RemoveIpAddressRequest) returns (RemoveIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/{ip_address}"
         };
     }
 
+    // Получить информацию о дополнительных IP адресах
     rpc getNetworkInfo (GetNetworkInfoRequest) returns (GetNetworkInfoResponse) {
         option (google.api.http) = {
             get: "/v1/vps/network"
         };
     }
 
+    // Создать приватную сеть
     rpc createPrivateNetwork (CreatePrivateNetworkRequest) returns (CreatePrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network"
         };
     }
 
+    // Получить IP адрес из приватной сети
     rpc suggestPrivateAddress (SuggestPrivateAddressRequest) returns (SuggestPrivateAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network/{network_id}/suggested-address"
@@ -42,14 +45,13 @@ service NetworkService {
 }
 
 message OrderIpAddressRequest {
-    // Идентификатор VPS, к которому следует добавить дополнительный IP-адрес
-    // Поле не является обязательным
+    // Идентификатор VPS
     string id = 1;
 }
 
 message OrderIpAddressResponse {
     oneof result {
-        // Успешый заказ дополнительного IP-адресоа
+        // IP-адрес
         string ip_address = 1;
 
         // Произошла ошибка при заказе дополнительного IP-адреса
@@ -86,7 +88,7 @@ message RemoveIpAddressRequest {
 
 message RemoveIpAddressResponse {
     oneof result {
-        // Успешое удаление дополнительного IP-адресоа
+        // IP-адрес
         string ip_address = 1;
 
         // Произошла ошибка при заказе дополнительного IP-адреса
@@ -127,10 +129,10 @@ message CreatePrivateNetworkRequest {}
 
 message CreatePrivateNetworkResponse {
     oneof result {
-        //
+        // Информация о приватной сети
         structures.PrivateNetwork network = 1;
 
-        // Произошла ошибка при заказе дополнительного IP-адреса
+        // Произошла ошибка при создании приватной сети
         Error error = 2;
     }
 
@@ -144,6 +146,7 @@ message CreatePrivateNetworkResponse {
         enum Code {
             // Внутренняя ошибка сервера
             INTERNAL_ERROR = 0;
+
             // Достигнут лимит на число приватных сетей для пользователя
             LIMIT_REACHED = 1;
         }
@@ -151,10 +154,14 @@ message CreatePrivateNetworkResponse {
 }
 
 message SuggestPrivateAddressRequest {
+    // Идентификатор приватной сети
     string network_id = 1;
-    string vps_id = 2; // can be empty
+
+    // Идентификатор VPS в формате uuid
+    string vps_id = 2;
 }
 
 message SuggestPrivateAddressResponse {
+    // IP адрес приватной сети
     string ip = 1;
 }
