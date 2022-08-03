@@ -45,7 +45,7 @@ service NetworkService {
 }
 
 message OrderIpAddressRequest {
-    // Идентификатор VPS
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
