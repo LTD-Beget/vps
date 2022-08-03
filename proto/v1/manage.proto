@@ -330,7 +330,7 @@ message GetAvailableSoftwareResponse {
 }
 
 message GetInstalledSoftwareRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
@@ -494,7 +494,7 @@ message GetListResponse {
 
 
 message GetInfoRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -512,7 +512,7 @@ message GetStatusesResponse {
     repeated StatusInfo statuses = 1;
 
     message StatusInfo {
-        // Идентификатор VPS, в формате uuid
+        // Идентификатор VPS, в формате uuid v4
         string id = 1;
 
         // Статус VPS
@@ -542,7 +542,7 @@ message GetStatusesResponse {
 }
 
 message StartVpsRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -576,7 +576,7 @@ message StartVpsResponse {
 }
 
 message StopVpsRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -610,7 +610,7 @@ message StopVpsResponse {
 }
 
 message RebootVpsRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -644,7 +644,7 @@ message RebootVpsResponse {
 }
 
 message ResetVpsRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -678,7 +678,7 @@ message ResetVpsResponse {
 }
 
 message RemoveVpsRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -712,7 +712,7 @@ message RemoveVpsResponse {
 }
 
 message StartRescueRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -746,7 +746,7 @@ message StartRescueResponse {
 }
 
 message StopRescueRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -780,7 +780,7 @@ message StopRescueResponse {
 }
 
 message ChangeConfigurationRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Название конфигурации(тарифа)
@@ -826,7 +826,7 @@ message ChangeConfigurationResponse {
 }
 
 message ReinstallRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор ОС
@@ -935,7 +935,7 @@ message GetAvailableConfigurationResponse {
 
 
 message UpdateInfoRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Отображаемое имя VPS
@@ -981,7 +981,7 @@ message UpdateInfoResponse {
 }
 
 message GetHistoryRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
@@ -991,7 +991,7 @@ message GetHistoryResponse {
 }
 
 message AttachSshKeyRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // ID публичного ключа
@@ -1022,7 +1022,7 @@ message AttachSshKeyResponse {
 }
 
 message DetachSshKeyRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // ID публичного ключа
@@ -1056,7 +1056,7 @@ message DetachSshKeyResponse {
 }
 
 message ResetPasswordRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
@@ -1126,7 +1126,7 @@ message HistoryItem {
 }
 
 message VpsInfo {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // ЧПУ-френдли имя VPS (может быть пустой строкой)
@@ -1343,7 +1343,7 @@ message DetachIpAddressResponse {
 }
 
 message AttachToPrivateNetworkRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // Идентификатор сети
@@ -1395,7 +1395,7 @@ message AttachToPrivateNetworkResponse {
 }
 
 message DetachFromPrivateNetworkRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // Идентификатор сети
@@ -1466,7 +1466,7 @@ message ChangeSshAccessResponse {
 }
 
 message GetFileManagerSettingsRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
@@ -1522,7 +1522,7 @@ message SoftwareInstallInfo {
 }
 
 message UnarchiveRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 

@@ -157,7 +157,7 @@ message SuggestPrivateAddressRequest {
     // Идентификатор приватной сети
     string network_id = 1;
 
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 2;
 }
 

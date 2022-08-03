@@ -63,7 +63,7 @@ service StatisticService {
 }
 
 message GetCpuRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Период(HOUR/DAY/WEEK)
@@ -76,7 +76,7 @@ message GetCpuResponse {
 }
 
 message GetMemoryRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Период(HOUR/DAY/WEEK)
@@ -89,7 +89,7 @@ message GetMemoryResponse {
 }
 
 message GetDiskRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Период(HOUR/DAY/WEEK)
@@ -106,7 +106,7 @@ message GetDiskResponse {
 
 
 message GetNetworkRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Период(HOUR/DAY/WEEK)
@@ -128,7 +128,7 @@ message GetNetworkResponse {
 }
 
 message GetDiskUsageRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Период(HOUR/DAY/WEEK)
@@ -141,7 +141,7 @@ message GetDiskUsageResponse {
 }
 
 message GetLoadAverageRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Период(HOUR/DAY/WEEK)
@@ -163,7 +163,7 @@ message GetLoadAverageResponse {
 }
 
 message GetCpuDetailsRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Период(HOUR/DAY/WEEK)
@@ -180,7 +180,7 @@ message GetCpuDetailsResponse {
     // Время, проведенное в пользовательском режиме с низким приоритетом
     repeated double nice = 3;
 
-    // Время, проведенное в системном режиме
+    // Время, проведенное в пространстве ядра
     repeated double system = 4;
 
     // Время бездействия
@@ -197,7 +197,7 @@ message GetCpuDetailsResponse {
 }
 
 message GetProcessListRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 

@@ -69,7 +69,7 @@ message GetAllResponse {
 }
 
 message CreateRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 1;
 
     // Описание снапшота
@@ -111,7 +111,7 @@ message CreateResponse {
 }
 
 message CreateCalculatorRequest {
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 2;
 }
 
@@ -140,7 +140,7 @@ message RestoreRequest {
     // Идентификатор снапшота
     uint64 id = 1;
 
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 2;
 }
 
@@ -225,7 +225,7 @@ message Snapshot {
     // Идентификатор снапшота
     uint64 id = 1;
 
-    // Идентификатор VPS в формате uuid
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 2;
 
     // Имя VPS
@@ -268,7 +268,7 @@ message Snapshot {
 }
 
 message Restore {
-    // Идентификатор ордера на восстановления
+    // Идентификатор заявки на восстановление
     uint64 id = 1;
 
     // Информация о снапшоте
@@ -280,7 +280,7 @@ message Restore {
     // Имя VPS на которую происходит восстановление
     string vps_name = 4;
 
-    // Тип восстановления
+    // Тип восстановления(на существующую или новую VPS)
     TargetType target_type = 5;
 
     // Дата начала восстановление, в формате RFC3339
@@ -293,10 +293,10 @@ message Restore {
     Status status = 8;
 
     enum TargetType {
-        // На существующую VPS
+        // Существующуя VPS
         EXISTING_VPS = 0;
 
-        // Создать новую VPS
+        // Новая VPS
         NEW_VPS = 1;
     }
 

@@ -45,7 +45,7 @@ service BackupService {
 }
 
 message GetBackupFileListRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор копии
@@ -69,7 +69,7 @@ message GetAvailableCopiesResponse {
 }
 
 message RestoreFileRequest {
-    // Идентификатор VPS, в формате uuid
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор копии
@@ -121,7 +121,7 @@ message RestoreFileResponse {
 }
 
 message RestoreServerRequest {
-    // Идентификатор VPS, в который происходит восстановление (uuid)
+    // Идентификатор VPS, в который происходит восстановление, в формате uuid v4
     string id = 1;
 
     // Идентификатор копии
