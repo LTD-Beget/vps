@@ -271,5 +271,6 @@ message InstalledSoftwareInfo {
 
     repeated SoftwareCategory category = 12;
 
-    uint32 software_id = 13;
+    // Уникальный идентификатор в рамках списка ПО полученного через запрос MarketplaceService.getSoftwareList
+    string slug = 13;
 }
