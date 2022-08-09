@@ -1,4 +1,4 @@
-syntax = 'proto3';
+syntax = "proto3";
 
 package beget.vps.v1.manage;
 
@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
 service ManageService {
-    // Отправляет команду на создание новой Vps и ее запуск (https://jira.beget.ru/browse/BH-327)
+    // Создать VPS
     rpc createVps (CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server"
@@ -14,84 +14,84 @@ service ManageService {
         };
     }
 
-    // Возвращает досупные варианты конфигурации Vps (список ОС и тарифных планов)
+    // Получить доступные варианты конфигурации VPS
     rpc getAvailableConfiguration (GetAvailableConfigurationRequest) returns (GetAvailableConfigurationResponse) {
         option (google.api.http) = {
             get: "/v1/vps/configuration"
         };
     }
 
-    // Возвращает список Vps с некоторыми параметрами
+    // Получить список VPS
     rpc getList (GetListRequest) returns (GetListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/list"
         };
     }
 
-    // Возвращает статусы всех Vps
+    // Получить статусы всех VPS
     rpc getStatuses (GetStatusesRequest) returns (GetStatusesResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/statuses"
         };
     }
 
-    // Возвращает информацию по одной конкретной Vps
+    // Получить информацию по VPS
     rpc getInfo (GetInfoRequest) returns (GetInfoResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/{id}"
         };
     }
 
-    // Отправляет команду на запуск Vps
+    // Запустить VPS
     rpc startVps (StartVpsRequest) returns (StartVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/start"
         };
     }
 
-    // Отправляет команду на остановку Vps
+    // Остановить VPS
     rpc stopVps (StopVpsRequest) returns (StopVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/stop"
         };
     }
 
-    // Отправляет команду на рестарт Vps
+    // Перезагрузить(reboot) VPS
     rpc rebootVps (RebootVpsRequest) returns (RebootVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reboot"
         };
     }
 
-    // Отправляет команду на рестарт Vps
+    // Перезагрузить(reset) VPS
     rpc resetVps (ResetVpsRequest) returns (ResetVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reset"
         };
     }
 
-    // Отправляет команду на удаление Vps
+    // Удалить VPS
     rpc removeVps (RemoveVpsRequest) returns (RemoveVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/remove"
         };
     }
 
-    // Отправляет команду на перевод Vps в rescue-режим
+    // Включить rescue-режим для VPS
     rpc startRescue (StartRescueRequest) returns (StartRescueResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/rescue"
         };
     }
 
-    // Отправляет запрос на отключение rescue-режима и перезагрузку Vps
+    // Выключить rescue-режим для VPS
     rpc stopRescue (StopRescueRequest) returns (StopRescueResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/server/{id}/rescue"
         };
     }
 
-    // Отправляет запрос на смену конфигурации Vps (с перезагрузкой)
+    // Сменить тариф VPS
     rpc changeConfiguration (ChangeConfigurationRequest) returns (ChangeConfigurationResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/configuration"
@@ -99,7 +99,7 @@ service ManageService {
         };
     }
 
-    // Отправляет запрос на переустановку ОС (с перезагрузкой и уничтожением всех данных)
+    // Пересоздать VPS
     rpc reinstall (ReinstallRequest) returns (ReinstallResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reinstall"
@@ -107,7 +107,7 @@ service ManageService {
         };
     }
 
-    // Обновляет информацию о Vps (которая отображается в панели)
+    // Обновить информацию о VPS
     rpc updateInfo (UpdateInfoRequest) returns (UpdateInfoResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/info"
@@ -115,34 +115,35 @@ service ManageService {
         };
     }
 
-    // Возвращат историю состояний VPS
+    // Получить историю действий с VPS
     rpc getHistory (GetHistoryRequest) returns (GetHistoryResponse) {
         option (google.api.http) = {
             get: "/v1/vps/{id}/history"
         };
     }
 
-    // Добавляет ssh-ключ к VPS
+    // Добавить публичный ssh-ключ в хранилище
     rpc attachSshKey (AttachSshKeyRequest) returns (AttachSshKeyResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/sshKey/{ssh_key_id}"
         };
     }
 
-    // Удаляет ssh-ключ из VPS
+    // Удалить публичный ssh-ключ из хранилища
     rpc detachSshKey (DetachSshKeyRequest) returns (DetachSshKeyResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/{id}/sshKey/{ssh_key_id}"
         };
     }
 
+    // Сбросить пароль VPS
     rpc resetPassword (ResetPasswordRequest) returns (ResetPasswordResponse) {
         option (google.api.http) = {
             put: "/v1/vps/{id}/password"
         };
     }
 
-    // Прикрепление дополнительного IP адреса пользователя к VPS
+    // Прикрепить дополнительный IP адрес к VPS
     rpc attachIpAddress (AttachIpAddressRequest) returns (AttachIpAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/network/{ip_address}"
@@ -150,14 +151,14 @@ service ManageService {
         };
     }
 
-    // Открепление дополнительного IP адреса пользователя от VPS
+    // Открепить дополнительный IP адрес от VPS
     rpc detachIpAddress (DetachIpAddressRequest) returns (DetachIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/detach/{ip_address}"
         };
     }
 
-    // Добавляет VPS к приватной сети
+    // Добавить VPS к приватной сети
     rpc attachToPrivateNetwork (AttachToPrivateNetworkRequest) returns (AttachToPrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/private-network/{network_id}"
@@ -165,14 +166,14 @@ service ManageService {
         };
     }
 
-    // Удаляет VPS из приватной сети
+    // Удалить VPS из приватной сети
     rpc detachFromPrivateNetwork (DetachFromPrivateNetworkRequest) returns (DetachFromPrivateNetworkResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/{id}/private-network/{network_id}"
         };
     }
 
-    // Изменение возможности доступа к пользовательской машине через SSH-ключи BeGet
+    // Открыть/закрыть доступ к VPS файловому менеджеру
     rpc changeSshAccess (ChangeSshAccessRequest) returns (ChangeSshAccessResponse) {
         option (google.api.http) = {
             put: "/v1/vps/{id}/ssh/access"
@@ -187,20 +188,21 @@ service ManageService {
         };
     }
 
-    // Возвращает список установленного ПО на сервере
+    // Получить список установленного ПО на VPS
     rpc getInstalledSoftware (GetInstalledSoftwareRequest) returns (GetInstalledSoftwareResponse) {
         option (google.api.http) = {
             get: "/v1/vps/{id}/software"
         };
     }
 
-    // Возвращает список доступного для установки ПО
+    // Получить список доступного для установки ПО
     rpc getAvailableSoftware (GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
         option (google.api.http) = {
             get: "/v1/vps/software"
         };
     }
 
+    // Проверить возможность установки ПО
     rpc checkSoftwareRequirements (CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/software/requirements"
@@ -208,12 +210,14 @@ service ManageService {
         };
     }
 
+    // Разархивировать VPS
     rpc unarchive (UnarchiveRequest) returns (UnarchiveResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/archive/{id}"
         };
     }
 
+    // Зарезервировать поддомен для VPS
     rpc reserveVpsSubdomain(ReserveVpsSubdomainRequest) returns (ReserveVpsSubdomainResponse) {
         option (google.api.http) = {
             get: "/v1/vps/subdomain/reserve"
@@ -225,36 +229,42 @@ message CheckSoftwareRequirementsRequest {
     // Идентификатор ОС
     uint32 operating_system_id = 1;
 
-    // Информация о желаемом ПО
+    // Выбранное ПО для установки
     SoftwareInstallInfo info = 2;
 }
 
 message CheckSoftwareRequirementsResponse {
+    // Ошибка при проверке возможности установки ПО
     Error error = 2;
 
     message Error {
-        DomainError wordpress_error = 1 ; // deprecated, use  domain_error instead
+        // Ошибка связанная с доменом
+        DomainError wordpress_error = 1 [deprecated=true];
 
         oneof type {
+            // Ошибка связанная с доменом
             DomainError domain_error = 2;
         }
 
+        // Ошибки связанные с доменом
         enum DomainError {
-           _ = 0;
-           // Домен не зарегистрирован
-           DOMAIN_NOT_REGISTERED = 1;
+            // Зарезервированный код ошибки
+            _ = 0;
+
+            // Домен не зарегистрирован
+            DOMAIN_NOT_REGISTERED = 1;
            
-           // Домен зарегистрирован через бегет и у него не наши NS-записи
-           WRONG_NS_RECORD = 2;
+            // Домен зарегистрирован через Beget и у него сторонние NS-записи(не ns1.beget.com/etc)
+            WRONG_NS_RECORD = 2;
 
-           // Домен зарегистрирован у стороннего регистратора и не делегирован нам
-           DOMAIN_NOT_DELEGATED = 3;
+            // Домен зарегистрирован у стороннего регистратора и не делегирован Beget
+            DOMAIN_NOT_DELEGATED = 3;
 
-           // Переданный домен не является fqdn
-           INVALID_DOMAIN = 4;
+            // Некорректное имя домена
+            INVALID_DOMAIN = 4;
 
-           // Домен зарегистрирован меньше 12 часов назад
-           DOMAIN_IS_NEW = 5;
+            // Домен зарегистрирован меньше 12 часов назад
+            DOMAIN_IS_NEW = 5;
         }
     }
 }
@@ -264,21 +274,23 @@ message GetAvailableSoftwareRequest {
 }
 
 message GetAvailableSoftwareResponse {
+    // Список с описанием установленного ПО
     repeated SoftwareInfo software = 1;
 
     message SoftwareInfo {
+        // Идентификатор ПО
         uint32 id = 1;
 
-        // Внутреннее имя (напр. redmine)
+        // Назнание ПО
         string name = 2;
 
-        // Отображаемое имя (напр. Redmine)
+        // Отображаемое название ПО
         string display_name = 3;
 
-        // Версия (напр. 1.0.1)
+        // Версия
         string version = 4;
 
-        // Тип ПО (панель управления, обычное ПО)
+        // Тип ПО
         Type type = 5;
 
         // Описание ПО
@@ -297,61 +309,64 @@ message GetAvailableSoftwareResponse {
         Requirements requirements = 10;
 
         message Requirements {
-            // Количество ядер процессора, шт
+            // Количество ядер процессора
             uint32 cpu_count = 1;
 
-            // Размер диска, мб
+            // Размер диска, указывается в Mb
             uint32 disk_size = 2;
 
-            // Объем оперативной памяти, мб
+            // Объем оперативной памяти, указывается в Mb
             uint32 memory = 3;
         }
 
         enum Type {
+            // Панель управления
             PANEL = 0;
+
+            // Остальное ПО
             SOFTWARE = 1;
         }
     }
 }
 
 message GetInstalledSoftwareRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
 message GetInstalledSoftwareResponse {
+    // Список установленного ПО на VPS
     repeated structures.InstalledSoftwareInfo software = 1;
 }
 
 message CreateVpsRequest {
-    // Отображаемое имя Vps (required)
+    // Отображаемое имя VPS
     string display_name = 1;
 
-    // Имя хоста (в ОС)
+    // Имя хоста в операционной системе
     string hostname = 2;
 
-    // Дескрипшн (опциональный). просто какой-нить текст
+    // Дополнительное описание VPS
     string description = 3;
 
-    // Идентификатор конфигурации (required)
+    // Необходима конфигурация(тариф)
     string configuration_id = 4;
 
     oneof source {
         // Идентификатор ОС
         uint32 operating_system_id = 5;
 
-        // Идентификатор снапшота, который восстановится в новую Vps
+        // Идентификатор снапшота, который восстановится в новую VPS
         uint64 snapshot_id = 11;
     }
 
-    // ID публичных ssh-ключей (предварительно созданные в системе)
+    // ID публичных ssh-ключей, которые будут добавлены в VPS
     repeated uint32 ssh_keys = 6;
 
     // Пароль (должен включать минимум 1 upper, 1 lower, 1 digit, 1 special char. Мин длина - 8 символов)
     string password = 7;
 
-    // Согласие на доступ к пользовательской машине через SSH-ключи BeGet
-    // Необходимо для использования пользователем файлового менеджера
+    // Открыть доступ к VPS файловому менеджеру
     bool beget_ssh_access_allowed = 8;
 
     // Информация о ПО, которое необходимо установить
@@ -364,20 +379,27 @@ message CreateVpsRequest {
 
 message CreateVpsResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при создании VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         oneof extra {
+            // Расширенное описание ошибки
             SoftwareVariableError variable_error = 3;
         }
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
             // Некорректное поле display_name
@@ -392,10 +414,10 @@ message CreateVpsResponse {
             // Недостаточно средств на счету
             INSUFFICIENT_FUNDS = 4;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 5;
 
-            // Неправильная конфигурация параметров доступа к Vps (не выбран ни логин, ни доступ по ключу)
+            // Неправильная конфигурация параметров доступа к VPS (не выбран ни логин, ни доступ по ключу)
             INVALID_SECURITY_CONFIGURATION = 6;
 
             // Некорректное поле password
@@ -407,19 +429,19 @@ message CreateVpsResponse {
             // Некорректная комбинация типов ПО
             SOFTWARE_INVALID_TYPE = 9;
 
-            // Недостаточно ресурсов на для устанавливаемого ПО на выбранном тарифном плане
+            // Недостаточно ресурсов для устанавливаемого ПО на выбранном тарифе
             SOFTWARE_NOT_ENOUGH_RESOURCES = 10;
 
-            // Пропущены обязательные переменные для устанавливаемого ПО. Подбробности в
+            // Пропущены обязательные переменные для устанавливаемого ПО
             SOFTWARE_VARIABLE_REQUIRED = 11;
 
-            // Переменная для устанавливаемого ПО. Подробности содержатся в `variable_error`
+            // Некорректная переменная для устанавливаемого ПО, подробности в `variable_error`
             SOFTWARE_VARIABLE_INVALID = 12;
 
-            // snapshot creating in progress
+            // Невозможно создать из снапшота(снапшот в процессе создания)
             SNAPSHOT_NOT_DONE = 13;
 
-            // snapshot configuration is higher than vps
+            // Конфигурация снапшота не подходит для выбранного тарифа
             SNAPSHOT_NOT_ENOUGH_CONFIGURATION = 14;
 
             // Некорректная конфигурация приватной сети
@@ -442,12 +464,20 @@ message CreateVpsResponse {
         }
 
         message SoftwareVariableError {
+            // Идентификатор устанавливаемого ПО
             uint32 id = 1;
+
+            // Список ошибок
             repeated ValueError error = 2;
 
             message ValueError {
+                // Название поля содержащее ошибку
                 string variable = 1;
+
+                // Описание ошибки на русском
                 string error_text_ru = 2;
+
+                // описание ошибки на английском
                 string error_text_en = 3;
             }
         }
@@ -458,16 +488,18 @@ message GetListRequest {
 }
 
 message GetListResponse {
+    // Информация о всех VPS
     repeated VpsInfo vps = 1;
 }
 
 
 message GetInfoRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message GetInfoResponse {
+    // Информация о VPS
     VpsInfo vps = 1;
 }
 
@@ -476,12 +508,14 @@ message GetStatusesRequest {
 }
 
 message GetStatusesResponse {
+    // Список VPS с описанием их статусов
     repeated StatusInfo statuses = 1;
 
     message StatusInfo {
-        // Идентификатор Vps (uuid)
+        // Идентификатор VPS, в формате uuid v4
         string id = 1;
 
+        // Статус VPS
         VpsStatus status = 2;
 
         // Включен rescue-режим
@@ -499,7 +533,7 @@ message GetStatusesResponse {
         // VPS заархивирована, управление невозможно
         bool archived = 7;
 
-        // VPS разблокируется после отключения по оплате или архивации
+        // VPS в процессе разблокировки
         bool unblocking = 8;
 
         // VPS в процессе разархивации
@@ -508,227 +542,275 @@ message GetStatusesResponse {
 }
 
 message StartVpsRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message StartVpsResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при включении VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
+            // Операция не может быть выполнена, т.к. VPS находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
         }
     }
 }
 
 message StopVpsRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message StopVpsResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при выключении VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
+            // Операция не может быть выполнена, т.к. VPS находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
         }
     }
 }
 
 message RebootVpsRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message RebootVpsResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при перезагрузке VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
             // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
         }
     }
 }
 
 message ResetVpsRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message ResetVpsResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при перезагрузке VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
+            // Операция не может быть выполнена, т.к. VPS находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
         }
     }
 }
 
 message RemoveVpsRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message RemoveVpsResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при удалении VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
+            // Операция не может быть выполнена, т.к. VPS находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
         }
     }
 }
 
 message StartRescueRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message StartRescueResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при включении rescue режима
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
+            // Операция не может быть выполнена, т.к. VPS находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
         }
     }
 }
 
 message StopRescueRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message StopRescueResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при отключении rescue режима
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
+            // Операция не может быть выполнена, т.к. VPS находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
         }
     }
 }
 
 message ChangeConfigurationRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
-    // Идентификатор конфигурации
+    // Название конфигурации(тарифа)
     string configuration_id = 2;
 }
 
 message ChangeConfigurationResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при смене конфигурации VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
+            // Операция не может быть выполнена, т.к. VPS находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
 
             // Недостаточно средств на счету
@@ -744,13 +826,13 @@ message ChangeConfigurationResponse {
 }
 
 message ReinstallRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
-    // Идентификатор ОС (required)
+    // Идентификатор ОС
     uint32 operating_system_id = 2;
 
-    // ID публичных ssh-ключей (предварительно созданные в системе)
+    // ID публичных ssh-ключей
     repeated uint32 ssh_keys = 3;
 
     // Пароль (должен включать минимум 1 upper, 1 lower, 1 digit, 1 special char. Мин длина - 8 символов)
@@ -762,32 +844,39 @@ message ReinstallRequest {
 
 message ReinstallResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при переустановке VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         oneof extra {
+            // Расширенное описание ошибки
             SoftwareVariableError variable_error = 3;
         }
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Операция не может быть выполнена, т.к. Vps находится в невалидном состоянии (например, сейчас перезапускается)
+            // Операция не может быть выполнена, т.к. VPS находится в невалидном состоянии (например, сейчас перезапускается)
             INVALID_STATE = 1;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 2;
 
             // Переданная конфигурация не может быть применена из-за ограничений
             INVALID_CONFIGURATION = 3;
 
-            // Неправильная конфигурация параметров доступа к Vps (не выбран ни логин, ни доступ по ключу)
+            // Неправильная конфигурация параметров доступа к VPS (не выбран ни логин, ни доступ по ключу)
             INVALID_SECURITY_CONFIGURATION = 4;
 
             // Некорректное поле password
@@ -796,7 +885,7 @@ message ReinstallResponse {
             // Некорректная комбинация типов ПО
             SOFTWARE_INVALID_TYPE = 6;
 
-            // Недостаточно ресурсов на для устанавливаемого ПО на выбранном тарифном плане
+            // Недостаточно ресурсов для устанавливаемого ПО на выбранном тарифном плане
             SOFTWARE_NOT_ENOUGH_RESOURCES = 7;
 
             // Некорректные остальные параметры конфигурации (public_key, operating_system_id, configuration_name)
@@ -805,7 +894,7 @@ message ReinstallResponse {
             // Пропущены обязательные переменные для устанавливаемого ПО
             SOFTWARE_VARIABLE_REQUIRED = 9;
 
-            // Переменная для устанавливаемого ПО. Подробности содержатся в `variable_error`
+            // Некоррктная переменная для устанавливаемого ПО, подробности содержатся в `variable_error`
             SOFTWARE_VARIABLE_INVALID = 10;
 
             // Пароль содержится в чёрном списке
@@ -813,12 +902,20 @@ message ReinstallResponse {
         }
 
         message SoftwareVariableError {
+            // Идентификатор устанавливаемого ПО
             uint32 id = 1;
+
+            // Список ошибок
             repeated ValueError error = 2;
 
             message ValueError {
+                // Параметр в котором возникла ошибка
                 string variable = 1;
+
+                // Описание ошибки на русском
                 string error_text_ru = 2;
+
+                // Описание ошибки на английском
                 string error_text_en = 3;
             }
         }
@@ -829,37 +926,46 @@ message GetAvailableConfigurationRequest {
 }
 
 message GetAvailableConfigurationResponse {
+    // Список доступных конфигураций VPS
     repeated VpsConfiguration configurations = 1;
+
+    // Список ОС
     repeated structures.OperatingSystem operating_systems = 2;
 }
 
 
 message UpdateInfoRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
-    // Отображаемое имя Vps
+    // Отображаемое имя VPS
     string display_name = 2;
 
-    // Имя хоста (в ОС)
+    // Имя хоста в ОС
     string hostname = 3;
 
-    // Дескрипшн
+    // Описание VPS
     string description = 4;
 }
 
 message UpdateInfoResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при обновлении информации о VPS
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
             // Некорректное поле display_name
@@ -868,22 +974,24 @@ message UpdateInfoResponse {
             // Некорректное поле hostnames
             INVALID_HOSTNAME = 2;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 3;
         }
     }
 }
 
 message GetHistoryRequest {
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
 message GetHistoryResponse {
+    // История действий с VPS
     repeated HistoryItem history = 1;
 }
 
 message AttachSshKeyRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // ID публичного ключа
@@ -892,7 +1000,10 @@ message AttachSshKeyRequest {
 
 message AttachSshKeyResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при добавлении публичного SSH ключа в хранилище
         Error error = 2;
     }
 
@@ -901,17 +1012,17 @@ message AttachSshKeyResponse {
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
         }
     }
 }
 
 message DetachSshKeyRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // ID публичного ключа
@@ -920,44 +1031,56 @@ message DetachSshKeyRequest {
 
 message DetachSshKeyResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при удалении публичного SSH ключа из хранилища
         Error error = 2;
     }
 
     message Error {
+        // Код ошибки
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
         }
     }
 }
 
 message ResetPasswordRequest {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
 message ResetPasswordResponse {
     oneof result {
+        // Информация о VPS
         VpsInfo vps = 1;
+
+        // Ошибка при сбросе пароля
         Error error = 2;
     }
 
     message Error {
+        // Код ошибка
         Code code = 1;
+
+        // Описание ошибки
         string message = 2;
 
         enum Code {
-            // Внутренняя ошибка (извиняемся и просим повторить попозже)
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Пользователю заблокирован доступ к управлению Vps
+            // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
         }
     }
@@ -965,41 +1088,60 @@ message ResetPasswordResponse {
 
 
 message HistoryItem {
+    // Дата
     string date = 1;
 
+    // Событие
     HistoryItemType type = 2;
 
+    // Было ли завершено ошибкой
     bool has_error = 3;
 
+    // Варианты событий
     enum HistoryItemType {
+        // Неизвестно
         UNKNOWN = 0;
+
+        // Создание VPS
         CREATE = 1;
+
+        // Запуск VPS
         START = 2;
+
+        // Остановка VPS
         STOP = 3;
+
+        // Перезагрузка VPS
         RESTART = 4;
+
+        // Переустановка VPS
         REINSTALL = 5;
+
+        // Переконфигурация VPS
         RECONFIGURE = 6;
+
+        // Удаление VPS
         REMOVE = 7;
     }
 }
 
 message VpsInfo {
-    // Идентификатор Vps (uuid)
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
-    // ЧПУ-френдли имя Vps (может быть пустой строкой)
+    // ЧПУ-френдли имя VPS (может быть пустой строкой)
     string slug = 2;
 
-    // Отображаемое имя Vps
+    // Отображаемое имя VPS
     string display_name = 3;
 
-    // Имя хоста (в ОС)
+    // Имя хоста в ОС
     string hostname = 4;
 
-    // Конфигурация Vps
+    // Конфигурация VPS
     VpsConfiguration configuration = 5;
 
-    // Текущий статус Vps
+    // Текущий статус VPS
     VpsStatus status = 6;
 
     // Информация об ssh-ключах
@@ -1011,7 +1153,7 @@ message VpsInfo {
     // Доступно ли управление данной Vps
     bool manage_enabled = 9;
 
-    // Дескрипшн для пользователя
+    // Описание VPS
     string description = 10;
 
     // Дата создания (в формате W3C)
@@ -1047,8 +1189,7 @@ message VpsInfo {
     // Информация о дополнительных IP-адресах VPS
     repeated string additional_ip_address = 18;
 
-    // Согласие на доступ к пользовательской машине через SSH-ключи BeGet
-    // Необходимо для использования пользователем файлового менеджера
+    // Включение/выключение доступа ФМ к VPS
     bool beget_ssh_access_allowed = 19;
 
     // VPS заархивирована, управление невозможно
@@ -1060,45 +1201,67 @@ message VpsInfo {
     // Приватные сети к которым подключена VPS
     repeated structures.AttachedPrivateNetwork private_network = 25;
 
-    // технический домен, если он есть
+    // Технический домен, если он есть
     string technical_domain = 26;
 
-    // домен, указанный при установке софта
+    // Домен, указанный при установке софта
     string software_domain = 27;
 
+    // Информация о установленном ПО
     structures.InstalledSoftwareInfo software = 28;
 }
 
 // Текущий статус Vps
 enum VpsStatus {
+    // Неизвестен
     UNKNOWN = 0;
+
+    // Создается
     CREATING = 1;
+
+    // Запущена
     RUNNING = 2;
+
+    // Останавливается
     STOPPING = 3;
+
+    // Перезагружается
     RESTARTING = 4;
+
+    // Удаляется
     REMOVING = 5;
+
+    // Удалена
     REMOVED = 6;
+
+    // Остановлена
     STOPPED = 7;
+
+    // Запускается
     STARTING = 8;
+
+    // Переконфигурируется
     RECONFIGURING = 9;
+
+    // Переустанавливается
     REINSTALLING = 10;
 }
 
-// Описывает параметры Vps
+// Описывает параметры VPS
 message VpsConfiguration {
     // Идентификатор конфигурации
     string id = 1;
 
-    // Имя конфигурации Vps
+    // Имя конфигурации VPS
     string name = 2;
 
-    // Количество ядер процессора, шт
+    // Количество ядер процессора
     uint32 cpu_count = 3;
 
-    // Объем дисковой квоты, Мб
+    // Объем дисковой квоты в Мб
     uint32 disk_size = 4;
 
-    // Объем оперативной памяти, Мб
+    // Объем оперативной памяти в Мб
     uint32 memory = 5;
 
     // Цена в день
@@ -1124,10 +1287,10 @@ message AttachIpAddressRequest {
 
 message AttachIpAddressResponse {
     oneof result {
-        // Успешное прикрепление дополнительного IP-адреса
+        // Информация о VPS
         VpsInfo vps = 1;
 
-        // Произошла ошибка при прикреплении дополнительного IP-адреса
+        // Ошибка при прикреплении дополнительного IP-адреса к VPS
         Error error = 2;
     }
 
@@ -1155,10 +1318,10 @@ message DetachIpAddressRequest {
 
 message DetachIpAddressResponse {
     oneof result {
-        // Успешное открепление дополнительного IP-адреса
+        // Информация о VPS
         VpsInfo vps = 1;
 
-        // Произошла ошибка при откреплении дополнительного IP-адреса
+        // Ошибка при откреплении дополнительного IP-адреса
         Error error = 2;
     }
 
@@ -1180,22 +1343,22 @@ message DetachIpAddressResponse {
 }
 
 message AttachToPrivateNetworkRequest {
-    // Идентификатор VPS
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // Идентификатор сети
     string network_id = 2;
 
-    // желаемый ip-адрес. Если пустая строка, то выберется случайный
+    // Желаемый ip-адрес. Если пустая строка, то выберется случайный
     string address = 3;
 }
 
 message AttachToPrivateNetworkResponse {
     oneof result {
-        // Успешное добавление к приватной сети
+        // Информация о VPS
         VpsInfo vps = 1;
 
-        // Произошла ошибка при добавлении к приватной сети
+        // Ошибка при добавлении к приватной сети
         Error error = 2;
     }
 
@@ -1232,7 +1395,7 @@ message AttachToPrivateNetworkResponse {
 }
 
 message DetachFromPrivateNetworkRequest {
-    // Идентификатор VPS
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
     // Идентификатор сети
@@ -1241,10 +1404,10 @@ message DetachFromPrivateNetworkRequest {
 
 message DetachFromPrivateNetworkResponse {
     oneof result {
-        // Успешное удаление из приватной сети
+        // Информация о VPS
         VpsInfo vps = 1;
 
-        // Произошла ошибка при удалении из приватной сети
+        // Ошибка при удалении VPS из приватной сети
         Error error = 2;
     }
 
@@ -1269,17 +1432,16 @@ message ChangeSshAccessRequest {
     // Идентификатор VPS
     string id = 1;
 
-    // Согласие на доступ к пользовательской машине через SSH-ключи BeGet
-    // Необходимо для использования пользователем файлового менеджера
+    // Включение/выключение доступа ФМ к VPS
     bool beget_ssh_access_allowed = 2;
 }
 
 message ChangeSshAccessResponse {
     oneof result {
-        // Успешное открепление дополнительного IP-адреса
+        // Информация о VPS
         VpsInfo vps = 1;
 
-        // Произошла ошибка при откреплении дополнительного IP-адреса
+        // Ошибка при включении/выключении доступа ФМ к VPS
         Error error = 2;
     }
 
@@ -1304,21 +1466,33 @@ message ChangeSshAccessResponse {
 }
 
 message GetFileManagerSettingsRequest {
-    // Vps uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
 message GetFileManagerSettingsResponse {
     oneof result {
+        // Параметры для использования файлового менеджера
         Credentials credentials = 1;
+
+        // Ошибка при получении параметров подключения к файловому менеджеру
         Error error = 2;
     }
 
     message Credentials {
+        // Тип подключения(sftp/ssh/etc)
         string type = 1;
+
+        // Логин
         string user = 2;
+
+        // Хост
         string host = 3;
+
+        // Идентификатор подключения
         uint32 connection_id = 4;
+
+        // Корневой путь удаленной ФС
         string path = 5;
     }
 
@@ -1333,7 +1507,7 @@ message GetFileManagerSettingsResponse {
             // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Доступ к серверу по ssh для бегета запрещен
+            // Доступ к серверу по ssh для Beget запрещен
             SSH_ACCESS_NOT_ALLOWED = 1;
         }
     }
@@ -1348,18 +1522,19 @@ message SoftwareInstallInfo {
 }
 
 message UnarchiveRequest {
-    // Vps uuid
+    // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
 message UnarchiveResponse {
+    // Информация о VPS
     VpsInfo vps = 1;
 }
 
 message PrivateNetworkInfo {
     // ID сети
     string id = 1;
-    // желаемый ip-адрес. Если пустая строка, то выберется случайный
+    // Желаемый ip-адрес. Если пустая строка, то выберется случайный
     string address = 2;
 }
 
@@ -1369,7 +1544,10 @@ message ReserveVpsSubdomainRequest {
 
 message ReserveVpsSubdomainResponse {
     oneof result {
+        // Домен
         string vps_subdomain = 1;
+
+        // Ошибка при резервировании домена
         Error error = 2;
     }
 

@@ -18,9 +18,11 @@ message GetAvailableSoftwareRequest {
 }
 
 message GetAvailableSoftwareResponse {
+    // Информация о доступном ПО
     repeated SoftwareInfo software = 1;
 
     message SoftwareInfo {
+        // Идентификатор софта
         uint32 id = 1;
 
         // Внутреннее имя (напр. redmine)
@@ -35,17 +37,28 @@ message GetAvailableSoftwareResponse {
         // Тип ПО (панель управления, обычное ПО)
         Type type = 5;
 
-        // Описание ПО
+        // Описание ПО на русском
         string description = 6;
+
+        // Описание ПО на английском
         string description_en = 7;
-        // Дополнительное описание для конкретной версии ПО
+
+        // Дополнительное описание на русском для конкретной версии ПО
         string description_version = 8;
+
+        // Дополнительное описание на английском для конкретной версии ПО
         string description_version_en = 9;
-        // Категория ПО
+
+        // Категория ПО на русском
         string category_name = 10;
+
+        // Категория ПО на английском
         string category_name_en = 11;
-        // Ссылки на иконки
+
+        // Ссылка на иконку ПО
         string icon_link = 12;
+
+        // Ссылка на иконку ПО 2х
         string icon_link_2x = 13;
 
         // Список ID образов, для которых возможна установка этого ПО
@@ -56,22 +69,26 @@ message GetAvailableSoftwareResponse {
 
         // Описание полей доступных для заполнения
         repeated FieldDesc field_data = 16;
+
         // Минимальные требования к конфигурации для установки
         Requirements requirements = 17;
 
         message Requirements {
-            // Количество ядер процессора, шт
+            // Количество ядер процессора
             uint32 cpu_count = 1;
 
-            // Размер диска, мб
+            // Размер диска в Мб
             uint32 disk_size = 2;
 
-            // Объем оперативной памяти, мб
+            // Объем оперативной памяти в Мб
             uint32 memory = 3;
         }
 
         enum Type {
+            // Панель управления
             PANEL = 0;
+
+            // Остальное ПО
             SOFTWARE = 1;
         }
     }
@@ -79,57 +96,85 @@ message GetAvailableSoftwareResponse {
 
 message FieldDesc {
     oneof field {
+        // Поле для пароля
         PasswordField password_field = 1;
+
+        // Поле для домена
         DomainField domain_field = 2;
+
+        // Обычное текстовое поле
         TextField text_field = 3;
+
+        // Поле для email
         EmailField email_field = 4;
     }
 }
 
-// Поле для паролей
 message PasswordField {
+    // Общие параметры для различных типов полей
     FieldCommon common = 1;
+
     // Автоматическая генерация пароля
     bool auto_generated = 2;
 }
-// Поле для почты
+
+
 message EmailField {
+    // Общие параметры для различных типов полей
     FieldCommon common = 1;
 }
-// Поле для текста
+
+
 message TextField {
+    // Общие параметры для различных типов полей
     FieldCommon common = 1;
+
     // Можно ли редактировать
     bool is_editable = 2;
 }
 
 message DomainField {
+    // Общие параметры для различных типов полей
     FieldCommon common = 1;
+
+    // Возможность использовать технический домен
     bool allow_tech_domain = 2;
 }
 
-// Общие параметры для различных типов полей (можно рассматривать как встроенный тип который расширяет другой)
 message FieldCommon {
     // Системное имя переменной
     string variable = 1;
-    // ЧП имя переменной
+
+    // ЧП имя переменной на русском
     string label = 2;
+
+    // ЧП имя переменной на английском
     string label_en = 3;
-    // Описание
+
+    // Описание на русском
     string description = 4;
+
+    // Описание на английском
     string description_en = 5;
+
     // Значение по умолчанию
     string default_value = 6;
-    // Является дополнительным параметром
+
+    // Является ли дополнительным параметром
     bool is_additional = 7;
+
     // Опциональность
     bool is_required = 8;
-    // Является исключительным (используется только для определенного ПО)
+
+    // Является ли исключительным (используется только для определенного ПО)
     bool is_custom = 9;
+
     // Регулярное выражение для валидации (Если пустая строка то не требуется валидация)
     string validation_regex = 10;
 
-    // Текст ошибки
+    // Текст ошибки на русском
     string validation_error_text = 11;
+
+    // Текст ошибки на русско
     string validation_error_text_en = 12;
 }

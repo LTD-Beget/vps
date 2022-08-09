@@ -6,27 +6,36 @@ import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
 service BackupService {
+    // Получить историю заданий по восстановлению
     rpc getOrders (GetOrdersRequest) returns (GetOrdersResponse) {
         option (google.api.http) = {
             get: "/v1/vps/backup/orders"
         };
     }
+
+    // Получить список копий доступный для восстановления
     rpc getAvailableCopies (GetAvailableCopiesRequest) returns (GetAvailableCopiesResponse) {
         option (google.api.http) = {
 			get: "/v1/vps/backup"
 		};
     }
+
+    // Получить список файлов определенного бекапа
     rpc getBackupFileList (GetBackupFileListRequest) returns (GetBackupFileListResponse) {
         option (google.api.http) = {
 			get: "/v1/vps/{id}/backup/{copy_id}"
 		};
     }
+
+    // Восстановить файл/директорию из бекапа
     rpc restoreFile (RestoreFileRequest) returns (RestoreFileResponse) {
         option (google.api.http) = {
 			post: "/v1/vps/{id}/backup/{copy_id}/file"
 			body: "*"
 		};
     }
+
+    // Восстановить все файлы из определенного бекапа
     rpc restoreServer (RestoreServerRequest) returns (RestoreServerResponse) {
         option (google.api.http) = {
 			post: "/v1/vps/{id}/backup/{copy_id}/server"
@@ -36,7 +45,7 @@ service BackupService {
 }
 
 message GetBackupFileListRequest {
-    // Идентификатор VPS (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор копии
@@ -60,7 +69,7 @@ message GetAvailableCopiesResponse {
 }
 
 message RestoreFileRequest {
-    // Идентификатор VPS (uuid)
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор копии
@@ -78,7 +87,7 @@ message RestoreFileRequest {
 
 message RestoreFileResponse {
     oneof result {
-        // Восстановление завершилось успешно
+        // Информация о восстановлении
         structures.OrderInfo order = 1;
 
         // Произошла ошибка при восстановлении файлов
@@ -112,7 +121,7 @@ message RestoreFileResponse {
 }
 
 message RestoreServerRequest {
-    // Идентификатор VPS, в который происходит восстановление (uuid)
+    // Идентификатор VPS, в который происходит восстановление, в формате uuid v4
     string id = 1;
 
     // Идентификатор копии
@@ -121,7 +130,7 @@ message RestoreServerRequest {
 
 message RestoreServerResponse {
     oneof result {
-        // Восстановление завершилось успешно
+        // Информация о восстановлении
         structures.OrderInfo order = 1;
 
         // Произошла ошибка при восстановлении файлов
@@ -157,5 +166,6 @@ message GetOrdersRequest {
 }
 
 message GetOrdersResponse {
+    // История заданий по восстановлению
     repeated structures.OrderInfo order = 1;
 }

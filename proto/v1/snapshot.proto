@@ -6,14 +6,14 @@ import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
 service SnapshotService {
-    // get all snapshots
+    // Получить список всех снашпотов
     rpc getAll (GetAllRequest) returns (GetAllResponse) {
         option (google.api.http) = {
             get: "/v1/vps/snapshot"
         };
     }
 
-    // create a snapshot
+    // Создать новый снапшот
     rpc create (CreateRequest) returns (CreateResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot"
@@ -21,7 +21,7 @@ service SnapshotService {
         };
     }
 
-    // create cost calculator for snapshot creating
+    // Узнать стоимость снапшота для конкретной VPS
     rpc createCalculator (CreateCalculatorRequest) returns (CreateCalculatorResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot/calculator"
@@ -29,14 +29,14 @@ service SnapshotService {
         };
     }
 
-    // get restore list
+    // Получить историю восстановлений из снапшота
     rpc getAllRestores (GetAllRestoresRequest) returns (GetAllRestoresResponse) {
         option (google.api.http) = {
             get: "/v1/vps/snapshot/restore"
         };
     }
 
-    // create a restore for the snapshot
+    // Создать заявку на восстановление из снапшота
     rpc restore (RestoreRequest) returns (RestoreResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot/{id}/restore"
@@ -44,14 +44,14 @@ service SnapshotService {
         };
     }
 
-    // remove the snapshot
+    // Удалить снапшот
     rpc remove (RemoveRequest) returns (RemoveResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/snapshot/{id}"
         };
     }
 
-    // edit snapshot user fields
+    // Изменить описание снапшота
     rpc edit (EditRequest) returns (EditResponse) {
         option (google.api.http) = {
             put: "/v1/vps/snapshot/{id}"
@@ -64,225 +64,258 @@ message GetAllRequest {
 }
 
 message GetAllResponse {
+    // Информация о снапшотах
     repeated Snapshot snapshot = 1;
 }
 
 message CreateRequest {
-    // vps id (uuid)
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 1;
 
-    // user title for snapshot
+    // Описание снапшота
     string description = 2;
 
-    // stop vps before snapshot?
+    // Остановить сервер на время создания снапшота
     bool consistent = 3;
 }
 
 message CreateResponse {
     oneof response {
+        // Информация о снапшоте
         Snapshot snapshot = 1;
+
+        // Произошла ошибка при создании снапшота
         Error error = 2;
     }
     message Error {
+        // Сообщение об ошибке
         string message = 1;
+
+        // Код ошибки
         Code code = 2;
+
         enum Code {
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // already creating this vps snapshot
+            // Для данной VPS уже создается снапшот
             ALREADY_CREATING = 1;
 
-            // must be positive balance
+            // Недостаточно денег на балансе для создания снапшота
             INSUFFICIENT_FUNDS = 2;
 
-            // vps must be running or stopped
+            // В данном статусе VPS невозможно создать снапшот(VPS не в статусе running/stopped)
             UNSUITABLE_VPS_STATUS = 3;
         }
     }
 }
 
 message CreateCalculatorRequest {
-    // vps id (uuid)
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 2;
 }
 
 message CreateCalculatorResponse {
-    // cost per day in rub
+    // Стоимость снапшота за день
     double price_day = 1;
 
-    // cost per day for gb in rub
+    // Стоимость одного Гб в день
     double price_day_gb = 2;
 
-    // size in gb
+    // Количество Гб у данной VPS
     uint32 size = 3;
 }
 
 message GetAllRestoresRequest {
-    // snapshot id. Optional, full list at 0
+    // Идентификатор снапшота
     uint64 id = 1;
 }
 
 message GetAllRestoresResponse {
+    // Информация о восстановлении
     repeated Restore restore = 1;
 }
 
 message RestoreRequest {
-    // snapshot id
+    // Идентификатор снапшота
     uint64 id = 1;
 
-    // target vps to restore
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 2;
 }
 
 message RestoreResponse {
     oneof response {
+        // Информация о восстановлении
         Restore restore = 1;
+
+        // Произошла ошибка при созданнии заявки на восстановление снапшота
         Error error = 2;
     }
     message Error {
+        // Описание ошибки
         string message = 1;
+
+        // Код ошибки
         Code code = 2;
+
         enum Code {
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // snapshot creating in progress
+            // Снапшот в процессе создания
             SNAPSHOT_NOT_DONE = 2;
 
-            // saved snapshot configuration is higher than target
+            // Конфигурация VPS не подходит для данного снапшота
             CONFIGURATION_NOT_ENOUGH = 3;
 
-            // vps must be running or stopped
+            // В данном статусе VPS невозможно восстановить снапшот(VPS не в статусе running/stopped)
             UNSUITABLE_VPS_STATUS = 4;
         }
     }
 }
 
 message RemoveRequest {
-    // snapshot id
+    // Идентификатор снапшота
     uint64 id = 1;
 }
 
 message RemoveResponse {
     oneof response {
+        // Информация о снапшоте
         Snapshot snapshot = 1;
+
+        // Ошибка при удалении снапшота
         Error error = 2;
     }
     message Error {
+        // Описание ошибки
         string message = 1;
+
+        // Код ошибки
         Code code = 2;
+
         enum Code {
+            // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // snapshot is creating or restoring or removing
+            // Удаление снапшота в данном статусе невозможно(находится в статусе creating/restoring/removing)
             SNAPSHOT_NOT_DONE = 1;
 
-            // snapshot now in restoring
+            // Из данного снапшота происходит восстановление данных
             SNAPSHOT_IS_RESTORING = 2;
         }
     }
 }
 
 message EditRequest {
-    // snapshot id
+    // Идентификатор снапшота
     uint64 id = 1;
 
-    // user title for snapshot
+    // Описание снапшота
     string description = 2;
 }
 
 message EditResponse {
-    // snapshot
+    // Информация о снапшоте
     Snapshot snapshot = 1;
 }
 
 message Snapshot {
-    // snapshot id
+    // Идентификатор снапшота
     uint64 id = 1;
 
-    // vps id (uuid)
+    // Идентификатор VPS в формате uuid v4
     string vps_id = 2;
 
-    // vps name
+    // Имя VPS
     string vps_name = 3;
 
-    // snapshot create date W3C
+    // Дата создания снапшота в формате W3C
     string date_create = 4;
 
-    // bytes
+    // Размер снапшота
     uint64 size = 5;
 
-    // current snapshot status
+    // Статус снапшота
     Status status = 6;
 
-    // source vps OS info at create time
+    // Исходная информация о ОС во время создания снапшота
     structures.OperatingSystem operating_system = 7;
 
-    // user title for snapshot
+    // Описание снапшота
     string description = 8;
 
-    // required vps configuration for restoring
+    // Необходимая конфигурация VPS для восстановления снапшота
     RequiredConfiguration configuration = 9;
 
-    // cost per day in rub
+    // Стоимость снапшота в день
     double price_day = 10;
 
     enum Status {
+        // Создание
         CREATING = 0;
+
+        // Создан
         DONE = 1;
+
+        // Восстанавливается
         RESTORING = 2;
+
+        // Удален
         DELETED = 3;
     }
 }
 
 message Restore {
-    // restore order id
+    // Идентификатор заявки на восстановление
     uint64 id = 1;
 
-    // source snapshot
+    // Информация о снапшоте
     Snapshot snapshot = 2;
 
-    // target vps id
+    // Идентификатор VPS на которую происходит восстановление
     string vps_id = 3;
 
-    // target vps name
+    // Имя VPS на которую происходит восстановление
     string vps_name = 4;
 
-    // restore type: existing or new vps
+    // Тип восстановления(на существующую или новую VPS)
     TargetType target_type = 5;
 
-    // start restore datetime (RFC3339)
+    // Дата начала восстановление, в формате RFC3339
     string date_create = 6;
 
-    // finish restore datetime (RFC3339)
+    // Дата окончания восстановление, в формате RFC3339
     string date_complete = 7;
 
-    // current restore status
+    // Текущий статус восстановления
     Status status = 8;
 
     enum TargetType {
-        // restore to existing vps
+        // Существующуя VPS
         EXISTING_VPS = 0;
 
-        // create vps from snapshot
+        // Новая VPS
         NEW_VPS = 1;
     }
 
     enum Status {
-        // in create process
+        // В процессе востановления
         PROCESSING = 0;
 
-        // restore completed
+        // Восстановление завершено
         COMPLETED = 1;
     }
 }
 
 message RequiredConfiguration {
-    // CPU cores
+    // Количество ядер процессора
     uint32 cpu_count = 1;
 
-    // disk size, Mb
+    // Размер диска в Mb
     uint32 disk_size = 2;
 
-    // RAM, Mb
+    // Размер оперативной памяти в Mb
     uint32 memory = 3;
 }
