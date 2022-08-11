@@ -7,6 +7,7 @@ import "vps/proto/v1/structures.proto";
 
 service ManageService {
     // Создать VPS
+    // Создаёт VPS
     rpc createVps (CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server"
@@ -15,6 +16,8 @@ service ManageService {
     }
 
     // Получить доступные варианты конфигурации VPS
+
+    // Получает информацию о конфигурации
     rpc getAvailableConfiguration (GetAvailableConfigurationRequest) returns (GetAvailableConfigurationResponse) {
         option (google.api.http) = {
             get: "/v1/vps/configuration"
@@ -352,6 +355,7 @@ message CreateVpsRequest {
     // Необходима конфигурация(тариф)
     string configuration_id = 4;
 
+    // Выбор между операционной системой и снапшотом
     oneof source {
         // Идентификатор ОС
         uint32 operating_system_id = 5;
