@@ -9,7 +9,7 @@ service ManageService {
     // Создать VPS.
     //
     //
-    // Создаёт VPS
+    // Создаёт VPS по заданным параметрам
     rpc createVps (CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server"
