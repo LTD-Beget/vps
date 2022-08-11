@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
 service ManageService {
-    // Создать VPS
+    // Создать VPS.
     //
     // Создаёт VPS
     rpc createVps (CreateVpsRequest) returns (CreateVpsResponse) {
