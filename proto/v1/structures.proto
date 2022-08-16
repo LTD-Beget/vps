@@ -209,7 +209,7 @@ message SoftwareMetadata {
     // второй цвет градиента в #hex формате
     string secondary_color = 8;
     // вес для сортировки софта на фронте
-    uint32 weight = 9;
+    float weight = 9;
 }
 
 message SoftwareCategory {
