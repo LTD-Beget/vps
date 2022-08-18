@@ -4,23 +4,26 @@ package beget.vps.v1.statistic;
 
 import "google/api/annotations.proto";
 
+// Статистика по серверу
+//
+//
 service StatisticService {
     // Получить статистику по использованию CPU для конкретной VPS
-    rpc getCpu (GetCpuRequest) returns (GetCpuResponse) {
+    rpc getCpu(GetCpuRequest) returns (GetCpuResponse) {
         option (google.api.http) = {
             get: "/v1/vps/statistic/cpu/{id}"
         };
     }
 
     // Получить статистику по использованию оперативной памяти для конкретной VPS
-    rpc getMemory (GetMemoryRequest) returns (GetMemoryResponse) {
+    rpc getMemory(GetMemoryRequest) returns (GetMemoryResponse) {
         option (google.api.http) = {
             get: "/v1/vps/statistic/memory/{id}"
         };
     }
 
     // Получить статистику о обращении к диску(чтение/запись) для конкретной VPS
-    rpc getDisk (GetDiskRequest) returns (GetDiskResponse) {
+    rpc getDisk(GetDiskRequest) returns (GetDiskResponse) {
         option (google.api.http) = {
             get: "/v1/vps/statistic/disk/{id}"
         };
@@ -34,28 +37,28 @@ service StatisticService {
     }
 
     // Получить статистику о трафике для конкретной VPS
-    rpc getNetwork (GetNetworkRequest) returns (GetNetworkResponse) {
+    rpc getNetwork(GetNetworkRequest) returns (GetNetworkResponse) {
         option (google.api.http) = {
             get: "/v1/vps/statistic/network/{id}"
         };
     }
 
     // Получить статистику о нагрузке на сервер
-    rpc getLoadAverage (GetLoadAverageRequest) returns (GetLoadAverageResponse) {
+    rpc getLoadAverage(GetLoadAverageRequest) returns (GetLoadAverageResponse) {
         option (google.api.http) = {
             get: "/v1/vps/statistic/load-average/{id}"
         };
     }
 
     // Получить детальную статистику о использовании CPU для конкретной VPS
-    rpc getCpuDetails (GetCpuDetailsRequest) returns (GetCpuDetailsResponse) {
+    rpc getCpuDetails(GetCpuDetailsRequest) returns (GetCpuDetailsResponse) {
         option (google.api.http) = {
             get: "/v1/vps/statistic/cpu-details/{id}"
         };
     }
 
     // Получить текущий список процессов на сервере
-    rpc getProcessList (GetProcessListRequest) returns (GetProcessListResponse) {
+    rpc getProcessList(GetProcessListRequest) returns (GetProcessListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/statistic/processes/{id}"
         };

@@ -5,10 +5,13 @@ package beget.vps.v1.sshKey;
 import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
+// Управление SSH-ключами
+//
+//
 service SshKeyService {
 
     // Добавить публичный SSH ключ
-    rpc add (AddRequest) returns (AddResponse) {
+    rpc add(AddRequest) returns (AddResponse) {
         option (google.api.http) = {
 			post: "/v1/vps/sshKey"
 			body: "*"
@@ -16,14 +19,14 @@ service SshKeyService {
     }
 
     // Получить список всех добавленных SSH ключей
-    rpc getAll (GetAllRequest) returns (GetAllResponse) {
+    rpc getAll(GetAllRequest) returns (GetAllResponse) {
         option (google.api.http) = {
 			get: "/v1/vps/sshKey"
 		};
     }
 
     // Удалить публичный SSH ключ
-    rpc remove (RemoveRequest) returns (RemoveResponse) {
+    rpc remove(RemoveRequest) returns (RemoveResponse) {
         option (google.api.http) = {
 			delete: "/v1/vps/sshKey/{id}"
 		};

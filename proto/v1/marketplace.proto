@@ -4,9 +4,12 @@ package beget.vps.v1.marketplace;
 
 import "google/api/annotations.proto";
 
+// Маркетплейс приложений
+//
+//
 service MarketplaceService {
     // Возвращает список доступного для установки ПО
-    rpc getAvailableSoftware (GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
+    rpc getAvailableSoftware(GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
         option (google.api.http) = {
             get: "/v1/vps/marketplace/software/list"
         };

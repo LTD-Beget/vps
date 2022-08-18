@@ -5,9 +5,12 @@ package beget.vps.v1.manage;
 import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
+// Управление облачными серверами
+//
+//
 service ManageService {
     // Создать VPS
-    rpc createVps (CreateVpsRequest) returns (CreateVpsResponse) {
+    rpc createVps(CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server"
             body: "*"
@@ -15,84 +18,84 @@ service ManageService {
     }
 
     // Получить доступные варианты конфигурации VPS
-    rpc getAvailableConfiguration (GetAvailableConfigurationRequest) returns (GetAvailableConfigurationResponse) {
+    rpc getAvailableConfiguration(GetAvailableConfigurationRequest) returns (GetAvailableConfigurationResponse) {
         option (google.api.http) = {
             get: "/v1/vps/configuration"
         };
     }
 
     // Получить список VPS
-    rpc getList (GetListRequest) returns (GetListResponse) {
+    rpc getList(GetListRequest) returns (GetListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/list"
         };
     }
 
     // Получить статусы всех VPS
-    rpc getStatuses (GetStatusesRequest) returns (GetStatusesResponse) {
+    rpc getStatuses(GetStatusesRequest) returns (GetStatusesResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/statuses"
         };
     }
 
     // Получить информацию по VPS
-    rpc getInfo (GetInfoRequest) returns (GetInfoResponse) {
+    rpc getInfo(GetInfoRequest) returns (GetInfoResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/{id}"
         };
     }
 
     // Запустить VPS
-    rpc startVps (StartVpsRequest) returns (StartVpsResponse) {
+    rpc startVps(StartVpsRequest) returns (StartVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/start"
         };
     }
 
     // Остановить VPS
-    rpc stopVps (StopVpsRequest) returns (StopVpsResponse) {
+    rpc stopVps(StopVpsRequest) returns (StopVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/stop"
         };
     }
 
-    // Перезагрузить(reboot) VPS
-    rpc rebootVps (RebootVpsRequest) returns (RebootVpsResponse) {
+    // Перезагрузить (reboot) VPS
+    rpc rebootVps(RebootVpsRequest) returns (RebootVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reboot"
         };
     }
 
-    // Перезагрузить(reset) VPS
-    rpc resetVps (ResetVpsRequest) returns (ResetVpsResponse) {
+    // Перезагрузить (reset) VPS
+    rpc resetVps(ResetVpsRequest) returns (ResetVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reset"
         };
     }
 
     // Удалить VPS
-    rpc removeVps (RemoveVpsRequest) returns (RemoveVpsResponse) {
+    rpc removeVps(RemoveVpsRequest) returns (RemoveVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/remove"
         };
     }
 
     // Включить rescue-режим для VPS
-    rpc startRescue (StartRescueRequest) returns (StartRescueResponse) {
+    rpc startRescue(StartRescueRequest) returns (StartRescueResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/rescue"
         };
     }
 
     // Выключить rescue-режим для VPS
-    rpc stopRescue (StopRescueRequest) returns (StopRescueResponse) {
+    rpc stopRescue(StopRescueRequest) returns (StopRescueResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/server/{id}/rescue"
         };
     }
 
     // Сменить тариф VPS
-    rpc changeConfiguration (ChangeConfigurationRequest) returns (ChangeConfigurationResponse) {
+    rpc changeConfiguration(ChangeConfigurationRequest) returns (ChangeConfigurationResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/configuration"
             body: "*"
@@ -100,7 +103,7 @@ service ManageService {
     }
 
     // Пересоздать VPS
-    rpc reinstall (ReinstallRequest) returns (ReinstallResponse) {
+    rpc reinstall(ReinstallRequest) returns (ReinstallResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reinstall"
             body: "*"
@@ -108,7 +111,7 @@ service ManageService {
     }
 
     // Обновить информацию о VPS
-    rpc updateInfo (UpdateInfoRequest) returns (UpdateInfoResponse) {
+    rpc updateInfo(UpdateInfoRequest) returns (UpdateInfoResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/info"
             body: "*"
@@ -116,35 +119,35 @@ service ManageService {
     }
 
     // Получить историю действий с VPS
-    rpc getHistory (GetHistoryRequest) returns (GetHistoryResponse) {
+    rpc getHistory(GetHistoryRequest) returns (GetHistoryResponse) {
         option (google.api.http) = {
             get: "/v1/vps/{id}/history"
         };
     }
 
     // Добавить публичный ssh-ключ в хранилище
-    rpc attachSshKey (AttachSshKeyRequest) returns (AttachSshKeyResponse) {
+    rpc attachSshKey(AttachSshKeyRequest) returns (AttachSshKeyResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/sshKey/{ssh_key_id}"
         };
     }
 
     // Удалить публичный ssh-ключ из хранилища
-    rpc detachSshKey (DetachSshKeyRequest) returns (DetachSshKeyResponse) {
+    rpc detachSshKey(DetachSshKeyRequest) returns (DetachSshKeyResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/{id}/sshKey/{ssh_key_id}"
         };
     }
 
     // Сбросить пароль VPS
-    rpc resetPassword (ResetPasswordRequest) returns (ResetPasswordResponse) {
+    rpc resetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {
         option (google.api.http) = {
             put: "/v1/vps/{id}/password"
         };
     }
 
     // Прикрепить дополнительный IP адрес к VPS
-    rpc attachIpAddress (AttachIpAddressRequest) returns (AttachIpAddressResponse) {
+    rpc attachIpAddress(AttachIpAddressRequest) returns (AttachIpAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/network/{ip_address}"
             body: "*"
@@ -152,14 +155,14 @@ service ManageService {
     }
 
     // Открепить дополнительный IP адрес от VPS
-    rpc detachIpAddress (DetachIpAddressRequest) returns (DetachIpAddressResponse) {
+    rpc detachIpAddress(DetachIpAddressRequest) returns (DetachIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/detach/{ip_address}"
         };
     }
 
     // Добавить VPS к приватной сети
-    rpc attachToPrivateNetwork (AttachToPrivateNetworkRequest) returns (AttachToPrivateNetworkResponse) {
+    rpc attachToPrivateNetwork(AttachToPrivateNetworkRequest) returns (AttachToPrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/private-network/{network_id}"
             body: "*"
@@ -167,14 +170,14 @@ service ManageService {
     }
 
     // Удалить VPS из приватной сети
-    rpc detachFromPrivateNetwork (DetachFromPrivateNetworkRequest) returns (DetachFromPrivateNetworkResponse) {
+    rpc detachFromPrivateNetwork(DetachFromPrivateNetworkRequest) returns (DetachFromPrivateNetworkResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/{id}/private-network/{network_id}"
         };
     }
 
     // Открыть/закрыть доступ к VPS файловому менеджеру
-    rpc changeSshAccess (ChangeSshAccessRequest) returns (ChangeSshAccessResponse) {
+    rpc changeSshAccess(ChangeSshAccessRequest) returns (ChangeSshAccessResponse) {
         option (google.api.http) = {
             put: "/v1/vps/{id}/ssh/access"
             body: "*"
@@ -182,28 +185,28 @@ service ManageService {
     }
 
     // Возвращает необходимые параметры сессии для перехода в файловый менеджер
-    rpc getFileManagerSettings (GetFileManagerSettingsRequest) returns (GetFileManagerSettingsResponse) {
+    rpc getFileManagerSettings(GetFileManagerSettingsRequest) returns (GetFileManagerSettingsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/fm"
         };
     }
 
     // Получить список установленного ПО на VPS
-    rpc getInstalledSoftware (GetInstalledSoftwareRequest) returns (GetInstalledSoftwareResponse) {
+    rpc getInstalledSoftware(GetInstalledSoftwareRequest) returns (GetInstalledSoftwareResponse) {
         option (google.api.http) = {
             get: "/v1/vps/{id}/software"
         };
     }
 
     // Получить список доступного для установки ПО
-    rpc getAvailableSoftware (GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
+    rpc getAvailableSoftware(GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
         option (google.api.http) = {
             get: "/v1/vps/software"
         };
     }
 
     // Проверить возможность установки ПО
-    rpc checkSoftwareRequirements (CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
+    rpc checkSoftwareRequirements(CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/software/requirements"
             body: "*"
@@ -211,7 +214,7 @@ service ManageService {
     }
 
     // Разархивировать VPS
-    rpc unarchive (UnarchiveRequest) returns (UnarchiveResponse) {
+    rpc unarchive(UnarchiveRequest) returns (UnarchiveResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/archive/{id}"
         };
@@ -253,7 +256,7 @@ message CheckSoftwareRequirementsResponse {
 
             // Домен не зарегистрирован
             DOMAIN_NOT_REGISTERED = 1;
-           
+
             // Домен зарегистрирован через Beget и у него сторонние NS-записи(не ns1.beget.com/etc)
             WRONG_NS_RECORD = 2;
 

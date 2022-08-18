@@ -5,9 +5,12 @@ package beget.vps.v1.network;
 import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
+// Управление сетью
+//
+//
 service NetworkService {
     // Заказать дополнительный IP-адрес
-    rpc orderIpAddress (OrderIpAddressRequest) returns (OrderIpAddressResponse) {
+    rpc orderIpAddress(OrderIpAddressRequest) returns (OrderIpAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/network"
             body: "*"
@@ -15,33 +18,33 @@ service NetworkService {
     }
 
     // Удалить дополнительный IP адрес
-    rpc removeIpAddress (RemoveIpAddressRequest) returns (RemoveIpAddressResponse) {
+    rpc removeIpAddress(RemoveIpAddressRequest) returns (RemoveIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/{ip_address}"
         };
     }
 
     // Получить информацию о дополнительных IP адресах
-    rpc getNetworkInfo (GetNetworkInfoRequest) returns (GetNetworkInfoResponse) {
+    rpc getNetworkInfo(GetNetworkInfoRequest) returns (GetNetworkInfoResponse) {
         option (google.api.http) = {
             get: "/v1/vps/network"
         };
     }
 
     // Создать приватную сеть
-    rpc createPrivateNetwork (CreatePrivateNetworkRequest) returns (CreatePrivateNetworkResponse) {
+    rpc createPrivateNetwork(CreatePrivateNetworkRequest) returns (CreatePrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network"
         };
     }
 
     // Получить IP адрес из приватной сети
-    rpc suggestPrivateAddress (SuggestPrivateAddressRequest) returns (SuggestPrivateAddressResponse) {
+    rpc suggestPrivateAddress(SuggestPrivateAddressRequest) returns (SuggestPrivateAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network/{network_id}/suggested-address"
             body: "*"
-            };
-        }
+        };
+    }
 }
 
 message OrderIpAddressRequest {

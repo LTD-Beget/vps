@@ -5,16 +5,19 @@ package beget.vps.v1.snapshot;
 import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
+// Снапшоты сервера
+//
+//
 service SnapshotService {
     // Получить список всех снашпотов
-    rpc getAll (GetAllRequest) returns (GetAllResponse) {
+    rpc getAll(GetAllRequest) returns (GetAllResponse) {
         option (google.api.http) = {
             get: "/v1/vps/snapshot"
         };
     }
 
     // Создать новый снапшот
-    rpc create (CreateRequest) returns (CreateResponse) {
+    rpc create(CreateRequest) returns (CreateResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot"
             body: "*"
@@ -22,7 +25,7 @@ service SnapshotService {
     }
 
     // Узнать стоимость снапшота для конкретной VPS
-    rpc createCalculator (CreateCalculatorRequest) returns (CreateCalculatorResponse) {
+    rpc createCalculator(CreateCalculatorRequest) returns (CreateCalculatorResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot/calculator"
             body: "*"
@@ -30,14 +33,14 @@ service SnapshotService {
     }
 
     // Получить историю восстановлений из снапшота
-    rpc getAllRestores (GetAllRestoresRequest) returns (GetAllRestoresResponse) {
+    rpc getAllRestores(GetAllRestoresRequest) returns (GetAllRestoresResponse) {
         option (google.api.http) = {
             get: "/v1/vps/snapshot/restore"
         };
     }
 
     // Создать заявку на восстановление из снапшота
-    rpc restore (RestoreRequest) returns (RestoreResponse) {
+    rpc restore(RestoreRequest) returns (RestoreResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot/{id}/restore"
             body: "*"
@@ -45,14 +48,14 @@ service SnapshotService {
     }
 
     // Удалить снапшот
-    rpc remove (RemoveRequest) returns (RemoveResponse) {
+    rpc remove(RemoveRequest) returns (RemoveResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/snapshot/{id}"
         };
     }
 
     // Изменить описание снапшота
-    rpc edit (EditRequest) returns (EditResponse) {
+    rpc edit(EditRequest) returns (EditResponse) {
         option (google.api.http) = {
             put: "/v1/vps/snapshot/{id}"
             body: "*"
