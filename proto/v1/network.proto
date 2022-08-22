@@ -7,9 +7,17 @@ import "vps/proto/v1/structures.proto";
 
 // Управление сетью
 //
-//
+// Предоставляет набор методов для работы с публичными IP-адресами и приватными сетями
+// облачных серверов.
 service NetworkService {
     // Заказать дополнительный IP-адрес
+    //
+    // Производит заказ нового публичного адреса. При указании идентификатора VPS `id` IP-адрес будет
+    // прикреплён к этому серверу. В случае отсутствии идентификатора IP будет добавлен на аккаунт без
+    // привязки к VPS.
+    //
+    // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
     rpc orderIpAddress(OrderIpAddressRequest) returns (OrderIpAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/network"
@@ -17,14 +25,22 @@ service NetworkService {
         };
     }
 
-    // Удалить дополнительный IP адрес
+    // Удалить дополнительный IP-адрес
+    //
+    // Удаляет дополнительный IP-адрес с аккаунта.
+    //
+    // Для получения доступных IP-адресов `ip_address` необходимо использовать метод
+    // "Получить информацию об IP-адресах и сетях" из API "Облачные серверы".
     rpc removeIpAddress(RemoveIpAddressRequest) returns (RemoveIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/{ip_address}"
         };
     }
 
-    // Получить информацию о дополнительных IP адресах
+    // Получить информацию об IP-адресах и сетях
+    //
+    // Возвращает информацию по основным и дополнительным публичным IP-адресам, а также по приватным сетям
+    // на текущем аккаунте.
     rpc getNetworkInfo(GetNetworkInfoRequest) returns (GetNetworkInfoResponse) {
         option (google.api.http) = {
             get: "/v1/vps/network"
@@ -32,13 +48,24 @@ service NetworkService {
     }
 
     // Создать приватную сеть
+    //
+    // Создаёт новую приватную сеть для аккаунта.
     rpc createPrivateNetwork(CreatePrivateNetworkRequest) returns (CreatePrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network"
         };
     }
 
-    // Получить IP адрес из приватной сети
+    // Получить IP-адрес из приватной сети
+    //
+    // Возвращает рекомендуемый IP-адрес для конкретного сервера в указанной сети. Адрес в сети
+    // при этом не резервируется.
+    //
+    // Для получения доступных идентификаторов сети `network_id` необходимо использовать метод
+    // "Получить информацию об IP-адресах и сетях" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов VPS `vps_id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
     rpc suggestPrivateAddress(SuggestPrivateAddressRequest) returns (SuggestPrivateAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network/{network_id}/suggested-address"
@@ -48,16 +75,17 @@ service NetworkService {
 }
 
 message OrderIpAddressRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS в формате uuid v4 (необязательное поле)
     string id = 1;
 }
 
 message OrderIpAddressResponse {
+    // Результат запроса
     oneof result {
-        // IP-адрес
+        // Результат запроса: IP-адрес
         string ip_address = 1;
 
-        // Произошла ошибка при заказе дополнительного IP-адреса
+        // Результат запроса: произошла ошибка при заказе дополнительного IP-адреса
         Error error = 2;
     }
 
@@ -78,7 +106,7 @@ message OrderIpAddressResponse {
             // Достигнут лимит резервации IP-адресов для пользователя
             CUSTOMER_IP_LIMIT_REACHED = 2;
 
-            // Произошла ошибка при добавлении дополнительного IP адреса внутри гостевой ОС
+            // Произошла ошибка при добавлении дополнительного IP-адреса внутри гостевой ОС
             GUEST_OS_ADD_IP_ADDRESS_FAILED = 3;
         }
     }
@@ -90,11 +118,12 @@ message RemoveIpAddressRequest {
 }
 
 message RemoveIpAddressResponse {
+    // Результат запроса
     oneof result {
-        // IP-адрес
+        // Результат запроса: IP-адрес
         string ip_address = 1;
 
-        // Произошла ошибка при заказе дополнительного IP-адреса
+        // Результат запроса: произошла ошибка при заказе дополнительного IP-адреса
         Error error = 2;
     }
 
@@ -109,7 +138,7 @@ message RemoveIpAddressResponse {
             // Внутренняя ошибка сервера
             INTERNAL_ERROR = 0;
 
-            // Произошла ошибка при удалении дополнительного IP адреса внутри гостевой ОС
+            // Произошла ошибка при удалении дополнительного IP-адреса внутри гостевой ОС
             GUEST_OS_REMOVE_IP_ADDRESS_FAILED = 1;
         }
     }
@@ -118,10 +147,10 @@ message RemoveIpAddressResponse {
 message GetNetworkInfoRequest {}
 
 message GetNetworkInfoResponse {
-    // Основные IP-адреса пользователя
+    // Основные публичные IP-адреса серверов
     repeated structures.IpInfo ip = 1;
 
-    // Дополнительные IP-адреса пользователя
+    // Дополнительные публичные IP-адреса для серверов
     repeated structures.AdditionalIpInfo additional_ip = 2;
 
     // Приватные сети пользователя
@@ -131,11 +160,12 @@ message GetNetworkInfoResponse {
 message CreatePrivateNetworkRequest {}
 
 message CreatePrivateNetworkResponse {
+    // Результат запроса
     oneof result {
-        // Информация о приватной сети
+        // Результат запроса: информация о приватной сети
         structures.PrivateNetwork network = 1;
 
-        // Произошла ошибка при создании приватной сети
+        // Результат запроса: произошла ошибка при создании приватной сети
         Error error = 2;
     }
 
@@ -165,6 +195,6 @@ message SuggestPrivateAddressRequest {
 }
 
 message SuggestPrivateAddressResponse {
-    // IP адрес приватной сети
+    // IP-адрес приватной сети
     string ip = 1;
 }
