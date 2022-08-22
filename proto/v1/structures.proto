@@ -2,7 +2,7 @@ syntax = 'proto3';
 
 package beget.vps.v1.structures;
 
-// Описание публичного ssh-ключа, добавленного пользователем в систему
+// Описание публичного SSH-ключа, добавленного пользователем в систему
 message SshKeyInfo {
     // Идентификатор ключа
     uint32 id = 1;
@@ -224,7 +224,7 @@ message PrivateNetwork {
     // Идентификатор сети
     string id = 1;
 
-    // IP адрес подсети
+    // IP-адрес подсети
     string subnet = 2;
 
     // Маска подсети
@@ -235,7 +235,7 @@ message AttachedPrivateNetwork {
     // Сведения о приватной сети
     PrivateNetwork network = 1;
 
-    // IP адреса из вышеуказанной сети
+    // IP-адреса из вышеуказанной сети
     repeated string ip = 2;
 }
 

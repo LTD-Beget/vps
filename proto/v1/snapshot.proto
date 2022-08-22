@@ -119,10 +119,10 @@ message CreateCalculatorRequest {
 }
 
 message CreateCalculatorResponse {
-    // Стоимость снапшота за день
+    // Стоимость снапшота за один день в рублях
     double price_day = 1;
 
-    // Стоимость одного Гб в день
+    // Стоимость одного Гб за один день в рублях
     double price_day_gb = 2;
 
     // Количество Гб у данной VPS
@@ -252,7 +252,7 @@ message Snapshot {
     // Необходимая конфигурация VPS для восстановления снапшота
     RequiredConfiguration configuration = 9;
 
-    // Стоимость снапшота в день
+    // Стоимость снапшота за один день в рублях
     double price_day = 10;
 
     enum Status {
