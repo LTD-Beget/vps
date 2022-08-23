@@ -10,6 +10,18 @@ import "vps/proto/v1/structures.proto";
 //
 service ManageService {
     // Создать VPS
+    //
+    // Создает новый облачный сервер с заданными параметрами.
+    //
+    // Для получения доступных идентификаторов конфигурации `configuration_id`
+    // и идентификаторов ОС `operating_system_id` необходимо использовать метод
+    // "Получить доступные конфигурации VPS" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов снапшотов `snapshot_id` необходимо использовать метод
+    // "Получить список снапшотов" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов SSH-ключей `ssh_keys` необходимо использовать метод
+    // "Получить список публичных SSH-ключей" из API "Облачные серверы".
     rpc createVps(CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server"
@@ -17,7 +29,7 @@ service ManageService {
         };
     }
 
-    // Получить доступные варианты конфигурации VPS
+    // Получить доступные конфигурации VPS
     rpc getAvailableConfiguration(GetAvailableConfigurationRequest) returns (GetAvailableConfigurationResponse) {
         option (google.api.http) = {
             get: "/v1/vps/configuration"
@@ -241,7 +253,7 @@ message CheckSoftwareRequirementsResponse {
     Error error = 2;
 
     message Error {
-        // Ошибка связанная с доменом
+        // Ошибка связанная с доменом. Вместо этого поля следует использовать `domain_error`.
         DomainError wordpress_error = 1 [deprecated=true];
 
         oneof type {
@@ -284,7 +296,7 @@ message GetAvailableSoftwareResponse {
         // Идентификатор ПО
         uint32 id = 1;
 
-        // Назнание ПО
+        // Название ПО
         string name = 2;
 
         // Отображаемое название ПО
@@ -349,21 +361,22 @@ message CreateVpsRequest {
     // Имя хоста в операционной системе
     string hostname = 2;
 
-    // Дополнительное описание VPS
+    // Дополнительное описание VPS (необязательное поле)
     string description = 3;
 
-    // Необходима конфигурация(тариф)
+    // Идентификатор необходимой конфигурации (тариф)
     string configuration_id = 4;
 
+    // Источник для диска сервера
     oneof source {
-        // Идентификатор ОС
+        // Источник для диска сервера: идентификатор ОС
         uint32 operating_system_id = 5;
 
-        // Идентификатор снапшота, который восстановится в новую VPS
+        // Источник для диска сервера: идентификатор снапшота, который восстановится в новую VPS
         uint64 snapshot_id = 11;
     }
 
-    // ID публичных ssh-ключей, которые будут добавлены в VPS
+    // Идентификаторы публичных SSH-ключей, которые будут добавлены в VPS (необязательное поле)
     repeated uint32 ssh_keys = 6;
 
     // Пароль (должен включать минимум 1 upper, 1 lower, 1 digit, 1 special char. Мин длина - 8 символов)
@@ -372,10 +385,10 @@ message CreateVpsRequest {
     // Открыть доступ к VPS файловому менеджеру
     bool beget_ssh_access_allowed = 8;
 
-    // Информация о ПО, которое необходимо установить
+    // Информация о ПО, которое необходимо установить (необязательное поле)
     repeated SoftwareInstallInfo software = 10;
 
-    // Приватные сети, к которым необходимо подключить VPS
+    // Приватные сети, к которым необходимо подключить VPS (необязательное поле)
     repeated PrivateNetworkInfo private_networks = 12;
 }
 
@@ -441,7 +454,7 @@ message CreateVpsResponse {
             // Некорректная переменная для устанавливаемого ПО, подробности в `variable_error`
             SOFTWARE_VARIABLE_INVALID = 12;
 
-            // Невозможно создать из снапшота(снапшот в процессе создания)
+            // Невозможно создать из снапшота (снапшот в процессе создания)
             SNAPSHOT_NOT_DONE = 13;
 
             // Конфигурация снапшота не подходит для выбранного тарифа
