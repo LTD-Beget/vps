@@ -143,7 +143,7 @@ message CreateResponse {
             // Недостаточно денег на балансе для создания снапшота
             INSUFFICIENT_FUNDS = 2;
 
-            // В данном статусе VPS невозможно создать снапшот(VPS не в статусе running/stopped)
+            // В данном статусе VPS невозможно создать снапшот (VPS не в статусе running/stopped)
             UNSUITABLE_VPS_STATUS = 3;
         }
     }
@@ -188,7 +188,7 @@ message RestoreResponse {
         // Информация о восстановлении
         Restore restore = 1;
 
-        // Произошла ошибка при созданнии заявки на восстановление снапшота
+        // Произошла ошибка при создании заявки на восстановление снапшота
         Error error = 2;
     }
     message Error {
@@ -208,7 +208,7 @@ message RestoreResponse {
             // Конфигурация VPS не подходит для данного снапшота
             CONFIGURATION_NOT_ENOUGH = 3;
 
-            // В данном статусе VPS невозможно восстановить снапшот(VPS не в статусе running/stopped)
+            // В данном статусе VPS невозможно восстановить снапшот (VPS не в статусе running/stopped)
             UNSUITABLE_VPS_STATUS = 4;
         }
     }
@@ -238,7 +238,7 @@ message RemoveResponse {
             // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Удаление снапшота в данном статусе невозможно(находится в статусе creating/restoring/removing)
+            // Удаление снапшота в данном статусе невозможно (находится в статусе creating/restoring/removing)
             SNAPSHOT_NOT_DONE = 1;
 
             // Из данного снапшота происходит восстановление данных
@@ -319,7 +319,7 @@ message Restore {
     // Имя VPS на которую происходит восстановление
     string vps_name = 4;
 
-    // Тип восстановления(на существующую или новую VPS)
+    // Тип восстановления (на существующую или новую VPS)
     TargetType target_type = 5;
 
     // Дата начала восстановление, в формате RFC3339
@@ -332,7 +332,7 @@ message Restore {
     Status status = 8;
 
     enum TargetType {
-        // Существующуя VPS
+        // Существующая VPS
         EXISTING_VPS = 0;
 
         // Новая VPS
@@ -340,7 +340,7 @@ message Restore {
     }
 
     enum Status {
-        // В процессе востановления
+        // В процессе восстановления
         PROCESSING = 0;
 
         // Восстановление завершено
