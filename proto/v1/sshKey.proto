@@ -5,25 +5,36 @@ package beget.vps.v1.sshKey;
 import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
+// Управление SSH-ключами
+//
+// Предоставляет набор методов по управлению публичными SSH-ключами.
 service SshKeyService {
-
-    // Добавить публичный SSH ключ
-    rpc add (AddRequest) returns (AddResponse) {
+    // Добавить SSH-ключ
+    //
+    // Добавляет новый публичными SSH-ключ на аккаунт.
+    rpc add(AddRequest) returns (AddResponse) {
         option (google.api.http) = {
 			post: "/v1/vps/sshKey"
 			body: "*"
 		};
     }
 
-    // Получить список всех добавленных SSH ключей
-    rpc getAll (GetAllRequest) returns (GetAllResponse) {
+    // Получить список SSH-ключей
+    //
+    // Возвращает список добавленных на аккаунт публичных SSH-ключей.
+    rpc getAll(GetAllRequest) returns (GetAllResponse) {
         option (google.api.http) = {
 			get: "/v1/vps/sshKey"
 		};
     }
 
-    // Удалить публичный SSH ключ
-    rpc remove (RemoveRequest) returns (RemoveResponse) {
+    // Удалить SSH-ключ
+    //
+    // Удаляет имеющийся на аккаунте публичный SSH-ключ.
+    //
+    // Для получения доступных идентификаторов SSH-ключей `id` необходимо использовать метод
+    // "Получить список публичных SSH-ключей" из API "Облачные серверы".
+    rpc remove(RemoveRequest) returns (RemoveResponse) {
         option (google.api.http) = {
 			delete: "/v1/vps/sshKey/{id}"
 		};
@@ -39,11 +50,12 @@ message AddRequest {
 }
 
 message AddResponse {
+    // Результат запроса
     oneof result {
-        // Информация о SSH ключе
+        // Результат запроса: информация о SSH-ключе
         structures.SshKeyInfo key = 1;
 
-        // Произошла ошибка при добавлении SSH ключа
+        // Результат запроса: произошла ошибка при добавлении SSH-ключа
         Error error = 2;
     }
 
@@ -58,13 +70,13 @@ message AddResponse {
             // Внутренняя ошибка
             INTERNAL_ERROR= 0;
 
-            // Имя SSH ключа невалидно (например, пустое)
+            // Имя SSH-ключа невалидно (например, пустое)
             INVALID_NAME = 1;
 
-            // SSH Ключ с таким отпечатком уже существует
+            // SSH-ключ с таким отпечатком уже существует
             KEY_EXISTS = 2;
 
-            // Публичный SSH ключ невалиден
+            // Публичный SSH-ключ невалиден
             INVALID_PUBLIC_KEY = 3;
         }
     }
@@ -73,24 +85,25 @@ message AddResponse {
 message GetAllRequest {}
 
 message GetAllResponse {
-    // Информация о SSH ключах
+    // Информация о SSH-ключах
     repeated structures.SshKeyInfo keys = 1;
 }
 
 message RemoveRequest {
-    // Идентификатор SSH ключа
+    // Идентификатор SSH-ключа
     uint32 id = 1;
 
-    // Принудительно удалить SSH ключ, даже если он на данный момент используется в какой либо VPS
+    // Принудительно удалить SSH-ключ, даже если он на данный момент используется в какой либо VPS
     bool force = 2;
 }
 
 message RemoveResponse {
+    // Результат запроса
     oneof result {
-        // Информация о SSH ключе
+        // Результат запроса: информация о SSH-ключе
         structures.SshKeyInfo key = 1;
 
-        // Произошла ошибка во время удаления SSH ключа
+        // Результат запроса: произошла ошибка во время удаления SSH-ключа
         Error error = 2;
     }
 
@@ -105,7 +118,7 @@ message RemoveResponse {
             // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // В данный момент ключ испольузется в VPS
+            // В данный момент ключ используется в VPS
             KEY_IN_USE = 1;
         }
     }

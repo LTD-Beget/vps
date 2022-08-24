@@ -4,9 +4,14 @@ package beget.vps.v1.marketplace;
 
 import "google/api/annotations.proto";
 
+// Маркетплейс приложений
+//
+// Предоставляет набор методов для работы с маркетплейсом приложений для облачных серверов.
 service MarketplaceService {
-    // Возвращает список доступного для установки ПО
-    rpc getAvailableSoftware (GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
+    // Получить список доступного ПО
+    //
+    // Возвращает список доступного для установки ПО.
+    rpc getAvailableSoftware(GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
         option (google.api.http) = {
             get: "/v1/vps/marketplace/software/list"
         };
@@ -95,17 +100,18 @@ message GetAvailableSoftwareResponse {
 }
 
 message FieldDesc {
+    // Поле
     oneof field {
-        // Поле для пароля
+        // Поле: пароль
         PasswordField password_field = 1;
 
-        // Поле для домена
+        // Поле: домен
         DomainField domain_field = 2;
 
-        // Обычное текстовое поле
+        // Поле: обычный текст
         TextField text_field = 3;
 
-        // Поле для email
+        // Поле: email
         EmailField email_field = 4;
     }
 }

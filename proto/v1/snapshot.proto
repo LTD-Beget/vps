@@ -5,16 +5,26 @@ package beget.vps.v1.snapshot;
 import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
+// Снапшоты сервера
+//
+// Предоставляет набор методов для работы со снапшотами облачных серверов.
 service SnapshotService {
-    // Получить список всех снашпотов
-    rpc getAll (GetAllRequest) returns (GetAllResponse) {
+    // Получить список снапшотов
+    //
+    // Возвращает список всех снапшотов созданных на текущем аккаунте.
+    rpc getAll(GetAllRequest) returns (GetAllResponse) {
         option (google.api.http) = {
             get: "/v1/vps/snapshot"
         };
     }
 
     // Создать новый снапшот
-    rpc create (CreateRequest) returns (CreateResponse) {
+    //
+    // Создаёт новый снапшот для указанного сервера.
+    //
+    // Для получения доступных идентификаторов VPS `vps_id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    rpc create(CreateRequest) returns (CreateResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot"
             body: "*"
@@ -22,7 +32,12 @@ service SnapshotService {
     }
 
     // Узнать стоимость снапшота для конкретной VPS
-    rpc createCalculator (CreateCalculatorRequest) returns (CreateCalculatorResponse) {
+    //
+    // Возвращает стоимость снапшота для указанного сервера.
+    //
+    // Для получения доступных идентификаторов VPS `vps_id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    rpc createCalculator(CreateCalculatorRequest) returns (CreateCalculatorResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot/calculator"
             body: "*"
@@ -30,14 +45,28 @@ service SnapshotService {
     }
 
     // Получить историю восстановлений из снапшота
-    rpc getAllRestores (GetAllRestoresRequest) returns (GetAllRestoresResponse) {
+    //
+    // Возвращает историю восстановлений из всех снапшотов или по указанному снапшоту
+    // (если передан идентификаторов снапшота `id` в запросе).
+    //
+    // Для получения доступных идентификаторов снапшотов `id` необходимо использовать метод
+    // "Получить список снапшотов" из API "Облачные серверы".
+    rpc getAllRestores(GetAllRestoresRequest) returns (GetAllRestoresResponse) {
         option (google.api.http) = {
             get: "/v1/vps/snapshot/restore"
         };
     }
 
-    // Создать заявку на восстановление из снапшота
-    rpc restore (RestoreRequest) returns (RestoreResponse) {
+    // Восстановить сервер из снапшота
+    //
+    // Восстанавливает сервер из указанного снапшота.
+    //
+    // Для получения доступных идентификаторов снапшотов `id` необходимо использовать метод
+    // "Получить список снапшотов" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов VPS `vps_id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    rpc restore(RestoreRequest) returns (RestoreResponse) {
         option (google.api.http) = {
             post: "/v1/vps/snapshot/{id}/restore"
             body: "*"
@@ -45,14 +74,24 @@ service SnapshotService {
     }
 
     // Удалить снапшот
-    rpc remove (RemoveRequest) returns (RemoveResponse) {
+    //
+    // Удаляет указанный снапшот.
+    //
+    // Для получения доступных идентификаторов снапшотов `id` необходимо использовать метод
+    // "Получить список снапшотов" из API "Облачные серверы".
+    rpc remove(RemoveRequest) returns (RemoveResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/snapshot/{id}"
         };
     }
 
     // Изменить описание снапшота
-    rpc edit (EditRequest) returns (EditResponse) {
+    //
+    // Изменяет описание указанного снапшота.
+    //
+    // Для получения доступных идентификаторов снапшотов `id` необходимо использовать метод
+    // "Получить список снапшотов" из API "Облачные серверы".
+    rpc edit(EditRequest) returns (EditResponse) {
         option (google.api.http) = {
             put: "/v1/vps/snapshot/{id}"
             body: "*"
@@ -72,7 +111,7 @@ message CreateRequest {
     // Идентификатор VPS в формате uuid v4
     string vps_id = 1;
 
-    // Описание снапшота
+    // Описание снапшота (необязательное поле)
     string description = 2;
 
     // Остановить сервер на время создания снапшота
@@ -104,7 +143,7 @@ message CreateResponse {
             // Недостаточно денег на балансе для создания снапшота
             INSUFFICIENT_FUNDS = 2;
 
-            // В данном статусе VPS невозможно создать снапшот(VPS не в статусе running/stopped)
+            // В данном статусе VPS невозможно создать снапшот (VPS не в статусе running/stopped)
             UNSUITABLE_VPS_STATUS = 3;
         }
     }
@@ -116,10 +155,10 @@ message CreateCalculatorRequest {
 }
 
 message CreateCalculatorResponse {
-    // Стоимость снапшота за день
+    // Стоимость снапшота за один день в рублях
     double price_day = 1;
 
-    // Стоимость одного Гб в день
+    // Стоимость одного Гб за один день в рублях
     double price_day_gb = 2;
 
     // Количество Гб у данной VPS
@@ -127,7 +166,7 @@ message CreateCalculatorResponse {
 }
 
 message GetAllRestoresRequest {
-    // Идентификатор снапшота
+    // Идентификатор снапшота (необязательное поле)
     uint64 id = 1;
 }
 
@@ -149,7 +188,7 @@ message RestoreResponse {
         // Информация о восстановлении
         Restore restore = 1;
 
-        // Произошла ошибка при созданнии заявки на восстановление снапшота
+        // Произошла ошибка при создании заявки на восстановление снапшота
         Error error = 2;
     }
     message Error {
@@ -169,7 +208,7 @@ message RestoreResponse {
             // Конфигурация VPS не подходит для данного снапшота
             CONFIGURATION_NOT_ENOUGH = 3;
 
-            // В данном статусе VPS невозможно восстановить снапшот(VPS не в статусе running/stopped)
+            // В данном статусе VPS невозможно восстановить снапшот (VPS не в статусе running/stopped)
             UNSUITABLE_VPS_STATUS = 4;
         }
     }
@@ -199,7 +238,7 @@ message RemoveResponse {
             // Внутренняя ошибка
             INTERNAL_ERROR = 0;
 
-            // Удаление снапшота в данном статусе невозможно(находится в статусе creating/restoring/removing)
+            // Удаление снапшота в данном статусе невозможно (находится в статусе creating/restoring/removing)
             SNAPSHOT_NOT_DONE = 1;
 
             // Из данного снапшота происходит восстановление данных
@@ -249,7 +288,7 @@ message Snapshot {
     // Необходимая конфигурация VPS для восстановления снапшота
     RequiredConfiguration configuration = 9;
 
-    // Стоимость снапшота в день
+    // Стоимость снапшота за один день в рублях
     double price_day = 10;
 
     enum Status {
@@ -280,7 +319,7 @@ message Restore {
     // Имя VPS на которую происходит восстановление
     string vps_name = 4;
 
-    // Тип восстановления(на существующую или новую VPS)
+    // Тип восстановления (на существующую или новую VPS)
     TargetType target_type = 5;
 
     // Дата начала восстановление, в формате RFC3339
@@ -293,7 +332,7 @@ message Restore {
     Status status = 8;
 
     enum TargetType {
-        // Существующуя VPS
+        // Существующая VPS
         EXISTING_VPS = 0;
 
         // Новая VPS
@@ -301,7 +340,7 @@ message Restore {
     }
 
     enum Status {
-        // В процессе востановления
+        // В процессе восстановления
         PROCESSING = 0;
 
         // Восстановление завершено

@@ -5,38 +5,69 @@ package beget.vps.v1.backup;
 import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
+// Автоматические резервные копии
+//
+// Предоставляет набор методов для работы с автоматическими резервными копиями.
 service BackupService {
     // Получить историю заданий по восстановлению
-    rpc getOrders (GetOrdersRequest) returns (GetOrdersResponse) {
+    //
+    // Возвращает список заданий по восстановлению серверов из резервных копий.
+    rpc getOrders(GetOrdersRequest) returns (GetOrdersResponse) {
         option (google.api.http) = {
             get: "/v1/vps/backup/orders"
         };
     }
 
-    // Получить список копий доступный для восстановления
-    rpc getAvailableCopies (GetAvailableCopiesRequest) returns (GetAvailableCopiesResponse) {
+    // Получить список доступных резервных копий
+    //
+    // Возвращает список резервных копий, доступных для восстановления.
+    rpc getAvailableCopies(GetAvailableCopiesRequest) returns (GetAvailableCopiesResponse) {
         option (google.api.http) = {
 			get: "/v1/vps/backup"
 		};
     }
 
-    // Получить список файлов определенного бекапа
-    rpc getBackupFileList (GetBackupFileListRequest) returns (GetBackupFileListResponse) {
+    // Получить список файлов определенной копии
+    //
+    // Возвращает список файлов в резервной копии по заданному пути.
+    //
+    // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов копии `copy_id` необходимо использовать метод
+    // "Получить список доступных резервных копий" из API "Облачные серверы".
+    rpc getBackupFileList(GetBackupFileListRequest) returns (GetBackupFileListResponse) {
         option (google.api.http) = {
 			get: "/v1/vps/{id}/backup/{copy_id}"
 		};
     }
 
-    // Восстановить файл/директорию из бекапа
-    rpc restoreFile (RestoreFileRequest) returns (RestoreFileResponse) {
+    // Восстановить файл/директорию из резервной копии
+    //
+    // Восстанавливает заданный набор файлов/директорий из резервной копии на указанный сервер.
+    //
+    // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов копии `copy_id` необходимо использовать метод
+    // "Получить список доступных резервных копий" из API "Облачные серверы".
+    rpc restoreFile(RestoreFileRequest) returns (RestoreFileResponse) {
         option (google.api.http) = {
 			post: "/v1/vps/{id}/backup/{copy_id}/file"
 			body: "*"
 		};
     }
 
-    // Восстановить все файлы из определенного бекапа
-    rpc restoreServer (RestoreServerRequest) returns (RestoreServerResponse) {
+    // Восстановить сервер из резервной копии
+    //
+    // Восстанавливает полную резервную копию на указанный сервер. Имеющиеся данные на сервере будут удалены.
+    //
+    // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов копии `copy_id` необходимо использовать метод
+    // "Получить список доступных резервных копий" из API "Облачные серверы".
+    rpc restoreServer(RestoreServerRequest) returns (RestoreServerResponse) {
         option (google.api.http) = {
 			post: "/v1/vps/{id}/backup/{copy_id}/server"
 			body: "*"
@@ -51,7 +82,7 @@ message GetBackupFileListRequest {
     // Идентификатор копии
     uint64 copy_id = 2;
 
-    // Путь для отображения
+    // Путь для отображения (необязательное поле, по умолчанию "/" - корень диска)
     string path = 3;
 }
 
@@ -81,16 +112,17 @@ message RestoreFileRequest {
     // Восстановление без выключения VPS
     bool affect_live = 4;
 
-    // Директория, в которую будет происходить восстановление. По-умолчанию - "/"
+    // Директория, в которую будет происходить восстановление (необязательное поле, по умолчанию "/" - корень диска)
     string target = 5;
 }
 
 message RestoreFileResponse {
+    // Результат запроса
     oneof result {
-        // Информация о восстановлении
+        // Результат запроса: информация о восстановлении
         structures.OrderInfo order = 1;
 
-        // Произошла ошибка при восстановлении файлов
+        // Результат запроса: произошла ошибка при восстановлении файлов
         Error error = 2;
     }
 
@@ -129,11 +161,12 @@ message RestoreServerRequest {
 }
 
 message RestoreServerResponse {
+    // Результат запроса
     oneof result {
-        // Информация о восстановлении
+        // Результат запроса: информация о восстановлении
         structures.OrderInfo order = 1;
 
-        // Произошла ошибка при восстановлении файлов
+        // Результат запроса: произошла ошибка при восстановлении файлов
         Error error = 2;
     }
 
