@@ -245,11 +245,12 @@ message GetProcessListRequest {
 }
 
 message GetProcessListResponse {
+    // Результат запроса
     oneof result {
-        // Список процессов
+        // Результат запроса: список процессов
         ProcessList processes = 1;
 
-        // Ошибка при получении информации о процессах
+        // Результат запроса: ошибка при получении информации о процессах
         Error error = 2;
     }
 

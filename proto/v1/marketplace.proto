@@ -100,17 +100,18 @@ message GetAvailableSoftwareResponse {
 }
 
 message FieldDesc {
+    // Поле
     oneof field {
-        // Поле для пароля
+        // Поле: пароль
         PasswordField password_field = 1;
 
-        // Поле для домена
+        // Поле: домен
         DomainField domain_field = 2;
 
-        // Обычное текстовое поле
+        // Поле: обычный текст
         TextField text_field = 3;
 
-        // Поле для email
+        // Поле: email
         EmailField email_field = 4;
     }
 }

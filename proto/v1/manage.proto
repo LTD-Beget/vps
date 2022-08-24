@@ -400,8 +400,9 @@ message CheckSoftwareRequirementsResponse {
         // Ошибка связанная с доменом. Вместо этого поля следует использовать `domain_error`.
         DomainError wordpress_error = 1 [deprecated=true];
 
+        // Тип ошибки
         oneof type {
-            // Ошибка связанная с доменом
+            // Тип ошибки: ошибка связанная с доменом
             DomainError domain_error = 2;
         }
 
@@ -538,11 +539,12 @@ message CreateVpsRequest {
 
 
 message CreateVpsResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при создании VPS
+        // Результат запроса: ошибка при создании VPS
         Error error = 2;
     }
 
@@ -553,8 +555,9 @@ message CreateVpsResponse {
         // Описание ошибки
         string message = 2;
 
+        // Расширенное описание ошибки
         oneof extra {
-            // Расширенное описание ошибки
+            //Расширенное описание ошибки: некорректное значение переменной для ПО
             SoftwareVariableError variable_error = 3;
         }
 
@@ -707,11 +710,12 @@ message StartVpsRequest {
 }
 
 message StartVpsResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при включении VPS
+        // Результат запроса: ошибка при включении VPS
         Error error = 2;
     }
 
@@ -741,11 +745,12 @@ message StopVpsRequest {
 }
 
 message StopVpsResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при выключении VPS
+        // Результат запроса: ошибка при выключении VPS
         Error error = 2;
     }
 
@@ -775,11 +780,12 @@ message RebootVpsRequest {
 }
 
 message RebootVpsResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при перезагрузке VPS
+        // Результат запроса: ошибка при перезагрузке VPS
         Error error = 2;
     }
 
@@ -809,11 +815,12 @@ message ResetVpsRequest {
 }
 
 message ResetVpsResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при перезагрузке VPS
+        // Результат запроса: ошибка при перезагрузке VPS
         Error error = 2;
     }
 
@@ -843,11 +850,12 @@ message RemoveVpsRequest {
 }
 
 message RemoveVpsResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при удалении VPS
+        // Результат запроса: при удалении VPS
         Error error = 2;
     }
 
@@ -877,11 +885,12 @@ message StartRescueRequest {
 }
 
 message StartRescueResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при включении rescue режима
+        // Результат запроса: ошибка при включении rescue-режима
         Error error = 2;
     }
 
@@ -911,11 +920,12 @@ message StopRescueRequest {
 }
 
 message StopRescueResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при отключении rescue режима
+        // Результат запроса: ошибка при отключении rescue-режима
         Error error = 2;
     }
 
@@ -948,11 +958,12 @@ message ChangeConfigurationRequest {
 }
 
 message ChangeConfigurationResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при смене конфигурации VPS
+        // Результат запроса: ошибка при смене конфигурации VPS
         Error error = 2;
     }
 
@@ -1003,11 +1014,12 @@ message ReinstallRequest {
 }
 
 message ReinstallResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при переустановке VPS
+        // Результат запроса: ошибка при переустановке VPS
         Error error = 2;
     }
 
@@ -1018,8 +1030,9 @@ message ReinstallResponse {
         // Описание ошибки
         string message = 2;
 
+        // Расширенное описание ошибки
         oneof extra {
-            // Расширенное описание ошибки
+            //Расширенное описание ошибки: некорректное значение переменной для ПО
             SoftwareVariableError variable_error = 3;
         }
 
@@ -1054,7 +1067,7 @@ message ReinstallResponse {
             // Пропущены обязательные переменные для устанавливаемого ПО
             SOFTWARE_VARIABLE_REQUIRED = 9;
 
-            // Некоррктная переменная для устанавливаемого ПО, подробности содержатся в `variable_error`
+            // Некорректная переменная для устанавливаемого ПО, подробности содержатся в `variable_error`
             SOFTWARE_VARIABLE_INVALID = 10;
 
             // Пароль содержится в чёрном списке
@@ -1109,11 +1122,12 @@ message UpdateInfoRequest {
 }
 
 message UpdateInfoResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при обновлении информации о VPS
+        // Результат запроса: ошибка при обновлении информации о VPS
         Error error = 2;
     }
 
@@ -1159,11 +1173,12 @@ message AttachSshKeyRequest {
 }
 
 message AttachSshKeyResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при добавлении публичного SSH ключа в хранилище
+        // Результат запроса: ошибка при добавлении публичного SSH-ключа на VPS
         Error error = 2;
     }
 
@@ -1190,11 +1205,12 @@ message DetachSshKeyRequest {
 }
 
 message DetachSshKeyResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при удалении публичного SSH ключа из хранилища
+        // Результат запроса: ошибка при удалении публичного SSH-ключа c VPS
         Error error = 2;
     }
 
@@ -1221,11 +1237,12 @@ message ResetPasswordRequest {
 }
 
 message ResetPasswordResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при сбросе пароля
+        // Результат запроса: ошибка при сбросе пароля
         Error error = 2;
     }
 
@@ -1289,7 +1306,7 @@ message VpsInfo {
     // Идентификатор VPS в формате uuid v4
     string id = 1;
 
-    // ЧПУ-френдли имя VPS (может быть пустой строкой)
+    // Имя VPS для человекопонятного URL (может быть пустой строкой)
     string slug = 2;
 
     // Отображаемое имя VPS
@@ -1446,11 +1463,12 @@ message AttachIpAddressRequest {
 }
 
 message AttachIpAddressResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: Информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при прикреплении дополнительного IP-адреса к VPS
+        // Результат запроса: ошибка при прикреплении дополнительного IP-адреса к VPS
         Error error = 2;
     }
 
@@ -1477,11 +1495,12 @@ message DetachIpAddressRequest {
 }
 
 message DetachIpAddressResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при откреплении дополнительного IP-адреса
+        // Результат запроса: ошибка при откреплении дополнительного IP-адреса
         Error error = 2;
     }
 
@@ -1514,11 +1533,12 @@ message AttachToPrivateNetworkRequest {
 }
 
 message AttachToPrivateNetworkResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при добавлении к приватной сети
+        // Результат запроса: ошибка при добавлении к приватной сети
         Error error = 2;
     }
 
@@ -1563,11 +1583,12 @@ message DetachFromPrivateNetworkRequest {
 }
 
 message DetachFromPrivateNetworkResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при удалении VPS из приватной сети
+        // Результат запроса: ошибка при удалении VPS из приватной сети
         Error error = 2;
     }
 
@@ -1597,11 +1618,12 @@ message ChangeSshAccessRequest {
 }
 
 message ChangeSshAccessResponse {
+    // Результат запроса
     oneof result {
-        // Информация о VPS
+        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Ошибка при включении/выключении доступа ФМ к VPS
+        // Результат запроса: ошибка при включении/выключении доступа ФМ к VPS
         Error error = 2;
     }
 
@@ -1631,11 +1653,12 @@ message GetFileManagerSettingsRequest {
 }
 
 message GetFileManagerSettingsResponse {
+    // Результат запроса
     oneof result {
-        // Параметры для использования файлового менеджера
+        // Результат запроса: параметры для использования файлового менеджера
         Credentials credentials = 1;
 
-        // Ошибка при получении параметров подключения к файловому менеджеру
+        // Результат запроса: ошибка при получении параметров подключения к файловому менеджеру
         Error error = 2;
     }
 
@@ -1703,11 +1726,12 @@ message ReserveVpsSubdomainRequest {
 }
 
 message ReserveVpsSubdomainResponse {
+    // Результат запроса
     oneof result {
-        // Домен
+        // Результат запроса: домен
         string vps_subdomain = 1;
 
-        // Ошибка при резервировании домена
+        // Результат запроса: ошибка при резервировании домена
         Error error = 2;
     }
 

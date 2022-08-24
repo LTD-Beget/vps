@@ -50,11 +50,12 @@ message AddRequest {
 }
 
 message AddResponse {
+    // Результат запроса
     oneof result {
-        // Информация о SSH-ключе
+        // Результат запроса: информация о SSH-ключе
         structures.SshKeyInfo key = 1;
 
-        // Произошла ошибка при добавлении SSH-ключа
+        // Результат запроса: произошла ошибка при добавлении SSH-ключа
         Error error = 2;
     }
 
@@ -97,11 +98,12 @@ message RemoveRequest {
 }
 
 message RemoveResponse {
+    // Результат запроса
     oneof result {
-        // Информация о SSH-ключе
+        // Результат запроса: информация о SSH-ключе
         structures.SshKeyInfo key = 1;
 
-        // Произошла ошибка во время удаления SSH-ключа
+        // Результат запроса: произошла ошибка во время удаления SSH-ключа
         Error error = 2;
     }
 

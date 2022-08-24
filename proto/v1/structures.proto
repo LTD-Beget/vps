@@ -140,8 +140,9 @@ message OrderInfo {
     ErrorDetails error_details = 12;
 
     message ErrorDetails {
+        // Тип ошибки
         oneof error {
-            // Ошибка связанная с восстановление файлов
+            // Тип ошибки: ошибка связанная с восстановление файлов
             FileError file_error = 1;
         }
 

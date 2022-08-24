@@ -117,11 +117,12 @@ message RestoreFileRequest {
 }
 
 message RestoreFileResponse {
+    // Результат запроса
     oneof result {
-        // Информация о восстановлении
+        // Результат запроса: информация о восстановлении
         structures.OrderInfo order = 1;
 
-        // Произошла ошибка при восстановлении файлов
+        // Результат запроса: произошла ошибка при восстановлении файлов
         Error error = 2;
     }
 
@@ -160,11 +161,12 @@ message RestoreServerRequest {
 }
 
 message RestoreServerResponse {
+    // Результат запроса
     oneof result {
-        // Информация о восстановлении
+        // Результат запроса: информация о восстановлении
         structures.OrderInfo order = 1;
 
-        // Произошла ошибка при восстановлении файлов
+        // Результат запроса: произошла ошибка при восстановлении файлов
         Error error = 2;
     }
 
