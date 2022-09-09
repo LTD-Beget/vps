@@ -559,6 +559,8 @@ message CreateVpsResponse {
         oneof extra {
             //Расширенное описание ошибки: некорректное значение переменной для ПО
             SoftwareVariableError variable_error = 3;
+            // Расширенное описание ошибки: недостаточно средств на счету (INSUFFICIENT_FUNDS)
+            InsufficientFundsError insufficient_funds_error = 4;
         }
 
         enum Code {
@@ -643,6 +645,17 @@ message CreateVpsResponse {
                 // описание ошибки на английском
                 string error_text_en = 3;
             }
+        }
+
+        message InsufficientFundsError {
+            // Текущий баланс аккаунта
+            double current_balance = 1;
+
+            // Требуемый для создания VPS баланс
+            double needed_balance = 2;
+
+            // Будут ли списаны со счета аккаунта средства за сутки при создании сервера
+            bool charge_on_add = 3;
         }
     }
 }
