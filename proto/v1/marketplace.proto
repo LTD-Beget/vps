@@ -3,6 +3,7 @@ syntax = 'proto3';
 package beget.vps.v1.marketplace;
 
 import "google/api/annotations.proto";
+import "vps/proto/v1/structures.proto";
 
 // Маркетплейс приложений
 //
@@ -11,18 +12,18 @@ service MarketplaceService {
     // Получить список доступного ПО
     //
     // Возвращает список доступного для установки ПО.
-    rpc getAvailableSoftware(GetAvailableSoftwareRequest) returns (GetAvailableSoftwareResponse) {
+    rpc getAvailableSoftware(GetSoftwareListRequest) returns (GetSoftwareListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/marketplace/software/list"
         };
     }
 }
 
-message GetAvailableSoftwareRequest {
+message GetSoftwareListRequest {
 
 }
 
-message GetAvailableSoftwareResponse {
+message GetSoftwareListResponse {
     // Информация о доступном ПО
     repeated SoftwareInfo software = 1;
 
@@ -39,9 +40,6 @@ message GetAvailableSoftwareResponse {
         // Версия (напр. 1.0.1)
         string version = 4;
 
-        // Тип ПО (панель управления, обычное ПО)
-        Type type = 5;
-
         // Описание ПО на русском
         string description = 6;
 
@@ -49,34 +47,31 @@ message GetAvailableSoftwareResponse {
         string description_en = 7;
 
         // Дополнительное описание на русском для конкретной версии ПО
-        string description_version = 8;
+        string description_version = 8 [deprecated = true];
 
         // Дополнительное описание на английском для конкретной версии ПО
-        string description_version_en = 9;
+        string description_version_en = 9 [deprecated = true];
 
-        // Категория ПО на русском
-        string category_name = 10;
-
-        // Категория ПО на английском
-        string category_name_en = 11;
-
-        // Ссылка на иконку ПО
-        string icon_link = 12;
-
-        // Ссылка на иконку ПО 2х
-        string icon_link_2x = 13;
-
-        // Список ID образов, для которых возможна установка этого ПО
-        repeated uint32 image_id = 14;
+        // Дополнительная информация о ПО
+        structures.SoftwareMetadata metadata = 10;
 
         // Список дополнительных полей, которые необходимо передать для установки ПО
-        repeated string variable = 15;
+        repeated string variable = 15 [deprecated = true];
 
         // Описание полей доступных для заполнения
         repeated FieldDesc field_data = 16;
 
         // Минимальные требования к конфигурации для установки
         Requirements requirements = 17;
+
+        // TODO(comment)
+        repeated structures.SoftwareCategory category = 18;
+
+        // Уникальный идентификатор в рамках возвращенной коллекции ПО для использования в URL (например, ubuntu-20-04)
+        string slug = 19;
+
+        // Имя страницы с описанием ПО в контетной части сайта marketplace
+        string documentation_slug = 20;
 
         message Requirements {
             // Количество ядер процессора
@@ -87,14 +82,6 @@ message GetAvailableSoftwareResponse {
 
             // Объем оперативной памяти в Мб
             uint32 memory = 3;
-        }
-
-        enum Type {
-            // Панель управления
-            PANEL = 0;
-
-            // Остальное ПО
-            SOFTWARE = 1;
         }
     }
 }
@@ -124,12 +111,10 @@ message PasswordField {
     bool auto_generated = 2;
 }
 
-
 message EmailField {
     // Общие параметры для различных типов полей
     FieldCommon common = 1;
 }
-
 
 message TextField {
     // Общие параметры для различных типов полей
@@ -169,7 +154,7 @@ message FieldCommon {
     // Является ли дополнительным параметром
     bool is_additional = 7;
 
-    // Опциональность
+    // Опциональность поля
     bool is_required = 8;
 
     // Является ли исключительным (используется только для определенного ПО)
@@ -181,6 +166,6 @@ message FieldCommon {
     // Текст ошибки на русском
     string validation_error_text = 11;
 
-    // Текст ошибки на русско
+    // Текст ошибки на английском
     string validation_error_text_en = 12;
 }
