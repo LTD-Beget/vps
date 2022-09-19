@@ -12,7 +12,7 @@ service MarketplaceService {
     // Получить список доступного ПО
     //
     // Возвращает список доступного для установки ПО.
-    rpc getAvailableSoftware(GetSoftwareListRequest) returns (GetSoftwareListResponse) {
+    rpc getSoftwareList(GetSoftwareListRequest) returns (GetSoftwareListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/marketplace/software/list"
         };
