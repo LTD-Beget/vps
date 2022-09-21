@@ -13,10 +13,11 @@ service ManageService {
     //
     // Создает новый облачный сервер с заданными параметрами.
     //
-    // TODO(comment)
     // Для получения доступных идентификаторов конфигурации `configuration_id`
-    // и идентификаторов ОС `operating_system_id` необходимо использовать метод
-    // "Получить доступные конфигурации VPS" из API "Облачные серверы".
+    // необходимо использовать метод "Получить доступные конфигурации VPS" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов ПО `software.id` и обязательных переменных для установки `software.variable`
+    // необходимо использовать метод "Получить список доступного ПО" из API "Облачные серверы"
     //
     // Для получения доступных идентификаторов снапшотов `snapshot_id` необходимо использовать метод
     // "Получить список снапшотов" из API "Облачные серверы".
@@ -176,10 +177,11 @@ service ManageService {
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
     //
-    // TODO(comment)
     // Для получения доступных идентификаторов конфигурации `configuration_id`
-    // и идентификаторов ОС `operating_system_id` необходимо использовать метод
-    // "Получить доступные конфигурации VPS" из API "Облачные серверы".
+    // необходимо использовать метод "Получить доступные конфигурации VPS" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов ПО `software.id` и обязательных переменных для установки `software.variable`
+    // необходимо использовать метод "Получить список доступного ПО" из API "Облачные серверы"
     //
     // Для получения доступных идентификаторов снапшотов `snapshot_id` необходимо использовать метод
     // "Получить список снапшотов" из API "Облачные серверы".
@@ -348,13 +350,6 @@ service ManageService {
         };
     }
 
-    // Получить список доступного для установки ПО
-    rpc getSoftwareList(GetSoftwareListRequest) returns (GetSoftwareListResponse) {
-        option (google.api.http) = {
-            get: "/v1/vps/software"
-        };
-    }
-
     // Проверить возможность установки ПО
     rpc checkSoftwareRequirements(CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
         option (google.api.http) = {
@@ -424,66 +419,6 @@ message CheckSoftwareRequirementsResponse {
 
             // Домен зарегистрирован меньше 12 часов назад
             DOMAIN_IS_NEW = 5;
-        }
-    }
-}
-
-message GetSoftwareListRequest {
-
-}
-
-message GetSoftwareListResponse {
-    // Список с описанием установленного ПО
-    repeated SoftwareInfo software = 1;
-
-    message SoftwareInfo {
-        // Идентификатор ПО
-        uint32 id = 1;
-
-        // Название ПО
-        string name = 2;
-
-        // Отображаемое название ПО
-        string display_name = 3;
-
-        // Версия
-        string version = 4;
-
-        // Тип ПО
-        Type type = 5;
-
-        // Описание ПО
-        string description = 6;
-
-        // Дополнительное описание для конкретной версии ПО
-        string description_version = 7;
-
-        // Список ID образов, для которых возможна установка этого ПО
-        repeated uint32 image_id = 8;
-
-        // Список дополнительных полей, которые необходимо передать для установки ПО
-        repeated string variable = 9;
-
-        // Минимальные требования к конфигурации для установки
-        Requirements requirements = 10;
-
-        message Requirements {
-            // Количество ядер процессора
-            uint32 cpu_count = 1;
-
-            // Размер диска, указывается в Mb
-            uint32 disk_size = 2;
-
-            // Объем оперативной памяти, указывается в Mb
-            uint32 memory = 3;
-        }
-
-        enum Type {
-            // Панель управления
-            PANEL = 0;
-
-            // Остальное ПО
-            SOFTWARE = 1;
         }
     }
 }

@@ -64,7 +64,7 @@ message GetSoftwareListResponse {
         // Минимальные требования к конфигурации для установки
         Requirements requirements = 17;
 
-        // TODO(comment)
+        // Категории к которым относится ПО
         repeated structures.SoftwareCategory category = 18;
 
         // Уникальный идентификатор в рамках возвращенной коллекции ПО для использования в URL (например, ubuntu-20-04)

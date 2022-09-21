@@ -87,7 +87,7 @@ message CopyInfo {
     // Конфигурация, которая использовалась сервером в момент создания резервной копии
     Configuration configuration = 5;
 
-    // TODO(comment)
+    // ПО, которое было установлено на момент создания резервной копии
     structures.InstalledSoftwareInfo installed_software = 8;
 
     message Configuration {
@@ -209,35 +209,34 @@ message AttachedPrivateNetwork {
 }
 
 message SoftwareMetadata {
-    // TODO(comment)
-
-    // новое ли ПО
+    // Новое ли ПО
     bool is_new = 1;
-    // показываем ли ПО на главной сразу
+    // Нужно ли показывать ПО в приоритете
     bool is_pinned = 2;
-    // ссылка на иконку
+    // Ссылка на иконку
     string icon = 3;
-    // ссылка на иконку побольше
+    // Ссылка на иконку в более высоком разрешении
     string icon2x = 4;
-    // ссылка на лого(еще больше чем иконки)
+    // Ссылка на лого
     string logo = 5;
-    // ссылка на лого(побольше)
+    // Ссылка на лого в более высоком разрешении
     string logo2x = 6;
-    // первый цвет градиента в #hex формате
+    // Первый цвет градиента в #hex формате
     string primary_color = 7;
-    // второй цвет градиента в #hex формате
+    // Второй цвет градиента в #hex формате
     string secondary_color = 8;
-    // вес для сортировки софта на фронте
+    // Вес для сортировки ПО
     float weight = 9;
 }
 
 message SoftwareCategory {
-    // TODO(comment)
-
+    // Системное название
     string sys_name = 1;
-    // название категории
+    // Название категории
     string name = 2;
+    // Название категории на английском
     string name_en = 3;
+    // Является ли категория основной
     bool is_main = 4;
 }
 
@@ -260,7 +259,7 @@ message InstalledSoftwareInfo {
     // Значение полей заполненных при установке ПО
     repeated FieldValue field_value = 7;
 
-    // TODO(comment)
+    // Дополнительная информация о ПО
     SoftwareMetadata metadata = 8;
 
     enum Status {
@@ -290,40 +289,39 @@ message InstalledSoftwareInfo {
         // Значение
         string value = 3;
 
-        // TODO(comment)
+        // Тип поля
         Type type = 4;
 
-        // TODO(comment)
+        // Название переменной
         string variable = 5;
 
         enum Type {
-            // TODO(comment)
+            // Тип поля: неизвестный
             UNKNOWN = 0;
 
-            // TODO(comment)
+            // Тип поля: домен
             DOMAIN = 1;
 
-            // TODO(comment)
+            // Тип поля: обычный текст
             TEXT = 2;
 
-            // TODO(comment)
+            // Тип поля: email
             EMAIL = 3;
 
-            // TODO(comment)
+            // Тип поля: пароль
             PASSWORD = 4;
         }
     }
 
-    // TODO(comment)
+    // Описание ПО
     string description = 10;
 
-    // TODO(comment)
+    // Описание ПО на английском
     string description_en = 11;
 
-    // TODO(comment)
+    // Категории к которым относится ПО
     repeated SoftwareCategory category = 12;
 
-    // TODO(comment)
-    // Уникальный идентификатор в рамках списка ПО полученного через запрос MarketplaceService.getSoftwareList
+    // Уникальный идентификатор в рамках списка ПО полученного через метод "Получить список доступного ПО" из API "Облачные серверы"
     string slug = 13;
 }

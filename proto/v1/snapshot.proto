@@ -302,7 +302,7 @@ message Snapshot {
         DELETED = 3;
     }
 
-    // TODO(comment)
+    // ПО, которое было установлено на момент создания снапшота
     structures.InstalledSoftwareInfo installed_software = 11;
 }
 
