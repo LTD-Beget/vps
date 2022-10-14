@@ -28,6 +28,9 @@ message GetSoftwareListResponse {
     repeated SoftwareInfo software = 1;
 
     message SoftwareInfo {
+        reserved "description_version", "description_version_en", "variable";
+        reserved 8, 9, 15;
+
         // Идентификатор софта
         uint32 id = 1;
 
@@ -46,17 +49,8 @@ message GetSoftwareListResponse {
         // Описание ПО на английском
         string description_en = 7;
 
-        // Дополнительное описание на русском для конкретной версии ПО
-        string description_version = 8 [deprecated = true];
-
-        // Дополнительное описание на английском для конкретной версии ПО
-        string description_version_en = 9 [deprecated = true];
-
         // Дополнительная информация о ПО
         structures.SoftwareMetadata metadata = 10;
-
-        // Список дополнительных полей, которые необходимо передать для установки ПО
-        repeated string variable = 15 [deprecated = true];
 
         // Описание полей доступных для заполнения
         repeated FieldDesc field_data = 16;
