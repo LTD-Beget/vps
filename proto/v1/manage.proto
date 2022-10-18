@@ -396,8 +396,8 @@ message CheckSoftwareRequirementsResponse {
     Error error = 2;
 
     message Error {
-        // Ошибка связанная с доменом. Вместо этого поля следует использовать `domain_error`.
-        DomainError wordpress_error = 1 [deprecated=true];
+        reserved "wordpress_error";
+        reserved 1;
 
         // Тип ошибки
         oneof type {
