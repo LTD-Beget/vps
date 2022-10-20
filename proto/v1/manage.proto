@@ -47,7 +47,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов SSH-ключей ssh_key_id необходимо использовать метод
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
-    rpc attachSshKey(AttachSshKeyRequest) returns (AttachSshKeyResponse) {
+    rpc zttachSshKey(ZttachSshKeyRequest) returns (ZttachSshKeyResponse) {
         option (google.api.http) = {
             post: "/v1/vps/id/sshKey/sshkeyid"
             body: "*"
@@ -660,7 +660,7 @@ message GetHistoryResponse {
     repeated HistoryItem history = 1;
 }
 
-message AttachSshKeyRequest {
+message ZttachSshKeyRequest {
     // Идентификатор VPS в формате uuid v4
     string id = 1;
 
@@ -668,7 +668,7 @@ message AttachSshKeyRequest {
     uint32 ssh_key_id = 2;
 }
 
-message AttachSshKeyResponse {
+message ZttachSshKeyResponse {
     // Результат запроса
     oneof result {
         // Результат запроса: информация о VPS
