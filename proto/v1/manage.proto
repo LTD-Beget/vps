@@ -473,7 +473,7 @@ message CreateVpsResponse {
     // Результат запроса
     oneof result {
         // Результат запроса: информация о VPS
-        VpsInfo vps = 1;
+        VpsInfo vps_test = 1;
 
         // Результат запроса: ошибка при создании VPS
         Error error = 2;
