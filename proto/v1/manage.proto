@@ -39,6 +39,19 @@ service ManageService {
             get: "/v1/vps/server/list"
         };
     }
+
+    // Добавить публичный SSH-ключ на VPS
+    //
+    // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    //
+    // Для получения доступных идентификаторов SSH-ключей `ssh_key_id` необходимо использовать метод
+    // "Получить список публичных SSH-ключей" из API "Облачные серверы".
+    rpc attachSshKey(AttachSshKeyRequest) returns (AttachSshKeyResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/{id}/sshKey/{ssh_key_id}"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
