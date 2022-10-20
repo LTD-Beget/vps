@@ -26,8 +26,7 @@ service ManageService {
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
     rpc createVps(CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
-            post: "/v1/vps/server"
-            body: "*"
+            get: "/v1/vps/server"
         };
     }
 
@@ -78,7 +77,8 @@ service ManageService {
     // "Получить список VPS" из API "Облачные серверы".
     rpc startVps(StartVpsRequest) returns (StartVpsResponse) {
         option (google.api.http) = {
-            post: "/v1/vps/server/{id}/start"
+         
+   post: "/v1/vps/server/{id}/start"
         };
     }
 
@@ -518,6 +518,7 @@ message GetStatusesResponse {
         bool manage_enabled = 5;
 
         // VPS находится в состоянии восстановления из резервной копии
+
         bool restoring = 6;
 
         // VPS заархивирована, управление невозможно
