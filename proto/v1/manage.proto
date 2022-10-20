@@ -50,6 +50,7 @@ service ManageService {
     rpc attachSshKey(AttachSshKeyRequest) returns (AttachSshKeyResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/sshKey/{ssh_key_id}"
+            body: "*"
         };
     }
 }
