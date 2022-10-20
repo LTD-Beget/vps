@@ -49,7 +49,7 @@ service ManageService {
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
     rpc attachSshKey(AttachSshKeyRequest) returns (AttachSshKeyResponse) {
         option (google.api.http) = {
-            post: "/v1/vps/{id}/sshKey/{ssh_key_id}"
+            post: "/v1/vps/id/sshKey/sshkeyid"
             body: "*"
         };
     }
