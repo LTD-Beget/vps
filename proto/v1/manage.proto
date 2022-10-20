@@ -596,7 +596,7 @@ message GetListRequest {
 
 message GetListResponse {
     // Информация о всех VPS
-    repeated VpsInfo vps = 1;
+    VpsInfo vps = 1;
 }
 
 
