@@ -24,7 +24,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов SSH-ключей ssh_keys необходимо использовать метод
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
-    rpc getListTest(GetListTestRequest) returns (GetListTestResponse) {
+    rpc createVps(CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server"
         };
@@ -47,9 +47,9 @@ service ManageService {
     //
     // Для получения доступных идентификаторов SSH-ключей ssh_key_id необходимо использовать метод
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
-    rpc zttachSshKey(ZttachSshKeyRequest) returns (ZttachSshKeyResponse) {
+    rpc attachSshKey(AttachSshKeyRequest) returns (AttachSshKeyResponse) {
         option (google.api.http) = {
-            post: "/v1/vps/id/sshKey/sshkeyid"
+            post: "/v1/vps/{id}/sshKey/{ssh_key_id}"
             body: "*"
         };
     }
@@ -107,7 +107,7 @@ message GetInstalledSoftwareResponse {
     structures.InstalledSoftwareInfo software = 1;
 }
 
-message GetListTestRequest {
+message CreateVpsRequest {
     // Отображаемое имя VPS
     string display_name = 1;
 
@@ -143,7 +143,7 @@ message GetListTestRequest {
 }
 
 
-message GetListTestResponse {
+message CreateVpsResponse {
         // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 }
@@ -660,7 +660,7 @@ message GetHistoryResponse {
     repeated HistoryItem history = 1;
 }
 
-message ZttachSshKeyRequest {
+message AttachSshKeyRequest {
     // Идентификатор VPS в формате uuid v4
     string id = 1;
 
@@ -668,7 +668,7 @@ message ZttachSshKeyRequest {
     uint32 ssh_key_id = 2;
 }
 
-message ZttachSshKeyResponse {
+message AttachSshKeyResponse {
     // Результат запроса
     oneof result {
         // Результат запроса: информация о VPS
