@@ -9,21 +9,6 @@ import "vps/proto/v1/structures.proto";
 //
 // Предоставляет набор методов для управления облачными серверами.
 service ManageService {
-    // Создать VPS
-    //
-    // Создает новый облачный сервер с заданными параметрами.
-    //
-    // Для получения доступных идентификаторов конфигурации configuration_id
-    // необходимо использовать метод "Получить доступные конфигурации VPS" из API "Облачные серверы".
-    //
-    // Для получения доступных идентификаторов ПО software.id и обязательных переменных для установки software.variable
-    // необходимо использовать метод "Получить список доступного ПО" из API "Облачные серверы"
-    //
-    // Для получения доступных идентификаторов снапшотов snapshot_id необходимо использовать метод
-    // "Получить список снапшотов" из API "Облачные серверы".
-    //
-    // Для получения доступных идентификаторов SSH-ключей ssh_keys необходимо использовать метод
-    // "Получить список публичных SSH-ключей" из API "Облачные серверы".
     rpc createVps(CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server"
@@ -31,22 +16,12 @@ service ManageService {
     }
 
 
-    // Получить список VPS
-    //
-    // Возвращает информацию по всем облачным серверам на текущем аккаунте.
     rpc getList(GetListRequest) returns (GetListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/list"
         };
     }
 
-    // Добавить публичный SSH-ключ на VPS
-    //
-    // Для получения доступных идентификаторов VPS id необходимо использовать метод
-    // "Получить список VPS" из API "Облачные серверы".
-    //
-    // Для получения доступных идентификаторов SSH-ключей ssh_key_id необходимо использовать метод
-    // "Получить список публичных SSH-ключей" из API "Облачные серверы".
     rpc attachSshKey(AttachSshKeyRequest) returns (AttachSshKeyResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/sshKey/{ssh_key_id}"
@@ -144,15 +119,27 @@ message CreateVpsRequest {
 
 
 message CreateVpsResponse {
-        // Результат запроса: информация о VPS
+    oneof result {
+        /* Информация о VPS */
         VpsInfo vps = 1;
+        Error error = 2;
+    }
+
+    message Error {
+        Code code = 1;
+        string message = 2;
+
+        enum Code {
+            INTERNAL = 0;
+        }
+    }
 }
 
 message GetListRequest {
 }
 
 message GetListResponse {
-    // Информация о всех VPS
+    /* Информация о VPS */
     VpsInfo vps = 1;
 }
 
@@ -163,7 +150,7 @@ message GetInfoRequest {
 }
 
 message GetInfoResponse {
-    // Информация о VPS
+    // vps
     VpsInfo vps = 1;
 }
 
@@ -661,17 +648,13 @@ message GetHistoryResponse {
 }
 
 message AttachSshKeyRequest {
-    // Идентификатор VPS в формате uuid v4
     string id = 1;
 
-    // ID публичного ключа
     uint32 ssh_key_id = 2;
 }
 
 message AttachSshKeyResponse {
-    // Результат запроса
     oneof result {
-        // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
         // Результат запроса: ошибка при добавлении публичного SSH-ключа на VPS
