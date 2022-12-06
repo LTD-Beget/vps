@@ -382,6 +382,18 @@ service ManageService {
             get: "/v1/vps/subdomain/reserve"
         };
     }
+
+    // Отключить послеустановочный алерт
+    //
+    // Отключает послеустановочный алерт с дополнительными инструкциями по завершению установки ПО.
+    //
+    // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    rpc disablePostInstallAlert(DisablePostInstallAlertRequest) returns (DisablePostInstallAlertResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/{id}/software/post-install-alert"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -474,6 +486,9 @@ message CreateVpsRequest {
 
     // Приватные сети, к которым необходимо подключить VPS (необязательное поле)
     repeated PrivateNetworkInfo private_networks = 12;
+
+    // Слаг, который вернется в ответе в VpsInfo (необязательное поле).
+    string link_slug = 14;
 }
 
 
@@ -565,6 +580,9 @@ message CreateVpsResponse {
 
             // Пароль содержится в чёрном списке
             BLACKLISTED_PASSWORD = 20;
+
+            // Передан некорректный link_slug
+            INVALID_LINK_SLUG = 21;
         }
 
         message SoftwareVariableError {
@@ -1334,6 +1352,9 @@ message VpsInfo {
 
     // Информация о установленном ПО
     structures.InstalledSoftwareInfo software = 28;
+
+    // Слаг, который был указан в CreateVpsRequest (может быть пустой строкой)
+    string link_slug = 29;
 }
 
 // Текущий статус Vps
@@ -1701,4 +1722,14 @@ message ReserveVpsSubdomainResponse {
             SUBDOMAIN_RESERVED = 1;
         }
     }
+}
+
+message DisablePostInstallAlertRequest {
+    // Идентификатор VPS в формате uuid v4
+    string id = 1;
+}
+
+message DisablePostInstallAlertResponse {
+   // Результат запроса: информация о VPS
+   VpsInfo vps = 1;
 }
