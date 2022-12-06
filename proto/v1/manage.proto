@@ -379,6 +379,53 @@ service ManageService {
             get: "/v1/vps/subdomain/reserve"
         };
     }
+
+    // Проверить возможность создания VPS
+    rpc checkVpsCreationRequirements(CheckVpsCreationRequirementsRequest) returns (CheckVpsCreationRequirementsResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/requirements"
+        };
+    }
+
+    // Получить связующий слаг
+    //
+    // Возвращает слаг, который можно передать в методе "Создать VPS" как поле link_slug
+    rpc getLinkSlug(GetLinkSlugRequest) returns (GetLinkSlugResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/link-slug"
+        };
+    }
+}
+
+message GetLinkSlugRequest {
+}
+
+message GetLinkSlugResponse {
+    // Связующий слаг
+    string link_slug = 1;
+}
+
+message CheckVpsCreationRequirementsRequest {
+}
+
+message CheckVpsCreationRequirementsResponse {
+    // Ошибка при проверке возможности установки ВПС
+    Error error = 1;
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Описание ошибки
+        string message = 2;
+
+        enum Code {
+          _ = 0;
+
+          // Недостаточно средств на счету
+          INSUFFICIENT_FUNDS = 1;
+        }
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -466,6 +513,10 @@ message CreateVpsRequest {
 
     // Приватные сети, к которым необходимо подключить VPS (необязательное поле)
     repeated PrivateNetworkInfo private_networks = 12;
+
+    // Слаг, который вернется в ответе в VpsInfo (необязательное поле).
+    // Можно сгенерировать самостоятельно либо получить из метода "Получить связующий слаг"
+    string link_slug = 13;
 }
 
 
@@ -1321,6 +1372,9 @@ message VpsInfo {
 
     // Информация о установленном ПО
     structures.InstalledSoftwareInfo software = 28;
+
+    // Слаг, который был указан в CreateVpsRequest (может быть пустой строкой)
+    string link_slug = 29;
 }
 
 // Текущий статус Vps

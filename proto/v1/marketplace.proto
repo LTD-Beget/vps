@@ -77,6 +77,9 @@ message GetSoftwareListResponse {
             // Объем оперативной памяти в Мб
             uint32 memory = 3;
         }
+
+        // Доступна ли быстрая установка
+        bool fast_install_available = 21;
     }
 }
 
