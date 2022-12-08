@@ -351,6 +351,9 @@ service ManageService {
     }
 
     // Проверить возможность установки ПО
+    //
+    // Для получения доступных идентификаторов конфигурации `configuration_id` необходимо использовать метод
+    // "Получить доступные конфигурации VPS" из API "Облачные серверы".
     rpc checkSoftwareRequirements(CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/software/requirements"
@@ -383,29 +386,15 @@ service ManageService {
     // Проверить возможность создания VPS
     rpc checkVpsCreationRequirements(CheckVpsCreationRequirementsRequest) returns (CheckVpsCreationRequirementsResponse) {
         option (google.api.http) = {
-            get: "/v1/vps/requirements"
+            post: "/v1/vps/requirements"
+            body: "*"
         };
     }
-
-    // Получить связующий слаг
-    //
-    // Возвращает слаг, который можно передать в методе "Создать VPS" как поле link_slug
-    rpc getLinkSlug(GetLinkSlugRequest) returns (GetLinkSlugResponse) {
-        option (google.api.http) = {
-            get: "/v1/vps/link-slug"
-        };
-    }
-}
-
-message GetLinkSlugRequest {
-}
-
-message GetLinkSlugResponse {
-    // Связующий слаг
-    string link_slug = 1;
 }
 
 message CheckVpsCreationRequirementsRequest {
+    // Идентификатор необходимой конфигурации (тариф)
+    string configuration_id = 1;
 }
 
 message CheckVpsCreationRequirementsResponse {
@@ -424,6 +413,12 @@ message CheckVpsCreationRequirementsResponse {
 
           // Недостаточно средств на счету
           INSUFFICIENT_FUNDS = 1;
+
+          // Переданная конфигурация не найдена
+          CONFIGURATION_NOT_FOUND = 2;
+
+          // Услуга не доступна для кастомера
+          SERVICE_DISABLED = 3;
         }
     }
 }
