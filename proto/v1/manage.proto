@@ -351,9 +351,6 @@ service ManageService {
     }
 
     // Проверить возможность установки ПО
-    //
-    // Для получения доступных идентификаторов конфигурации `configuration_id` необходимо использовать метод
-    // "Получить доступные конфигурации VPS" из API "Облачные серверы".
     rpc checkSoftwareRequirements(CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/software/requirements"
@@ -384,6 +381,11 @@ service ManageService {
     }
 
     // Проверить возможность создания VPS
+    //
+    // Проверяет возможнсть создания vps с указанной конфигурацией
+    //
+    // Для получения доступных идентификаторов конфигурации `configuration_id` необходимо использовать метод
+    // "Получить доступные конфигурации VPS" из API "Облачные серверы".
     rpc checkVpsCreationRequirements(CheckVpsCreationRequirementsRequest) returns (CheckVpsCreationRequirementsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/requirements"
@@ -417,7 +419,7 @@ message CheckVpsCreationRequirementsResponse {
           // Переданная конфигурация не найдена
           CONFIGURATION_NOT_FOUND = 2;
 
-          // Услуга не доступна для кастомера
+          // Услуга недоступна для кастомера
           SERVICE_DISABLED = 3;
         }
     }
@@ -510,7 +512,6 @@ message CreateVpsRequest {
     repeated PrivateNetworkInfo private_networks = 12;
 
     // Слаг, который вернется в ответе в VpsInfo (необязательное поле).
-    // Можно сгенерировать самостоятельно либо получить из метода "Получить связующий слаг"
     string link_slug = 13;
 }
 
@@ -603,6 +604,9 @@ message CreateVpsResponse {
 
             // Пароль содержится в чёрном списке
             BLACKLISTED_PASSWORD = 20;
+
+            // Передан некорректный link_slug
+            INVALID_LINK_SLUG = 21;
         }
 
         message SoftwareVariableError {
