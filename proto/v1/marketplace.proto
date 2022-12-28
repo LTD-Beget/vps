@@ -14,30 +14,15 @@ service MarketplaceService {
     // Возвращает список доступного для установки ПО.
     rpc getSoftwareList(GetSoftwareListRequest) returns (GetSoftwareListResponse) {
         option (google.api.http) = {
-            post: "/v1/vps/marketplace/software/list",
-            body: "*"
+            get: "/v1/vps/marketplace/software/list"
         };
     }
 }
 
 message GetSoftwareListRequest {
-    oneof condition {
-        ByCategoryName by_category_name = 1;
-        ByDisplayName by_display_name = 2;
-        ByIsPinned is_pinned = 3;
-    }
-
-    message ByCategoryName {
-        string category_name = 1;
-    }
-
-    message ByDisplayName {
-        string display_name = 1;
-    }
-
-    message ByIsPinned {
-        bool is_pinned = 1;
-    }
+    repeated string category_name = 1;
+    string display_name = 2;
+    bool is_pinned = 3;
 }
 
 message GetSoftwareListResponse {
