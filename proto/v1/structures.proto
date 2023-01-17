@@ -238,6 +238,8 @@ message SoftwareCategory {
     string name_en = 3;
     // Является ли категория основной
     bool is_main = 4;
+    // Иконка категории в формате .svg
+    string icon_svg = 5;
 }
 
 message InstalledSoftwareInfo {

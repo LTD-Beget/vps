@@ -20,7 +20,14 @@ service MarketplaceService {
 }
 
 message GetSoftwareListRequest {
+    // Категория софта
+    string category_name = 1;
 
+    // Имя софта
+    string display_name = 2;
+
+    // Популярный софт
+    bool is_pinned = 3;
 }
 
 message GetSoftwareListResponse {
