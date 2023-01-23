@@ -443,8 +443,12 @@ message CreateVpsRequest {
     // Дополнительное описание VPS (необязательное поле)
     string description = 3;
 
-    // Идентификатор необходимой конфигурации (тариф)
-    string configuration_id = 4;
+    oneof configuration {
+        // Идентификатор необходимой конфигурации (тариф)
+        string configuration_id = 4;
+        // Todo comment
+        structures.ConfigurationParams configurator_params = 13;
+    }
 
     // Источник для диска сервера
     oneof source {
@@ -897,8 +901,12 @@ message ChangeConfigurationRequest {
     // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
-    // Название конфигурации(тарифа)
-    string configuration_id = 2;
+    oneof configuration {
+        // Название конфигурации(тарифа)
+        string configuration_id = 2;
+        // Todo comment
+        structures.ConfigurationParams configuration_params = 3;
+    }
 }
 
 message ChangeConfigurationResponse {
