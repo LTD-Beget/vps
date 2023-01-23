@@ -338,3 +338,24 @@ message ConfigurationParams {
     // Объем оперативной памяти в Мб
     uint32 memory = 3;
 }
+
+message ConfiguratorSettings {
+    CpuSettings cpu_settings = 1;
+    DiskSettings disk_settings = 2;
+    MemorySettings memory_settings = 3;
+}
+
+message CpuSettings {
+    uint32 min_cpu_count = 1;
+    uint32 max_cpu_count = 2;
+}
+
+message DiskSettings {
+    uint32 min_disk_size = 1;
+    uint32 max_disk_size = 2;
+}
+
+message MemorySettings {
+    uint32 min_memory = 1;
+    uint32 max_memory = 2;
+}
