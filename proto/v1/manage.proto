@@ -1050,7 +1050,6 @@ message GetAvailableConfigurationRequest {
 message GetAvailableConfigurationResponse {
     // Список доступных конфигураций VPS
     repeated VpsConfiguration configurations = 1;
-    structures.ConfiguratorSettings configurator_settings = 2;
 }
 
 
