@@ -5,8 +5,9 @@ package beget.vps.v1.configurator;
 import "google/api/annotations.proto";
 import "vps/proto/v1/structures.proto";
 
-// Todo description
+// Конфигуратор VPS
 //
+// Предоставляет метод получения кастомной конфигурации VPS
 service ConfiguratorService {
   rpc configurator(ConfiguratorRequest) returns (ConfiguratorResponse) {
     option (google.api.http) = {
@@ -17,6 +18,7 @@ service ConfiguratorService {
 
 message ConfiguratorRequest {
   structures.ConfigurationParams params = 1;
+  string vps_id = 2;
 }
 
 message ConfiguratorResponse {

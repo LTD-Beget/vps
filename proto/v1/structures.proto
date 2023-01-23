@@ -339,23 +339,54 @@ message ConfigurationParams {
     uint32 memory = 3;
 }
 
+// Настройки конфигуратора
 message ConfiguratorSettings {
+    // Настройки CPU
     CpuSettings cpu_settings = 1;
+
+    // Настройки диска
     DiskSettings disk_settings = 2;
+
+    // Настройки памяти
     MemorySettings memory_settings = 3;
 }
 
 message CpuSettings {
-    uint32 min_cpu_count = 1;
-    uint32 max_cpu_count = 2;
+    // Диапазон значений кол-ва CPU min/max в шт
+    Range range = 1;
+
+    // Диапазон доступных значений кол-ва CPU min/max в шт
+    Range available_range = 2;
+
+    // Шаг в шт
+    uint32 step = 3;
 }
 
 message DiskSettings {
-    uint32 min_disk_size = 1;
-    uint32 max_disk_size = 2;
+    // Диапазон значений объема дисковой квоты min/max в МБ
+    Range range = 1;
+
+    // Диапазон доступных значений объема дисковой квоты min/max  в МБ
+    Range available_range = 2;
+
+    // Шаг в МБ
+    uint32 step = 3;
 }
 
 message MemorySettings {
-    uint32 min_memory = 1;
-    uint32 max_memory = 2;
+    // Диапазон значений объема памяти min/max в МБ
+    Range range = 1;
+
+    // Диапазон доступных значений объема памяти min/max  в МБ
+    Range available_range = 2;
+
+    // Шаг в МБ
+    uint32 step = 3;
+}
+
+message Range {
+    // Минимальное значение
+    uint32 min = 1;
+    // Максимальное значение
+    uint32 max = 2;
 }
