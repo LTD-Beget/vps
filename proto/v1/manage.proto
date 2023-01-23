@@ -395,6 +395,18 @@ service ManageService {
             body: "*"
         };
     }
+
+    // Отключить послеустановочный алерт
+    //
+    // Отключает послеустановочный алерт с дополнительными инструкциями по завершению установки ПО.
+    //
+    // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
+    // "Получить список VPS" из API "Облачные серверы".
+    rpc disablePostInstallationAlert(DisablePostInstallationAlertRequest) returns (DisablePostInstallationAlertResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/{id}/software/post-installation-alert"
+        };
+    }
 }
 
 message CheckVpsCreationRequirementsRequest {
@@ -1752,6 +1764,38 @@ message ReserveVpsSubdomainResponse {
 
             // Поддомен уже зарезервирован
             SUBDOMAIN_RESERVED = 1;
+        }
+    }
+}
+
+message DisablePostInstallationAlertRequest {
+    // Идентификатор VPS в формате uuid v4
+    string id = 1;
+}
+
+message DisablePostInstallationAlertResponse {
+    // Результат запроса
+    oneof result {
+        // Результат запроса: информация о VPS
+        VpsInfo vps = 1;
+
+        // Результат запроса: ошибка при попытке завершить установку ПО
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Операция не может быть выполнена, т.к. ПО находится в невалидном состоянии (например, установка еще не запускалась статус "pending")
+            INVALID_SOFTWARE_STATE = 1;
         }
     }
 }
