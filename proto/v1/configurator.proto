@@ -9,7 +9,7 @@ import "vps/proto/v1/structures.proto";
 //
 // Предоставляет метод получения кастомной конфигурации VPS
 service ConfiguratorService {
-  rpc getConfiguratorSettings(GetConfiguratorSettingsRequest) returns (GetConfiguratorSettingsResponse) {
+  rpc getConfiguratorInfo(GetConfiguratorInfoRequest) returns (GetConfiguratorInfoResponse) {
     option (google.api.http) = {
       get: "/v1/vps/configurator"
     };
@@ -22,10 +22,10 @@ service ConfiguratorService {
   }
 }
 
-message GetConfiguratorSettingsRequest {
+message GetConfiguratorInfoRequest {
 }
 
-message GetConfiguratorSettingsResponse {
+message GetConfiguratorInfoResponse {
   structures.ConfiguratorSettings settings = 1;
   bool is_available = 2;
 }
