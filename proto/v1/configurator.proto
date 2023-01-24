@@ -11,13 +11,13 @@ import "vps/proto/v1/structures.proto";
 service ConfiguratorService {
   rpc getConfiguratorInfo(GetConfiguratorInfoRequest) returns (GetConfiguratorInfoResponse) {
     option (google.api.http) = {
-      get: "/v1/vps/configurator"
+      get: "/v1/vps/configurator/info"
     };
   }
 
   rpc calculate(CalculateRequest) returns (CalculateResponse) {
     option (google.api.http) = {
-      post: "/v1/vps/configurator"
+      post: "/v1/vps/configurator/calculator"
     };
   }
 }
