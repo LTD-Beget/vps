@@ -9,13 +9,13 @@ import "vps/proto/v1/structures.proto";
 //
 // Предоставляет метод получения кастомной конфигурации VPS
 service ConfiguratorService {
-  rpc configuratorSettings(GetConfiguratorSettingsRequest) returns (GetConfiguratorSettingsResponse) {
+  rpc getConfiguratorSettings(GetConfiguratorSettingsRequest) returns (GetConfiguratorSettingsResponse) {
     option (google.api.http) = {
       get: "/v1/vps/configurator"
     };
   }
 
-  rpc configurator(ConfiguratorRequest) returns (ConfiguratorResponse) {
+  rpc configure(ConfigureRequest) returns (ConfigureResponse) {
     option (google.api.http) = {
       post: "/v1/vps/configurator"
     };
@@ -23,21 +23,40 @@ service ConfiguratorService {
 }
 
 message GetConfiguratorSettingsRequest {
-  string vps_id = 1;
 }
 
 message GetConfiguratorSettingsResponse {
   structures.ConfiguratorSettings settings = 1;
+  bool is_available = 2;
 }
 
-message ConfiguratorRequest {
+message ConfigureRequest {
   structures.ConfigurationParams params = 1;
   string vps_id = 2;
 }
 
-message ConfiguratorResponse {
-  structures.ConfiguratorSettings settings = 1;
-  structures.ConfigurationParams available_params = 2;
-  double price_day = 3;
-  double price_month = 4;
+message ConfigureResponse {
+  oneof result {
+    Configuration configuration = 1;
+    Error error = 2;
+  }
+
+  message Configuration {
+    structures.ConfiguratorSettings settings = 1;
+    structures.ConfigurationParams available_params = 2;
+    double price_day = 3;
+    double price_month = 4;
+  }
+
+  message Error {
+    // Код ошибки
+    Code code = 1;
+
+    // Описание ошибки
+    string message = 2;
+  }
+  enum Code {
+    // Действие в данный момент недоступно
+    TEMPORARILY_UNAVAILABLE = 0;
+  }
 }
