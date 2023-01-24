@@ -15,7 +15,7 @@ service ConfiguratorService {
     };
   }
 
-  rpc configure(ConfigureRequest) returns (ConfigureResponse) {
+  rpc calculate(CalculateRequest) returns (CalculateResponse) {
     option (google.api.http) = {
       post: "/v1/vps/configurator"
     };
@@ -30,18 +30,18 @@ message GetConfiguratorInfoResponse {
   bool is_available = 2;
 }
 
-message ConfigureRequest {
+message CalculateRequest {
   structures.ConfigurationParams params = 1;
   string vps_id = 2;
 }
 
-message ConfigureResponse {
+message CalculateResponse {
   oneof result {
-    Configuration configuration = 1;
+    Success success = 1;
     Error error = 2;
   }
 
-  message Configuration {
+  message Success {
     structures.ConfiguratorSettings settings = 1;
     structures.ConfigurationParams available_params = 2;
     double price_day = 3;
