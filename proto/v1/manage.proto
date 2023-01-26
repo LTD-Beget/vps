@@ -1395,6 +1395,9 @@ message VpsConfiguration {
 
     // Является ли конфигурация персональной
     bool custom = 9;
+
+    // Является ли конфигурация настраиваемой
+    bool configurable = 10;
 }
 
 message AttachIpAddressRequest {
