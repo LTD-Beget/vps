@@ -43,7 +43,7 @@ message CalculateResponse {
 
   message Success {
     structures.ConfiguratorSettings settings = 1;
-    structures.ConfigurationParams available_params = 2;
+    structures.ConfigurationParams params = 2;
     double price_day = 3;
     double price_month = 4;
   }
