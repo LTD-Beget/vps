@@ -18,6 +18,7 @@ service ConfiguratorService {
   rpc calculate(CalculateRequest) returns (CalculateResponse) {
     option (google.api.http) = {
       post: "/v1/vps/configurator/calculator"
+      body: "*"
     };
   }
 }
