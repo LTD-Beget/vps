@@ -447,7 +447,7 @@ message CreateVpsRequest {
         // Идентификатор необходимой конфигурации (тариф)
         string configuration_id = 4;
         // Валидные параметры конфигурации и стоимость конфигурации можно получить через метод calculate апи конфигуратора
-        structures.ConfigurationParams configurator_params = 13;
+        structures.ConfigurationParams configuration_params = 13;
     }
 
     // Источник для диска сервера
