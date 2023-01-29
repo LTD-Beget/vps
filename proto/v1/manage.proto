@@ -402,9 +402,9 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc disablePostInstallationAlert(DisablePostInstallationAlertRequest) returns (DisablePostInstallationAlertResponse) {
+    rpc disablePostInstallAlert(DisablePostInstallAlertRequest) returns (DisablePostInstallAlertResponse) {
         option (google.api.http) = {
-            delete: "/v1/vps/{id}/software/post-installation-alert"
+            delete: "/v1/vps/{id}/software/post-install-alert"
         };
     }
 }
@@ -532,7 +532,7 @@ message CreateVpsRequest {
     repeated PrivateNetworkInfo private_networks = 12;
 
     // Слаг, который вернется в ответе в VpsInfo (необязательное поле).
-    string link_slug = 13;
+    string link_slug = 14;
 }
 
 
@@ -1768,12 +1768,12 @@ message ReserveVpsSubdomainResponse {
     }
 }
 
-message DisablePostInstallationAlertRequest {
+message DisablePostInstallAlertRequest {
     // Идентификатор VPS в формате uuid v4
     string id = 1;
 }
 
-message DisablePostInstallationAlertResponse {
+message DisablePostInstallAlertResponse {
     // Результат запроса
     oneof result {
         // Результат запроса: информация о VPS

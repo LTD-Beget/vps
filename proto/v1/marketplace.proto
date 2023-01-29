@@ -85,8 +85,8 @@ message GetSoftwareListResponse {
             uint32 memory = 3;
         }
 
-        // Доступна ли быстрая установка
-        bool fast_install_available = 21;
+        // Доступна ли автоматическая установка
+        bool unattended_install_available = 21;
     }
 }
 
