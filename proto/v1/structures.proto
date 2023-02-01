@@ -339,7 +339,6 @@ message ConfigurationParams {
     uint32 memory = 3;
 }
 
-// Настройки конфигуратора
 message ConfiguratorSettings {
     // Настройки CPU
     CpuSettings cpu_settings = 1;

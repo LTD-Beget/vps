@@ -7,14 +7,20 @@ import "vps/proto/v1/structures.proto";
 
 // Конфигуратор VPS
 //
-// Предоставляет метод получения кастомной конфигурации VPS
+// Предоставляет набор методов для получения настраиваемой конфигурации VPS
 service ConfiguratorService {
+  // Получить настройки конфигуратора
+  //
+  // Возвращает настройки конфигуратора и его доступность.
   rpc getConfiguratorInfo(GetConfiguratorInfoRequest) returns (GetConfiguratorInfoResponse) {
     option (google.api.http) = {
       get: "/v1/vps/configurator/info"
     };
   }
 
+  // Рассчитать конфигурацию
+  //
+  // Проверяет возможность создания конфигурации, возвращает ближайшую доступную конфигурацию и ее стоимость.
   rpc calculate(CalculateRequest) returns (CalculateResponse) {
     option (google.api.http) = {
       post: "/v1/vps/configurator/calculator"
@@ -27,25 +33,42 @@ message GetConfiguratorInfoRequest {
 }
 
 message GetConfiguratorInfoResponse {
+  // Настройки конфигуратора
   structures.ConfiguratorSettings settings = 1;
+
+  // Флаг доступности конфигуратора
   bool is_available = 2;
 }
 
 message CalculateRequest {
+  // Параметры конфигурации
   structures.ConfigurationParams params = 1;
+
+  // Идентификатор VPS, для которой требуется рассчитать конфигурацию (необязательное поле)
   string vps_id = 2;
 }
 
 message CalculateResponse {
+  // Результат запроса
   oneof result {
+    // Результат запроса: информация о конфигурации
     Success success = 1;
+
+    // Результат запроса: ошибка конфигуратора
     Error error = 2;
   }
 
   message Success {
+    // Настройки конфигуратора
     structures.ConfiguratorSettings settings = 1;
+
+    // Доступная конфигурация
     structures.ConfigurationParams params = 2;
+
+    // Стоимость полученной конфигурации в день
     double price_day = 3;
+
+    // Стоимость полученной конфигурации в месяц
     double price_month = 4;
   }
 
