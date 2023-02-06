@@ -18,13 +18,12 @@ service ConfiguratorService {
     };
   }
 
-  // Рассчитать конфигурацию
+  // Получить расчет конфигурации
   //
-  // Проверяет возможность создания конфигурации, возвращает ближайшую доступную конфигурацию и ее стоимость.
-  rpc calculate(CalculateRequest) returns (CalculateResponse) {
+  // Проверяет возможность создания переданной конфигурации, возвращает ближайшую доступную конфигурацию и ее стоимость.
+  rpc getCalculation(GetCalculationRequest) returns (GetCalculationResponse) {
     option (google.api.http) = {
-      post: "/v1/vps/configurator/calculator"
-      body: "*"
+      get: "/v1/vps/configurator/calculation"
     };
   }
 }
@@ -40,7 +39,7 @@ message GetConfiguratorInfoResponse {
   bool is_available = 2;
 }
 
-message CalculateRequest {
+message GetCalculationRequest {
   // Параметры конфигурации
   structures.ConfigurationParams params = 1;
 
@@ -48,7 +47,7 @@ message CalculateRequest {
   string vps_id = 2;
 }
 
-message CalculateResponse {
+message GetCalculationResponse {
   // Результат запроса
   oneof result {
     // Результат запроса: информация о конфигурации
