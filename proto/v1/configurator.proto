@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+package beget.vps.v1.configurator;
+
+import "google/api/annotations.proto";
+import "vps/proto/v1/structures.proto";
+
+// Конфигуратор VPS
+//
+// Предоставляет набор методов для получения настраиваемой конфигурации VPS.
+service ConfiguratorService {
+  // Получить настройки конфигуратора
+  //
+  // Возвращает настройки конфигуратора и его доступность.
+  rpc getConfiguratorInfo(GetConfiguratorInfoRequest) returns (GetConfiguratorInfoResponse) {
+    option (google.api.http) = {
+      get: "/v1/vps/configurator/info"
+    };
+  }
+
+  // Получить расчет конфигурации
+  //
+  // Проверяет возможность создания переданной конфигурации, возвращает ближайшую доступную конфигурацию и ее стоимость.
+  rpc getCalculation(GetCalculationRequest) returns (GetCalculationResponse) {
+    option (google.api.http) = {
+      get: "/v1/vps/configurator/calculation"
+    };
+  }
+}
+
+message GetConfiguratorInfoRequest {
+}
+
+message GetConfiguratorInfoResponse {
+  // Настройки конфигуратора
+  ConfiguratorSettings settings = 1;
+
+  // Флаг доступности конфигуратора
+  bool is_available = 2;
+}
+
+message GetCalculationRequest {
+  // Параметры конфигурации
+  structures.ConfigurationParams params = 1;
+
+  // Идентификатор VPS, для которой требуется рассчитать конфигурацию (необязательное поле)
+  string vps_id = 2;
+}
+
+message GetCalculationResponse {
+  // Результат запроса
+  oneof result {
+    // Результат запроса: информация о конфигурации
+    Success success = 1;
+
+    // Результат запроса: ошибка конфигуратора
+    Error error = 2;
+  }
+
+  message Success {
+    // Настройки конфигуратора
+    ConfiguratorSettings settings = 1;
+
+    // Доступная конфигурация
+    structures.ConfigurationParams params = 2;
+
+    // Стоимость полученной конфигурации в день
+    double price_day = 3;
+
+    // Стоимость полученной конфигурации в месяц
+    double price_month = 4;
+  }
+
+  message Error {
+    // Код ошибки
+    Code code = 1;
+
+    // Описание ошибки
+    string message = 2;
+  }
+  enum Code {
+    // Действие в данный момент недоступно
+    TEMPORARILY_UNAVAILABLE = 0;
+  }
+}
+
+message ConfiguratorSettings {
+  // Настройки CPU
+  CpuSettings cpu_settings = 1;
+
+  // Настройки диска
+  DiskSettings disk_settings = 2;
+
+  // Настройки памяти
+  MemorySettings memory_settings = 3;
+}
+
+message CpuSettings {
+  // Диапазон значений кол-ва CPU min/max в шт
+  Range range = 1;
+
+  // Диапазон доступных значений кол-ва CPU min/max в шт
+  Range available_range = 2;
+
+  // Шаг в шт
+  uint32 step = 3;
+}
+
+message DiskSettings {
+  // Диапазон значений объема дисковой квоты min/max в МБ
+  Range range = 1;
+
+  // Диапазон доступных значений объема дисковой квоты min/max  в МБ
+  Range available_range = 2;
+
+  // Шаг в МБ
+  uint32 step = 3;
+}
+
+message MemorySettings {
+  // Диапазон значений объема памяти min/max в МБ
+  Range range = 1;
+
+  // Диапазон доступных значений объема памяти min/max  в МБ
+  Range available_range = 2;
+
+  // Шаг в МБ
+  uint32 step = 3;
+}
+
+message Range {
+  // Минимальное значение
+  uint32 min = 1;
+  // Максимальное значение
+  uint32 max = 2;
+}
+
