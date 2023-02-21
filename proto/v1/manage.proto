@@ -1793,9 +1793,6 @@ message DisablePostInstallAlertResponse {
         enum Code {
             // Внутренняя ошибка сервера
             INTERNAL_ERROR = 0;
-
-            // Операция не может быть выполнена, т.к. ПО находится в невалидном состоянии (например, установка еще не запускалась статус "pending")
-            INVALID_SOFTWARE_STATE = 1;
         }
     }
 }
