@@ -410,8 +410,13 @@ service ManageService {
 }
 
 message CheckVpsCreationRequirementsRequest {
-    // Идентификатор необходимой конфигурации (тариф)
-    string configuration_id = 1;
+    // Конфигурация
+    oneof configuration {
+        // Конфигурация: Идентификатор необходимой конфигурации (тариф)
+        string configuration_id = 1;
+        // Конфигурация: Параметры конфигурации VPS
+        structures.ConfigurationParams configuration_params = 2;
+    }
 }
 
 message CheckVpsCreationRequirementsResponse {
