@@ -84,6 +84,9 @@ message GetSoftwareListResponse {
             // Объем оперативной памяти в Мб
             uint32 memory = 3;
         }
+
+        // Доступна ли автоматическая установка
+        bool unattended_install_available = 21;
     }
 }
 
