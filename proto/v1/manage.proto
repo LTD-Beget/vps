@@ -492,6 +492,9 @@ message CreateVpsRequest {
 
     // Идентификатор лицензии на ПО из каталога лицензий
     uint32 license_id = 15;
+
+    // Регион, в котором будет создан VPS. По-умолчанию: ru1
+    string region = 16;
 }
 
 
@@ -1377,6 +1380,9 @@ message VpsInfo {
 
     // Слаг, который был указан в CreateVpsRequest (может быть пустой строкой)
     string link_slug = 29;
+
+    // Регион, в котором располагается VPS
+    string region = 30;
 }
 
 // Текущий статус Vps
@@ -1446,6 +1452,9 @@ message VpsConfiguration {
 
     // Является ли конфигурация настраиваемой
     bool configurable = 10;
+
+    // Регион, в котором доступна конфигурация
+    string region = 11;
 }
 
 message AttachIpAddressRequest {
