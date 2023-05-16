@@ -29,6 +29,8 @@ service ConfiguratorService {
 }
 
 message GetConfiguratorInfoRequest {
+  // Регион, для которого получить информацию о конфигураторе. По-умолчанию: ru1
+  string region = 1;
 }
 
 message GetConfiguratorInfoResponse {
