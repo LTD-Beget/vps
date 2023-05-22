@@ -31,6 +31,9 @@ message AdditionalIpInfo {
 
     // Идентификатор VPS, к которому привязан дополнительный IP-адрес
     string vps_id = 2;
+
+    // Регион, в котором заказан IP-адрес
+    string region = 3;
 }
 
 message FileInfo {
