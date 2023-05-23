@@ -1488,6 +1488,9 @@ message AttachIpAddressResponse {
 
             // Произошла ошибка при добавлении дополнительного IP адреса внутри гостевой ОС
             GUEST_OS_ADD_IP_ADDRESS_FAILED = 1;
+
+            // Регион VPS не соответствует региону IP-адреса
+            REGION_MISMATCH = 2;
         }
     }
 }
