@@ -74,18 +74,29 @@ service NetworkService {
 }
 
 message OrderIpAddressRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS в формате uuid v4.
+    // IP-адрес будет выделен в регионе размещения VPS.
+    // Если не передать id, то адрес будет выделен в регионе 'ru1'
     string id = 1;
 }
 
 message OrderIpAddressResponse {
-    // Результат запроса
+    // [УСТАРЕЛО]. Результат запроса
     oneof result {
-        // Информация о выделенном IP-адресе
-        structures.AdditionalIpInfo additional_ip = 1;
+        // [УСТАРЕЛО]. Результат запроса: IP-адрес
+        string ip_address = 1;
+
+        // [УСТАРЕЛО]. Результат запроса: произошла ошибка при заказе дополнительного IP-адреса
+        Error error = 2;
+    }
+
+    // Результат запроса
+    oneof result_v2 {
+        // Результат запроса: информация о выделенном IP-адресе
+        structures.AdditionalIpInfo additional_ip = 3;
 
         // Результат запроса: произошла ошибка при заказе дополнительного IP-адреса
-        Error error = 2;
+        Error error_v2 = 4;
     }
 
     message Error {
