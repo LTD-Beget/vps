@@ -201,6 +201,9 @@ message PrivateNetwork {
 
     // Маска подсети
     uint32 mask = 3;
+
+    // Регион приватной сети
+    string region = 4;
 }
 
 message AttachedPrivateNetwork {

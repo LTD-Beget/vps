@@ -167,7 +167,10 @@ message GetNetworkInfoResponse {
     repeated structures.PrivateNetwork private_network = 3;
 }
 
-message CreatePrivateNetworkRequest {}
+message CreatePrivateNetworkRequest {
+    // Регион создания приватной сети. По-умолчанию: ru1
+    string region = 1;
+}
 
 message CreatePrivateNetworkResponse {
     // Результат запроса
