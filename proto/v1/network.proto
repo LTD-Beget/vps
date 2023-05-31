@@ -52,6 +52,7 @@ service NetworkService {
     rpc createPrivateNetwork(CreatePrivateNetworkRequest) returns (CreatePrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network"
+            body: "*"
         };
     }
 
