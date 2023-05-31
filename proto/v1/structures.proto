@@ -409,3 +409,20 @@ message SoftwareLicense {
     // Информация о типе оплаты и стоимости лицензии
     SoftwareLicenseBillingType billing = 8;
 }
+
+message RegionInfo {
+    // Идентификатор региона
+    string id = 1;
+
+    // Отображаемое имя региона
+    string name = 2;
+
+    // Отображаемое имя региона на английском
+    string name_en = 3;
+
+    // Код страны региона в формате ISO 3166-1 alpha-2
+    string country = 4;
+
+    // Доступен ли регион для создания новых VPS
+    bool available = 5;
+}

@@ -394,6 +394,15 @@ service ManageService {
             delete: "/v1/vps/{id}/software/post-install-alert"
         };
     }
+
+    // Получить список регионов для виртуальных серверов
+    //
+    // Возвращает список регионов, в которых предоставляется услуга VPS
+    rpc getRegionList(GetRegionListRequest) returns (GetRegionListResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/region"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -1766,4 +1775,10 @@ message DisablePostInstallAlertRequest {
 message DisablePostInstallAlertResponse {
    // Результат запроса: информация о VPS
    VpsInfo vps = 1;
+}
+
+message GetRegionListRequest {}
+
+message GetRegionListResponse {
+    repeated structures.RegionInfo regions = 1;
 }
