@@ -330,6 +330,9 @@ message InstalledSoftwareInfo {
     // Флаг, указывающий что на данный момент активен алерт с инструкциями для завершения установки ПО.
     // Чтобы снять это флаг используйте метод "Отключить послеустановочный алерт"
     bool post_install_alert = 14;
+
+    // Список лицензий, которые привязаны к VPS
+    repeated IssuedSoftwareLicense license = 22;
 }
 
 message ConfigurationParams {
@@ -341,4 +344,62 @@ message ConfigurationParams {
 
     // Объем оперативной памяти в Мб
     uint32 memory = 3;
+}
+
+message IssuedSoftwareLicense {
+    // Идентификатор выпущенной лицензии
+    uint32 id = 1;
+    // Тип лицензии
+    string type = 2;
+    // Отображаемое имя лицензии
+    string display_name = 3;
+    // Редакция лицензии (тарифный план)
+    string plan = 4;
+    // Краткое описание особенности конкретной версии на русском
+    string additional_info = 5;
+    // Краткое описание особенности конкретной версии на английском
+    string additional_info_en = 6;
+    // Является ли лицензия этого типа основной (обязательной) для использования ПО
+    bool primary = 7;
+    // Информация о типе оплаты и стоимости лицензии
+    SoftwareLicenseBillingType billing = 8;
+}
+
+message SoftwareLicenseBillingType {
+    oneof info {
+        Daily daily = 1;
+        Monthly monthly = 2;
+    }
+
+    // Посуточный тип лицензирования
+    message Daily {
+        // Стоимость лицензии в сутки
+        double price_day = 1;
+        // Стоимость лицензии в месяц (для удобства пользователя)
+        uint32 price_month = 2;
+    }
+
+    message Monthly {
+        // Стоимость лицензии в месяц
+        uint32 price_month = 1;
+    }
+}
+
+message SoftwareLicense {
+    // Идентификатор лицензии в каталоге лицензий
+    uint32 id = 1;
+    // Тип лицензии
+    string type = 2;
+    // Отображаемое имя лицензии
+    string display_name = 3;
+    // Редакция лицензии (тарифный план)
+    string plan = 4;
+    // Краткое описание особенности конкретной версии на русском
+    string additional_info = 5;
+    // Краткое описание особенности конкретной версии на английском
+    string additional_info_en = 6;
+    // Является ли лицензия этого типа основной (обязательной) для использования ПО
+    bool primary = 7;
+    // Информация о типе оплаты и стоимости лицензии
+    SoftwareLicenseBillingType billing = 8;
 }
