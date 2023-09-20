@@ -1,0 +1,96 @@
+syntax = 'proto3';
+
+package beget.vps.v1.softwareLicense;
+
+import "vps/proto/v1/structures.proto";
+import "google/api/annotations.proto";
+
+// Управление лицензиями
+//
+// Предоставляет набор методов для управления лицензиями.
+service SoftwareLicenseService {
+    // Получить информацию о доступной лицензии из каталога лицензий
+    //
+    // Позволяет получить полную информацию о доступной лицензии по ее идентификатору
+    rpc getLicenseInfo(GetLicenseInfoRequest) returns (GetLicenseInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/software/license"
+        };
+    }
+
+    // Изменить тип лицензии
+    //
+    // Позволяет перейти на другой тип/редакцию лицензии в рамках одного продукта, если это допускается политикой лицензирования
+    rpc changeLicensePlan(ChangeLicensePlanRequest) returns (ChangeLicensePlanResponse) {
+        option (google.api.http) = {
+            patch: "/v1/vps/software/license/{vps_id}"
+            body: "*"
+        };
+    }
+}
+
+message GetLicenseInfoRequest {
+    // Идентификатор лицензии в каталоге приложений
+    uint32 license_id = 1;
+}
+
+message GetLicenseInfoResponse {
+    // Результат запроса: информация о запрашиваемой лицензии из каталога
+    structures.SoftwareLicense license = 3;
+}
+
+message ChangeLicensePlanRequest {
+    // Идентификатор VPS, к которому привязана лицензия
+    string vps_id = 1;
+    // Идентификатор текущей выпущенной лицензии
+    uint32 license_id = 2;
+    // Идентификатор новой лицензии из каталога лицензий
+    uint32 new_license_id = 3;
+}
+
+message ChangeLicensePlanResponse {
+    // Результат запроса
+    oneof result {
+        // Результат запроса: информация о новой лицензии
+        structures.IssuedSoftwareLicense license = 1;
+
+        // Результат запроса: ошибка при смене лицензии
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Описание ошибки
+        string message = 2;
+
+        // Расширенное описание ошибки
+        oneof extra {
+            // Расширенное описание ошибки: недостаточно средств на счету (INSUFFICIENT_FUNDS)
+            InsufficientFundsError insufficient_funds_error = 3;
+        }
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR = 0;
+
+            // Недостаточно средств на счету
+            INSUFFICIENT_FUNDS = 1;
+
+            // Доступ к VPS заблокирован
+            SERVICE_DISABLED = 2;
+        }
+
+        message InsufficientFundsError {
+            // Текущий баланс аккаунта
+            double current_balance = 1;
+
+            // Требуемый баланс для смены лицензии
+            double needed_balance = 2;
+
+            // Будут ли списаны со счета аккаунта средства за сутки при смене лицензии
+            bool charge_on_add = 3;
+        }
+    }
+}

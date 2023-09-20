@@ -17,6 +17,27 @@ service MarketplaceService {
             get: "/v1/vps/marketplace/software/list"
         };
     }
+
+    // Получить информацию о заданном ПО
+    //
+    // Возвращает информацию об одном заданном экземпляре ПО
+    rpc getSoftwareInfo(GetSoftwareInfoRequest) returns (GetSoftwareInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/marketplace/software/{name}/{version}"
+        };
+    }
+}
+
+message GetSoftwareInfoRequest {
+    // Имя ПО
+    string name = 1;
+    // Версия ПО
+    string version = 2;
+}
+
+message GetSoftwareInfoResponse {
+    // Информация об искомом ПО
+    SoftwareInfo software = 1;
 }
 
 message GetSoftwareListRequest {
@@ -33,61 +54,6 @@ message GetSoftwareListRequest {
 message GetSoftwareListResponse {
     // Информация о доступном ПО
     repeated SoftwareInfo software = 1;
-
-    message SoftwareInfo {
-        reserved "description_version", "description_version_en", "variable";
-        reserved 8, 9, 15;
-
-        // Идентификатор софта
-        uint32 id = 1;
-
-        // Внутреннее имя (напр. redmine)
-        string name = 2;
-
-        // Отображаемое имя (напр. Redmine)
-        string display_name = 3;
-
-        // Версия (напр. 1.0.1)
-        string version = 4;
-
-        // Описание ПО на русском
-        string description = 6;
-
-        // Описание ПО на английском
-        string description_en = 7;
-
-        // Дополнительная информация о ПО
-        structures.SoftwareMetadata metadata = 10;
-
-        // Описание полей доступных для заполнения
-        repeated FieldDesc field_data = 16;
-
-        // Минимальные требования к конфигурации для установки
-        Requirements requirements = 17;
-
-        // Категории к которым относится ПО
-        repeated structures.SoftwareCategory category = 18;
-
-        // Уникальный идентификатор в рамках возвращенной коллекции ПО для использования в URL (например, ubuntu-20-04)
-        string slug = 19;
-
-        // Имя страницы с описанием ПО в контетной части сайта marketplace
-        string documentation_slug = 20;
-
-        message Requirements {
-            // Количество ядер процессора
-            uint32 cpu_count = 1;
-
-            // Размер диска в Мб
-            uint32 disk_size = 2;
-
-            // Объем оперативной памяти в Мб
-            uint32 memory = 3;
-        }
-
-        // Доступна ли автоматическая установка
-        bool unattended_install_available = 21;
-    }
 }
 
 message FieldDesc {
@@ -172,4 +138,62 @@ message FieldCommon {
 
     // Текст ошибки на английском
     string validation_error_text_en = 12;
+}
+
+message SoftwareInfo {
+    reserved "description_version", "description_version_en", "variable";
+    reserved 8, 9, 15;
+
+    // Идентификатор софта
+    uint32 id = 1;
+
+    // Внутреннее имя (напр. redmine)
+    string name = 2;
+
+    // Отображаемое имя (напр. Redmine)
+    string display_name = 3;
+
+    // Версия (напр. 1.0.1)
+    string version = 4;
+
+    // Описание ПО на русском
+    string description = 6;
+
+    // Описание ПО на английском
+    string description_en = 7;
+
+    // Дополнительная информация о ПО
+    structures.SoftwareMetadata metadata = 10;
+
+    // Описание полей доступных для заполнения
+    repeated FieldDesc field_data = 16;
+
+    // Минимальные требования к конфигурации для установки
+    Requirements requirements = 17;
+
+    // Категории к которым относится ПО
+    repeated structures.SoftwareCategory category = 18;
+
+    // Уникальный идентификатор в рамках возвращенной коллекции ПО для использования в URL (например, ubuntu-20-04)
+    string slug = 19;
+
+    // Имя страницы с описанием ПО в контетной части сайта marketplace
+    string documentation_slug = 20;
+
+    message Requirements {
+        // Количество ядер процессора
+        uint32 cpu_count = 1;
+
+        // Размер диска в Мб
+        uint32 disk_size = 2;
+
+        // Объем оперативной памяти в Мб
+        uint32 memory = 3;
+    }
+
+    // Доступна ли автоматическая установка
+    bool unattended_install_available = 21;
+
+    // Информация о лицензировании ПО
+    repeated structures.SoftwareLicense license = 22;
 }

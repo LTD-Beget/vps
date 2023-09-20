@@ -191,7 +191,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов SSH-ключей `ssh_keys` необходимо использовать метод
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
-       rpc reinstall(ReinstallRequest) returns (ReinstallResponse) {
+    rpc reinstall(ReinstallRequest) returns (ReinstallResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reinstall"
             body: "*"
@@ -489,6 +489,9 @@ message CreateVpsRequest {
 
     // Слаг, который вернется в ответе в VpsInfo (необязательное поле).
     string link_slug = 14;
+
+    // Идентификатор лицензии на ПО из каталога лицензий
+    uint32 license_id = 15;
 }
 
 
@@ -983,6 +986,9 @@ message ReinstallRequest {
 
     // Информация о ПО, которое необходимо установить
     SoftwareInstallInfo software = 6;
+
+    // Идентификатор лицензии на ПО из каталога лицензий
+    uint32 license_id = 7;
 }
 
 message ReinstallResponse {
@@ -1006,6 +1012,8 @@ message ReinstallResponse {
         oneof extra {
             //Расширенное описание ошибки: некорректное значение переменной для ПО
             SoftwareVariableError variable_error = 3;
+            // Расширенное описание ошибки: недостаточно средств на счету (INSUFFICIENT_FUNDS)
+            InsufficientFundsError insufficient_funds_error = 4;
         }
 
         enum Code {
@@ -1044,6 +1052,9 @@ message ReinstallResponse {
 
             // Пароль содержится в чёрном списке
             BLACKLISTED_PASSWORD = 11;
+
+            // Недостаточно средств на счету
+            INSUFFICIENT_FUNDS = 12;
         }
 
         message SoftwareVariableError {
@@ -1063,6 +1074,17 @@ message ReinstallResponse {
                 // Описание ошибки на английском
                 string error_text_en = 3;
             }
+        }
+
+        message InsufficientFundsError {
+            // Текущий баланс аккаунта
+            double current_balance = 1;
+
+            // Требуемый для создания VPS баланс
+            double needed_balance = 2;
+
+            // Будут ли списаны со счета аккаунта средства за сутки при создании сервера
+            bool charge_on_add = 3;
         }
     }
 }
