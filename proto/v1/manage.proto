@@ -1447,6 +1447,9 @@ message VpsConfiguration {
     // Объем оперативной памяти в Мб
     uint32 memory = 5;
 
+    // Пропускная способность канала для публичной сети в Мбит/с
+    uint32 bandwidth_public = 12;
+
     // Цена в день
     double price_day = 6;
 
