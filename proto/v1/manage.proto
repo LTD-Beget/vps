@@ -394,6 +394,15 @@ service ManageService {
             delete: "/v1/vps/{id}/software/post-install-alert"
         };
     }
+
+    // Получить список регионов для виртуальных серверов
+    //
+    // Возвращает список регионов, в которых предоставляется услуга VPS
+    rpc getRegionList(GetRegionListRequest) returns (GetRegionListResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/region"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -492,6 +501,9 @@ message CreateVpsRequest {
 
     // Идентификатор лицензии на ПО из каталога лицензий
     uint32 license_id = 15;
+
+    // Регион, в котором будет создан VPS. По-умолчанию: ru1
+    string region = 16;
 }
 
 
@@ -1377,6 +1389,9 @@ message VpsInfo {
 
     // Слаг, который был указан в CreateVpsRequest (может быть пустой строкой)
     string link_slug = 29;
+
+    // Регион, в котором располагается VPS
+    string region = 30;
 }
 
 // Текущий статус Vps
@@ -1432,6 +1447,9 @@ message VpsConfiguration {
     // Объем оперативной памяти в Мб
     uint32 memory = 5;
 
+    // Пропускная способность канала для публичной сети в Мбит/с
+    uint32 bandwidth_public = 12;
+
     // Цена в день
     double price_day = 6;
 
@@ -1446,6 +1464,9 @@ message VpsConfiguration {
 
     // Является ли конфигурация настраиваемой
     bool configurable = 10;
+
+    // Регион, в котором доступна конфигурация
+    string region = 11;
 }
 
 message AttachIpAddressRequest {
@@ -1479,6 +1500,9 @@ message AttachIpAddressResponse {
 
             // Произошла ошибка при добавлении дополнительного IP адреса внутри гостевой ОС
             GUEST_OS_ADD_IP_ADDRESS_FAILED = 1;
+
+            // Регион VPS не соответствует региону IP-адреса
+            REGION_MISMATCH = 2;
         }
     }
 }
@@ -1754,4 +1778,10 @@ message DisablePostInstallAlertRequest {
 message DisablePostInstallAlertResponse {
    // Результат запроса: информация о VPS
    VpsInfo vps = 1;
+}
+
+message GetRegionListRequest {}
+
+message GetRegionListResponse {
+    repeated structures.RegionInfo regions = 1;
 }

@@ -29,6 +29,8 @@ service ConfiguratorService {
 }
 
 message GetConfiguratorInfoRequest {
+  // Регион, для которого получить информацию о конфигураторе. По-умолчанию: ru1
+  string region = 1;
 }
 
 message GetConfiguratorInfoResponse {
@@ -42,6 +44,9 @@ message GetConfiguratorInfoResponse {
 message GetCalculationRequest {
   // Параметры конфигурации
   structures.ConfigurationParams params = 1;
+
+  // Регион, для которого требуется рассчитать конфигурацию. По-умолчанию: ru1
+  string region = 5;
 
   // Источник для расчетов конфигурации (необязательное поле)
   oneof source {

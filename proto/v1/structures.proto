@@ -31,6 +31,9 @@ message AdditionalIpInfo {
 
     // Идентификатор VPS, к которому привязан дополнительный IP-адрес
     string vps_id = 2;
+
+    // Регион, в котором заказан IP-адрес
+    string region = 3;
 }
 
 message FileInfo {
@@ -83,6 +86,9 @@ message CopyInfo {
 
     // Общий размер резервной копии в байтах
     uint64 size = 4;
+
+    // Регион, в котором доступна копия
+    string region = 9;
 
     // Конфигурация, которая использовалась сервером в момент создания резервной копии
     Configuration configuration = 5;
@@ -198,6 +204,9 @@ message PrivateNetwork {
 
     // Маска подсети
     uint32 mask = 3;
+
+    // Регион приватной сети
+    string region = 4;
 }
 
 message AttachedPrivateNetwork {
@@ -402,4 +411,21 @@ message SoftwareLicense {
     bool primary = 7;
     // Информация о типе оплаты и стоимости лицензии
     SoftwareLicenseBillingType billing = 8;
+}
+
+message RegionInfo {
+    // Идентификатор региона
+    string id = 1;
+
+    // Отображаемое имя региона
+    string name = 2;
+
+    // Отображаемое имя региона на английском
+    string name_en = 3;
+
+    // Код страны региона в формате ISO 3166-1 alpha-2
+    string country = 4;
+
+    // Доступен ли регион для создания новых VPS
+    bool available = 5;
 }

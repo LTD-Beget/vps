@@ -210,6 +210,9 @@ message RestoreResponse {
 
             // В данном статусе VPS невозможно восстановить снапшот (VPS не в статусе running/stopped)
             UNSUITABLE_VPS_STATUS = 4;
+
+            // Регион снапшота не соответствует региону целевого сервера
+            REGION_MISMATCH = 5;
         }
     }
 }
@@ -287,6 +290,9 @@ message Snapshot {
 
     // Стоимость снапшота за один день в рублях
     double price_day = 10;
+
+    // Локация, в которой доступен снапшот
+    string region = 12;
 
     enum Status {
         // Создание

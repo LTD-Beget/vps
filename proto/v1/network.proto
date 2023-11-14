@@ -13,8 +13,7 @@ service NetworkService {
     // Заказать дополнительный IP-адрес
     //
     // Производит заказ нового публичного адреса. При указании идентификатора VPS `id` IP-адрес будет
-    // прикреплён к этому серверу. В случае отсутствии идентификатора IP будет добавлен на аккаунт без
-    // привязки к VPS.
+    // прикреплён к этому серверу.
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
@@ -53,6 +52,7 @@ service NetworkService {
     rpc createPrivateNetwork(CreatePrivateNetworkRequest) returns (CreatePrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/private-network"
+            body: "*"
         };
     }
 
@@ -75,18 +75,29 @@ service NetworkService {
 }
 
 message OrderIpAddressRequest {
-    // Идентификатор VPS в формате uuid v4 (необязательное поле)
+    // Идентификатор VPS в формате uuid v4.
+    // IP-адрес будет выделен в регионе размещения VPS.
+    // Если не передать id, то адрес будет выделен в регионе 'ru1'
     string id = 1;
 }
 
 message OrderIpAddressResponse {
-    // Результат запроса
+    // [УСТАРЕЛО]. Результат запроса
     oneof result {
-        // Результат запроса: IP-адрес
+        // [УСТАРЕЛО]. Результат запроса: IP-адрес
         string ip_address = 1;
 
-        // Результат запроса: произошла ошибка при заказе дополнительного IP-адреса
+        // [УСТАРЕЛО]. Результат запроса: произошла ошибка при заказе дополнительного IP-адреса
         Error error = 2;
+    }
+
+    // Результат запроса
+    oneof result_v2 {
+        // Результат запроса: информация о выделенном IP-адресе
+        structures.AdditionalIpInfo additional_ip = 3;
+
+        // Результат запроса: произошла ошибка при заказе дополнительного IP-адреса
+        Error error_v2 = 4;
     }
 
     message Error {
@@ -157,7 +168,10 @@ message GetNetworkInfoResponse {
     repeated structures.PrivateNetwork private_network = 3;
 }
 
-message CreatePrivateNetworkRequest {}
+message CreatePrivateNetworkRequest {
+    // Регион создания приватной сети. По-умолчанию: ru1
+    string region = 1;
+}
 
 message CreatePrivateNetworkResponse {
     // Результат запроса
