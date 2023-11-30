@@ -1333,6 +1333,9 @@ message ResetPasswordResponse {
 
             // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
+            
+            // Не удалось сменить пароль в гостевой системе, необходимо перезагрузить VPS
+            GUEST_OS_RESET_PASSWORD_FAILED = 2;
         }
     }
 }
