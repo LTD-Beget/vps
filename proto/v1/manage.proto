@@ -1244,6 +1244,9 @@ message AttachSshKeyRequest {
 
     // ID публичного ключа
     uint32 ssh_key_id = 2;
+
+    // Нужно ли добавить этот ключ в гостевую ОС
+    bool add_to_guest = 3;
 }
 
 message AttachSshKeyResponse {
@@ -1266,6 +1269,9 @@ message AttachSshKeyResponse {
 
             // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
+
+            // Не удалось добавить ключ в гостевую ОС
+            GUEST_OS_KEY_MANAGE_FAILED = 2;
         }
     }
 }
@@ -1276,6 +1282,9 @@ message DetachSshKeyRequest {
 
     // ID публичного ключа
     uint32 ssh_key_id = 2;
+
+    // Нужно ли удалить этот ключ из гостевой ОС
+    bool remove_from_guest = 3;
 }
 
 message DetachSshKeyResponse {
@@ -1301,6 +1310,9 @@ message DetachSshKeyResponse {
 
             // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
+
+            // Не удалось удалить ключ из гостевой ОС
+            GUEST_OS_KEY_MANAGE_FAILED = 2;
         }
     }
 }
