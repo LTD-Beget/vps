@@ -1244,9 +1244,6 @@ message AttachSshKeyRequest {
 
     // ID публичного ключа
     uint32 ssh_key_id = 2;
-
-    // Нужно ли добавить этот ключ в гостевую ОС
-    bool add_to_guest = 3;
 }
 
 message AttachSshKeyResponse {
@@ -1282,9 +1279,6 @@ message DetachSshKeyRequest {
 
     // ID публичного ключа
     uint32 ssh_key_id = 2;
-
-    // Нужно ли удалить этот ключ из гостевой ОС
-    bool remove_from_guest = 3;
 }
 
 message DetachSshKeyResponse {
