@@ -1479,8 +1479,8 @@ message VpsConfiguration {
     // Регион, в котором доступна конфигурация
     string region = 11;
 
-    // Доступные теги конфигурации
-    repeated string tag_names = 13;
+    // К какой группе относится конфигурация. VpsConfiguration.group == ConfigurationGroup.tag
+    repeated string group = 13;
 }
 
 message AttachIpAddressRequest {
