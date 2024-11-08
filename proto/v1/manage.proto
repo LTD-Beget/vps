@@ -1480,7 +1480,7 @@ message VpsConfiguration {
     string region = 11;
 
     // К какой группе относится конфигурация. VpsConfiguration.group == ConfigurationGroup.tag
-    repeated string group = 13;
+    string group = 13;
 }
 
 message AttachIpAddressRequest {
