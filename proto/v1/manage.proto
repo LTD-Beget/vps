@@ -1437,8 +1437,8 @@ message ConfigurationGroup {
     // Имя группы
     string name = 1;
 
-    // Тэг. Если тэг конфигурации равен тегу группы, значит конфигурация относится к группе.
-    string tag = 2;
+    // Системное наименование группы.
+    string group = 2;
 }
 
 // Описывает параметры VPS
@@ -1479,7 +1479,7 @@ message VpsConfiguration {
     // Регион, в котором доступна конфигурация
     string region = 11;
 
-    // К какой группе относится конфигурация. VpsConfiguration.group == ConfigurationGroup.tag
+    // К какой группе относится конфигурация. VpsConfiguration.group == ConfigurationGroup.group
     string group = 13;
 }
 
