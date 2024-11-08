@@ -1479,7 +1479,7 @@ message VpsConfiguration {
     string region = 11;
 
     // Доступные теги конфигурации
-    repeated string tags = 13;
+    repeated string tag_names = 13;
 }
 
 message AttachIpAddressRequest {
