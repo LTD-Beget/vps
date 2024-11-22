@@ -1107,6 +1107,8 @@ message GetAvailableConfigurationRequest {
 message GetAvailableConfigurationResponse {
     // Список доступных конфигураций VPS
     repeated VpsConfiguration configurations = 1;
+    // Список групп конфигураций
+    repeated ConfigurationGroup configuration_groups = 2;
 }
 
 
@@ -1430,6 +1432,15 @@ enum VpsStatus {
     REINSTALLING = 10;
 }
 
+// Описывает группу  (обычный, high_cpu, и т.д.)
+message ConfigurationGroup {
+    // Имя группы
+    string name = 1;
+
+    // Системное наименование группы.
+    string group = 2;
+}
+
 // Описывает параметры VPS
 message VpsConfiguration {
     // Идентификатор конфигурации
@@ -1467,6 +1478,9 @@ message VpsConfiguration {
 
     // Регион, в котором доступна конфигурация
     string region = 11;
+
+    // К какой группе относится конфигурация. VpsConfiguration.group == ConfigurationGroup.group
+    string group = 13;
 }
 
 message AttachIpAddressRequest {
