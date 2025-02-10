@@ -504,6 +504,10 @@ message CreateVpsRequest {
 
     // Регион, в котором будет создан VPS. По-умолчанию: ru1
     string region = 16;
+
+    // Группа конфигураций, к которой будет относиться VPS. Если не указанна, то значение normal_cpu.
+    // Требуется толко при отправке запроса вместе с configuration_params
+    string configuration_group = 17;
 }
 
 
