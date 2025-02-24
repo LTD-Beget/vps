@@ -31,6 +31,8 @@ service ConfiguratorService {
 message GetConfiguratorInfoRequest {
   // Регион, для которого получить информацию о конфигураторе. По-умолчанию: ru1
   string region = 1;
+  // Группа, к которой относится конфигурация. По умолчанию normal_cpu
+  string configuration_group = 2;
 }
 
 message GetConfiguratorInfoResponse {
@@ -59,6 +61,8 @@ message GetCalculationRequest {
     // Источник для расчетов конфигурации: Идентификатор снапшота, для получения необходимо использовать метод "Получить список снапшотов" из API "Облачные серверы".
     uint64 snapshot_id = 4;
   }
+  // Группа, к которой относится конфигурация. По умолчанию normal_cpu
+  string configuration_group = 6;
 }
 
 message GetCalculationResponse {
