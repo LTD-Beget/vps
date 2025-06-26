@@ -605,6 +605,9 @@ message CreateVpsResponse {
 
             // Передан некорректный link_slug
             INVALID_LINK_SLUG = 21;
+
+            // Недостаточно дискового пространства для создания VPS
+            NOT_ENOUGH_SPACE = 22;
         }
 
         message SoftwareVariableError {
@@ -1074,6 +1077,9 @@ message ReinstallResponse {
 
             // Недостаточно средств на счету
             INSUFFICIENT_FUNDS = 12;
+
+            // Недостаточно дискового пространства для создания VPS
+            NOT_ENOUGH_SPACE = 13;
         }
 
         message SoftwareVariableError {
