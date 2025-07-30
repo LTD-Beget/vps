@@ -482,6 +482,9 @@ message CreateVpsRequest {
 
         // Источник для диска сервера: идентификатор снапшота, который восстановится в новую VPS
         uint64 snapshot_id = 11;
+
+        // Источник для диска сервера: идентификатор образа, который будет использован для создания VPS
+        string image_id = 18;
     }
 
     // Идентификаторы публичных SSH-ключей, которые будут добавлены в VPS (необязательное поле)
@@ -602,6 +605,9 @@ message CreateVpsResponse {
 
             // Передан некорректный link_slug
             INVALID_LINK_SLUG = 21;
+
+            // Недостаточно дискового пространства для создания VPS
+            NOT_ENOUGH_SPACE = 22;
         }
 
         message SoftwareVariableError {
@@ -1071,6 +1077,9 @@ message ReinstallResponse {
 
             // Недостаточно средств на счету
             INSUFFICIENT_FUNDS = 12;
+
+            // Недостаточно дискового пространства для создания VPS
+            NOT_ENOUGH_SPACE = 13;
         }
 
         message SoftwareVariableError {
