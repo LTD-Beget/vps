@@ -406,7 +406,7 @@ service ManageService {
 
     rpc pin (PinRequest) returns (PinResponse) {
         option (google.api.http) = {
-            PUT: "/v1/vps/server/{id}/pin"
+            put: "/v1/vps/server/{id}/pin"
         };
     };
 }
