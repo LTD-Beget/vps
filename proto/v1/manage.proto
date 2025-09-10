@@ -519,7 +519,7 @@ message CreateVpsRequest {
     string configuration_group = 17;
 
     // Отображение сервера в интерфейсе как закреплённого
-    optional bool ui_pinned = 19;
+    bool ui_pinned = 19;
 }
 
 
