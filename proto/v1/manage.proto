@@ -1852,7 +1852,7 @@ message PinResponse {
             INTERNAL_ERROR = 0;
 
             // Некорректное тело запроса
-            INVALID_ARGUMENT = 1;
+            INVALID_REQUEST = 1;
 
             // Vps с переданным идентификатором не найдена
             NOT_FOUND = 2;
