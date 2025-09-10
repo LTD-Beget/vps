@@ -1833,5 +1833,29 @@ message PinRequest {
 }
 
 message PinResponse {
-    VpsInfo vps = 1;
+    oneof result {
+        // Результат запроса: информация о VPS
+        VpsInfo vps = 1;
+
+        // Результат запроса: ошибка при закреплении/откреплении VPS
+        Error error = 2;
+    }
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Некорректное тело запроса
+            INVALID_ARGUMENT = 1;
+
+            // Vps с переданным идентификатором не найдена
+            NOT_FOUND = 2;
+        }
+    }
 }
