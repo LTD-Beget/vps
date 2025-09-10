@@ -511,6 +511,9 @@ message CreateVpsRequest {
     // Группа конфигураций, к которой будет относиться VPS. Если не указанна, то значение normal_cpu.
     // Требуется толко при отправке запроса вместе с configuration_params
     string configuration_group = 17;
+
+    // Отображение сервера в интерфейсе как закреплённого
+    optional bool ui_pinned = 19;
 }
 
 
@@ -1407,6 +1410,9 @@ message VpsInfo {
 
     // Регион, в котором располагается VPS
     string region = 30;
+
+    // Отображение сервера в интерфейсе как закреплённого
+    bool ui_pinned = 31;
 }
 
 // Текущий статус Vps
