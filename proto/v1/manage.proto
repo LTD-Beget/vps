@@ -404,6 +404,7 @@ service ManageService {
         };
     }
 
+    // Закрепить/открепить VPS в интерфейсе
     rpc pin (PinRequest) returns (PinResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/pin"
