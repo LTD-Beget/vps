@@ -27,7 +27,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов SSH-ключей `ssh_keys` необходимо использовать метод
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
-    rpc createVps (CreateVpsRequest) returns (CreateVpsResponse) {
+    rpc createVps(CreateVpsRequest) returns (CreateVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server"
             body: "*"
@@ -37,7 +37,7 @@ service ManageService {
     // Получить доступные конфигурации VPS
     //
     // Возвращает список доступных конфигураций и операционных систем для создания сервера.
-    rpc getAvailableConfiguration (GetAvailableConfigurationRequest) returns (GetAvailableConfigurationResponse) {
+    rpc getAvailableConfiguration(GetAvailableConfigurationRequest) returns (GetAvailableConfigurationResponse) {
         option (google.api.http) = {
             get: "/v1/vps/configuration"
         };
@@ -46,7 +46,7 @@ service ManageService {
     // Получить список VPS
     //
     // Возвращает информацию по всем облачным серверам на текущем аккаунте.
-    rpc getList (GetListRequest) returns (GetListResponse) {
+    rpc getList(GetListRequest) returns (GetListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/list"
         };
@@ -55,7 +55,7 @@ service ManageService {
     // Получить статусы всех VPS
     //
     // Возвращает статусы всех облачных серверов на текущем аккаунте.
-    rpc getStatuses (GetStatusesRequest) returns (GetStatusesResponse) {
+    rpc getStatuses(GetStatusesRequest) returns (GetStatusesResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/statuses"
         };
@@ -67,7 +67,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc getInfo (GetInfoRequest) returns (GetInfoResponse) {
+    rpc getInfo(GetInfoRequest) returns (GetInfoResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/{id}"
         };
@@ -79,7 +79,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc startVps (StartVpsRequest) returns (StartVpsResponse) {
+    rpc startVps(StartVpsRequest) returns (StartVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/start"
         };
@@ -91,7 +91,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc stopVps (StopVpsRequest) returns (StopVpsResponse) {
+    rpc stopVps(StopVpsRequest) returns (StopVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/stop"
         };
@@ -103,7 +103,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc rebootVps (RebootVpsRequest) returns (RebootVpsResponse) {
+    rpc rebootVps(RebootVpsRequest) returns (RebootVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reboot"
         };
@@ -115,7 +115,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc resetVps (ResetVpsRequest) returns (ResetVpsResponse) {
+    rpc resetVps(ResetVpsRequest) returns (ResetVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reset"
         };
@@ -127,7 +127,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc removeVps (RemoveVpsRequest) returns (RemoveVpsResponse) {
+    rpc removeVps(RemoveVpsRequest) returns (RemoveVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/remove"
         };
@@ -139,7 +139,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc startRescue (StartRescueRequest) returns (StartRescueResponse) {
+    rpc startRescue(StartRescueRequest) returns (StartRescueResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/rescue"
         };
@@ -151,7 +151,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc stopRescue (StopRescueRequest) returns (StopRescueResponse) {
+    rpc stopRescue(StopRescueRequest) returns (StopRescueResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/server/{id}/rescue"
         };
@@ -166,7 +166,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов конфигурации `configuration_id` необходимо использовать метод
     // "Получить доступные конфигурации VPS" из API "Облачные серверы".
-    rpc changeConfiguration (ChangeConfigurationRequest) returns (ChangeConfigurationResponse) {
+    rpc changeConfiguration(ChangeConfigurationRequest) returns (ChangeConfigurationResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/configuration"
             body: "*"
@@ -191,7 +191,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов SSH-ключей `ssh_keys` необходимо использовать метод
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
-    rpc reinstall (ReinstallRequest) returns (ReinstallResponse) {
+    rpc reinstall(ReinstallRequest) returns (ReinstallResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/reinstall"
             body: "*"
@@ -206,7 +206,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc updateInfo (UpdateInfoRequest) returns (UpdateInfoResponse) {
+    rpc updateInfo(UpdateInfoRequest) returns (UpdateInfoResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/info"
             body: "*"
@@ -219,7 +219,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc getHistory (GetHistoryRequest) returns (GetHistoryResponse) {
+    rpc getHistory(GetHistoryRequest) returns (GetHistoryResponse) {
         option (google.api.http) = {
             get: "/v1/vps/{id}/history"
         };
@@ -232,7 +232,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов SSH-ключей `ssh_key_id` необходимо использовать метод
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
-    rpc attachSshKey (AttachSshKeyRequest) returns (AttachSshKeyResponse) {
+    rpc attachSshKey(AttachSshKeyRequest) returns (AttachSshKeyResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/sshKey/{ssh_key_id}"
         };
@@ -245,7 +245,7 @@ service ManageService {
     //
     // Для получения идентификаторов добавленных на сервер SSH-ключей `ssh_key_id` необходимо использовать метод
     // "Получить информацию по VPS" из API "Облачные серверы", либо использовать информацию по VPS из предыдущего запроса.
-    rpc detachSshKey (DetachSshKeyRequest) returns (DetachSshKeyResponse) {
+    rpc detachSshKey(DetachSshKeyRequest) returns (DetachSshKeyResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/{id}/sshKey/{ssh_key_id}"
         };
@@ -257,7 +257,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc resetPassword (ResetPasswordRequest) returns (ResetPasswordResponse) {
+    rpc resetPassword(ResetPasswordRequest) returns (ResetPasswordResponse) {
         option (google.api.http) = {
             put: "/v1/vps/{id}/password"
         };
@@ -270,7 +270,7 @@ service ManageService {
     //
     // Для получения доступных IP-адресов `ip_address` необходимо использовать метод
     // "Получить информацию об IP-адресах и сетях" из API "Облачные серверы".
-    rpc attachIpAddress (AttachIpAddressRequest) returns (AttachIpAddressResponse) {
+    rpc attachIpAddress(AttachIpAddressRequest) returns (AttachIpAddressResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/network/{ip_address}"
             body: "*"
@@ -284,7 +284,7 @@ service ManageService {
     //
     // Для получения списка добавленных на сервер IP-адресов `ip_address` необходимо использовать метод
     // "Получить информацию по VPS" из API "Облачные серверы", либо использовать информацию по VPS из предыдущего запроса.
-    rpc detachIpAddress (DetachIpAddressRequest) returns (DetachIpAddressResponse) {
+    rpc detachIpAddress(DetachIpAddressRequest) returns (DetachIpAddressResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/network/detach/{ip_address}"
         };
@@ -299,7 +299,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов сети `network_id` необходимо использовать метод
     // "Получить информацию об IP-адресах и сетях" из API "Облачные серверы".
-    rpc attachToPrivateNetwork (AttachToPrivateNetworkRequest) returns (AttachToPrivateNetworkResponse) {
+    rpc attachToPrivateNetwork(AttachToPrivateNetworkRequest) returns (AttachToPrivateNetworkResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/private-network/{network_id}"
             body: "*"
@@ -315,7 +315,7 @@ service ManageService {
     //
     // Для получения списка подключенных к серверу сетей `network_id` необходимо использовать метод
     // "Получить информацию по VPS" из API "Облачные серверы", либо использовать информацию по VPS из предыдущего запроса.
-    rpc detachFromPrivateNetwork (DetachFromPrivateNetworkRequest) returns (DetachFromPrivateNetworkResponse) {
+    rpc detachFromPrivateNetwork(DetachFromPrivateNetworkRequest) returns (DetachFromPrivateNetworkResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/{id}/private-network/{network_id}"
         };
@@ -327,7 +327,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc changeSshAccess (ChangeSshAccessRequest) returns (ChangeSshAccessResponse) {
+    rpc changeSshAccess(ChangeSshAccessRequest) returns (ChangeSshAccessResponse) {
         option (google.api.http) = {
             put: "/v1/vps/{id}/ssh/access"
             body: "*"
@@ -340,21 +340,21 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc getFileManagerSettings (GetFileManagerSettingsRequest) returns (GetFileManagerSettingsResponse) {
+    rpc getFileManagerSettings(GetFileManagerSettingsRequest) returns (GetFileManagerSettingsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/{id}/fm"
         };
     }
 
     // Получить список установленного ПО на VPS
-    rpc getInstalledSoftware (GetInstalledSoftwareRequest) returns (GetInstalledSoftwareResponse) {
+    rpc getInstalledSoftware(GetInstalledSoftwareRequest) returns (GetInstalledSoftwareResponse) {
         option (google.api.http) = {
             get: "/v1/vps/{id}/software"
         };
     }
 
     // Проверить возможность установки ПО
-    rpc checkSoftwareRequirements (CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
+    rpc checkSoftwareRequirements(CheckSoftwareRequirementsRequest) returns (CheckSoftwareRequirementsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/software/requirements"
             body: "*"
@@ -367,7 +367,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc unarchive (UnarchiveRequest) returns (UnarchiveResponse) {
+    rpc unarchive(UnarchiveRequest) returns (UnarchiveResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/archive/{id}"
         };
@@ -377,7 +377,7 @@ service ManageService {
     //
     // Выполняет временное резервирование технического домена, который в дальнейшем
     // можно использовать при создании/переустановке сервера для установки ПО.
-    rpc reserveVpsSubdomain (ReserveVpsSubdomainRequest) returns (ReserveVpsSubdomainResponse) {
+    rpc reserveVpsSubdomain(ReserveVpsSubdomainRequest) returns (ReserveVpsSubdomainResponse) {
         option (google.api.http) = {
             get: "/v1/vps/subdomain/reserve"
         };
@@ -389,7 +389,7 @@ service ManageService {
     //
     // Для получения доступных идентификаторов VPS `id` необходимо использовать метод
     // "Получить список VPS" из API "Облачные серверы".
-    rpc disablePostInstallAlert (DisablePostInstallAlertRequest) returns (DisablePostInstallAlertResponse) {
+    rpc disablePostInstallAlert(DisablePostInstallAlertRequest) returns (DisablePostInstallAlertResponse) {
         option (google.api.http) = {
             delete: "/v1/vps/{id}/software/post-install-alert"
         };
@@ -398,19 +398,19 @@ service ManageService {
     // Получить список регионов для виртуальных серверов
     //
     // Возвращает список регионов, в которых предоставляется услуга VPS
-    rpc getRegionList (GetRegionListRequest) returns (GetRegionListResponse) {
+    rpc getRegionList(GetRegionListRequest) returns (GetRegionListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/region"
         };
     }
 
-    // Закрепить/открепить VPS в интерфейсе
-    rpc pin (PinRequest) returns (PinResponse) {
-        option (google.api.http) = {
-            put: "/v1/vps/server/{id}/pin"
-            body: "*"
-        };
+  // Закрепить/открепить VPS в интерфейсе
+  rpc pin (PinRequest) returns (PinResponse) {
+    option (google.api.http) = {
+      put: "/v1/vps/server/{id}/pin"
+      body: "*"
     };
+  }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -861,7 +861,7 @@ message RemoveVpsResponse {
         // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Результат запроса: при удалении VPS
+        // Результат запроса: ошибка при удалении VPS
         Error error = 2;
     }
 
@@ -1511,7 +1511,7 @@ message VpsConfiguration {
 }
 
 message AttachIpAddressRequest {
-    // Идентификатор VPS
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // IP-адрес
@@ -1581,7 +1581,7 @@ message DetachIpAddressResponse {
 }
 
 message AttachToPrivateNetworkRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор сети
@@ -1634,7 +1634,7 @@ message AttachToPrivateNetworkResponse {
 }
 
 message DetachFromPrivateNetworkRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор сети
@@ -1669,7 +1669,7 @@ message DetachFromPrivateNetworkResponse {
 }
 
 message ChangeSshAccessRequest {
-    // Идентификатор VPS
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Включение/выключение доступа ФМ к VPS
@@ -1707,7 +1707,7 @@ message ChangeSshAccessResponse {
 }
 
 message GetFileManagerSettingsRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -1760,11 +1760,11 @@ message SoftwareInstallInfo {
     uint32 id = 1;
 
     // Дополнительные переменные для установки
-    map<string, string> variable = 2;
+    map<string,string> variable = 2;
 }
 
 message UnarchiveRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -1812,13 +1812,13 @@ message ReserveVpsSubdomainResponse {
 }
 
 message DisablePostInstallAlertRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
 message DisablePostInstallAlertResponse {
-    // Результат запроса: информация о VPS
-    VpsInfo vps = 1;
+   // Результат запроса: информация о VPS
+   VpsInfo vps = 1;
 }
 
 message GetRegionListRequest {}
@@ -1828,34 +1828,37 @@ message GetRegionListResponse {
 }
 
 message PinRequest {
-    string id = 1;
-    bool ui_pinned = 2;
+  // Идентификатор VPS, в формате uuid v4
+  string id = 1;
+  // Отображение сервера в интерфейсе как закреплённого
+  bool ui_pinned = 2;
 }
 
 message PinResponse {
-    oneof result {
-        // Результат запроса: информация о VPS
-        VpsInfo vps = 1;
+  // Результат запроса
+  oneof result {
+    // Результат запроса: информация о VPS
+    VpsInfo vps = 1;
 
-        // Результат запроса: ошибка при закреплении/откреплении VPS
-        Error error = 2;
+    // Результат запроса: ошибка при закреплении/откреплении VPS
+    Error error = 2;
+  }
+  message Error {
+    // Код ошибки
+    Code code = 1;
+
+    // Сообщение об ошибке
+    string message = 2;
+
+    enum Code {
+      // Внутренняя ошибка сервера
+      INTERNAL_ERROR = 0;
+
+      // Некорректное тело запроса
+      INVALID_REQUEST = 1;
+
+      // Vps с переданным идентификатором не найдена
+      NOT_FOUND = 2;
     }
-    message Error {
-        // Код ошибки
-        Code code = 1;
-
-        // Сообщение об ошибке
-        string message = 2;
-
-        enum Code {
-            // Внутренняя ошибка сервера
-            INTERNAL_ERROR = 0;
-
-            // Некорректное тело запроса
-            INVALID_REQUEST = 1;
-
-            // Vps с переданным идентификатором не найдена
-            NOT_FOUND = 2;
-        }
-    }
+  }
 }
