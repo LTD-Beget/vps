@@ -404,13 +404,13 @@ service ManageService {
         };
     }
 
-  // Закрепить/открепить VPS в интерфейсе
-  rpc pin (PinRequest) returns (PinResponse) {
-    option (google.api.http) = {
-      put: "/v1/vps/server/{id}/pin"
-      body: "*"
-    };
-  }
+    // Закрепить/открепить VPS в интерфейсе
+    rpc pin (PinRequest) returns (PinResponse) {
+        option (google.api.http) = {
+            put: "/v1/vps/server/{id}/pin"
+            body: "*"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -1828,37 +1828,38 @@ message GetRegionListResponse {
 }
 
 message PinRequest {
-  // Идентификатор VPS, в формате uuid v4
-  string id = 1;
-  // Отображение сервера в интерфейсе как закреплённого
-  bool ui_pinned = 2;
+    // Идентификатор VPS, в формате uuid v4
+    string id = 1;
+    // Отображение сервера в интерфейсе как закреплённого
+    bool ui_pinned = 2;
 }
 
 message PinResponse {
-  // Результат запроса
-  oneof result {
-    // Результат запроса: информация о VPS
-    VpsInfo vps = 1;
+    // Результат запроса
+    oneof result {
+        // Результат запроса: информация о VPS
+        VpsInfo vps = 1;
 
-    // Результат запроса: ошибка при закреплении/откреплении VPS
-    Error error = 2;
-  }
-  message Error {
-    // Код ошибки
-    Code code = 1;
-
-    // Сообщение об ошибке
-    string message = 2;
-
-    enum Code {
-      // Внутренняя ошибка сервера
-      INTERNAL_ERROR = 0;
-
-      // Некорректное тело запроса
-      INVALID_REQUEST = 1;
-
-      // Vps с переданным идентификатором не найдена
-      NOT_FOUND = 2;
+        // Результат запроса: ошибка при закреплении/откреплении VPS
+        Error error = 2;
     }
-  }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Некорректное тело запроса
+            INVALID_REQUEST = 1;
+
+            // Vps с переданным идентификатором не найдена
+            NOT_FOUND = 2;
+        }
+    }
 }
