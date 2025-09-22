@@ -411,6 +411,17 @@ service ManageService {
             body: "*"
         };
     }
+
+    // Управление привязкой VPS к проекту
+    //
+    // Позволяет изменить проект, к которому привязан VPS, или отвязать VPS от проекта.
+    // При передаче null VPS переводится в проект по умолчанию.
+    rpc updateProjectBinding(UpdateProjectBindingRequest) returns (UpdateProjectBindingResponse) {
+        option (google.api.http) = {
+            put: "/v1/vps/server/{id}/project"
+            body: "*"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -522,6 +533,9 @@ message CreateVpsRequest {
 
     // Отображение сервера в интерфейсе как закреплённого
     bool ui_pinned = 19;
+
+    // Идентификатор проекта в формате uuid v4 (необязательное поле)
+    string project_id = 20;
 }
 
 
@@ -1419,8 +1433,11 @@ message VpsInfo {
     // Регион, в котором располагается VPS
     string region = 30;
 
+    // Идентификатор проекта в формате uuid v4
+    string project_id = 31;
+
     // Отображение сервера в интерфейсе как закреплённого
-    bool ui_pinned = 31;
+    bool ui_pinned = 32;
 }
 
 // Текущий статус Vps
@@ -1825,6 +1842,44 @@ message GetRegionListRequest {}
 
 message GetRegionListResponse {
     repeated structures.RegionInfo regions = 1;
+}
+
+message UpdateProjectBindingRequest {
+    // Идентификатор VPS в формате uuid v4
+    string id = 1;
+
+    // Идентификатор проекта в формате uuid v4 (пустая строка для отвязки от проекта)
+    string project_id = 2;
+}
+
+message UpdateProjectBindingResponse {
+    // Результат запроса
+    oneof result {
+        // Результат запроса: информация о VPS
+        VpsInfo vps = 1;
+
+        // Результат запроса: ошибка при изменении привязки к проекту
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Описание ошибки
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR = 0;
+
+            // Доступ к VPS заблокирован
+            SERVICE_DISABLED = 2;
+
+            // Проект не найден или недоступен
+            PROJECT_NOT_FOUND = 3;
+        }
+    }
 }
 
 message ChangePinnedRequest {
