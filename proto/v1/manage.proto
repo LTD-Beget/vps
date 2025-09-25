@@ -416,7 +416,7 @@ service ManageService {
     //
     // Позволяет изменить проект, к которому привязан VPS, или отвязать VPS от проекта.
     // При передаче null VPS переводится в проект по умолчанию.
-    rpc updateProjectBinding(UpdateProjectBindingRequest) returns (UpdateProjectBindingResponse) {
+    rpc bindProject(BindProjectRequest) returns (BindProjectResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/project"
             body: "*"
@@ -1844,7 +1844,7 @@ message GetRegionListResponse {
     repeated structures.RegionInfo regions = 1;
 }
 
-message UpdateProjectBindingRequest {
+message BindProjectRequest {
     // Идентификатор VPS в формате uuid v4
     string id = 1;
 
@@ -1852,7 +1852,7 @@ message UpdateProjectBindingRequest {
     string project_id = 2;
 }
 
-message UpdateProjectBindingResponse {
+message BindProjectResponse {
     // Результат запроса
     oneof result {
         // Результат запроса: информация о VPS
