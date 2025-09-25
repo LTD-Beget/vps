@@ -668,11 +668,25 @@ message CreateVpsResponse {
 }
 
 message GetListRequest {
+    // Смещение для пагинации
+    uint32 offset = 1;
+
+    // Лимит записей для пагинации (от 1 до 9999)
+    uint32 limit = 2;
+
+    //TODO: описать фильтрацию
+    repeated string filter = 3;
+
+    //TODO: описать сортировку
+    repeated string sort = 4;
 }
 
 message GetListResponse {
-    // Информация о всех VPS
+    // Информация о запрошенных VPS
     repeated VpsInfo vps = 1;
+
+    // Общее количество VPS
+    uint32 total_count = 2;
 }
 
 
