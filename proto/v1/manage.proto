@@ -405,7 +405,7 @@ service ManageService {
     }
 
     // Закрепить/открепить VPS в интерфейсе
-    rpc pin (PinRequest) returns (PinResponse) {
+    rpc changePinned(ChangePinnedRequest) returns (ChangePinnedResponse) {
         option (google.api.http) = {
             put: "/v1/vps/server/{id}/pin"
             body: "*"
@@ -1827,14 +1827,14 @@ message GetRegionListResponse {
     repeated structures.RegionInfo regions = 1;
 }
 
-message PinRequest {
+message ChangePinnedRequest {
     // Идентификатор VPS, в формате uuid v4
     string id = 1;
     // Отображение сервера в интерфейсе как закреплённого
     bool ui_pinned = 2;
 }
 
-message PinResponse {
+message ChangePinnedResponse {
     // Результат запроса
     oneof result {
         // Результат запроса: информация о VPS
