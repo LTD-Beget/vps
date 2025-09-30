@@ -403,6 +403,14 @@ service ManageService {
             get: "/v1/vps/region"
         };
     }
+
+    // Закрепить/открепить VPS в интерфейсе
+    rpc changePinned(ChangePinnedRequest) returns (ChangePinnedResponse) {
+        option (google.api.http) = {
+            put: "/v1/vps/server/{id}/pin"
+            body: "*"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -511,6 +519,9 @@ message CreateVpsRequest {
     // Группа конфигураций, к которой будет относиться VPS. Если не указанна, то значение normal_cpu.
     // Требуется толко при отправке запроса вместе с configuration_params
     string configuration_group = 17;
+
+    // Отображение сервера в интерфейсе как закреплённого
+    bool ui_pinned = 19;
 }
 
 
@@ -850,7 +861,7 @@ message RemoveVpsResponse {
         // Результат запроса: информация о VPS
         VpsInfo vps = 1;
 
-        // Результат запроса: при удалении VPS
+        // Результат запроса: ошибка при удалении VPS
         Error error = 2;
     }
 
@@ -1407,6 +1418,9 @@ message VpsInfo {
 
     // Регион, в котором располагается VPS
     string region = 30;
+
+    // Отображение сервера в интерфейсе как закреплённого
+    bool ui_pinned = 31;
 }
 
 // Текущий статус Vps
@@ -1497,7 +1511,7 @@ message VpsConfiguration {
 }
 
 message AttachIpAddressRequest {
-    // Идентификатор VPS
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // IP-адрес
@@ -1567,7 +1581,7 @@ message DetachIpAddressResponse {
 }
 
 message AttachToPrivateNetworkRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор сети
@@ -1620,7 +1634,7 @@ message AttachToPrivateNetworkResponse {
 }
 
 message DetachFromPrivateNetworkRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Идентификатор сети
@@ -1655,7 +1669,7 @@ message DetachFromPrivateNetworkResponse {
 }
 
 message ChangeSshAccessRequest {
-    // Идентификатор VPS
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 
     // Включение/выключение доступа ФМ к VPS
@@ -1693,7 +1707,7 @@ message ChangeSshAccessResponse {
 }
 
 message GetFileManagerSettingsRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -1750,7 +1764,7 @@ message SoftwareInstallInfo {
 }
 
 message UnarchiveRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -1798,7 +1812,7 @@ message ReserveVpsSubdomainResponse {
 }
 
 message DisablePostInstallAlertRequest {
-    // Идентификатор VPS в формате uuid v4
+    // Идентификатор VPS, в формате uuid v4
     string id = 1;
 }
 
@@ -1811,4 +1825,41 @@ message GetRegionListRequest {}
 
 message GetRegionListResponse {
     repeated structures.RegionInfo regions = 1;
+}
+
+message ChangePinnedRequest {
+    // Идентификатор VPS, в формате uuid v4
+    string id = 1;
+    // Отображение сервера в интерфейсе как закреплённого
+    bool ui_pinned = 2;
+}
+
+message ChangePinnedResponse {
+    // Результат запроса
+    oneof result {
+        // Результат запроса: информация о VPS
+        VpsInfo vps = 1;
+
+        // Результат запроса: ошибка при закреплении/откреплении VPS
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Некорректное тело запроса
+            INVALID_REQUEST = 1;
+
+            // Vps с переданным идентификатором не найдена
+            NOT_FOUND = 2;
+        }
+    }
 }
