@@ -1433,11 +1433,11 @@ message VpsInfo {
     // Регион, в котором располагается VPS
     string region = 30;
 
-    // Идентификатор проекта в формате uuid v4
-    string project_id = 31;
-
     // Отображение сервера в интерфейсе как закреплённого
-    bool ui_pinned = 32;
+    bool ui_pinned = 31;
+
+    // Идентификатор проекта в формате uuid v4
+    string project_id = 32;
 }
 
 // Текущий статус Vps
