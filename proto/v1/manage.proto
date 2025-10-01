@@ -411,6 +411,17 @@ service ManageService {
             body: "*"
         };
     }
+
+    // Управление привязкой VPS к проекту
+    //
+    // Позволяет изменить проект, к которому привязан VPS
+    // При передаче null VPS переводится в проект по умолчанию.
+    rpc bindProject(BindProjectRequest) returns (BindProjectResponse) {
+        option (google.api.http) = {
+            put: "/v1/vps/server/{id}/project"
+            body: "*"
+        };
+    }
 }
 
 message CheckSoftwareRequirementsRequest {
@@ -522,6 +533,9 @@ message CreateVpsRequest {
 
     // Отображение сервера в интерфейсе как закреплённого
     bool ui_pinned = 19;
+
+    // Идентификатор проекта в формате uuid v4. Если не указан, то vps будет привязана к проекту по умолчанию
+    string project_id = 20;
 }
 
 
@@ -1421,6 +1435,9 @@ message VpsInfo {
 
     // Отображение сервера в интерфейсе как закреплённого
     bool ui_pinned = 31;
+
+    // Идентификатор проекта в формате uuid v4
+    string project_id = 32;
 }
 
 // Текущий статус Vps
@@ -1825,6 +1842,44 @@ message GetRegionListRequest {}
 
 message GetRegionListResponse {
     repeated structures.RegionInfo regions = 1;
+}
+
+message BindProjectRequest {
+    // Идентификатор VPS в формате uuid v4
+    string id = 1;
+
+    // Идентификатор проекта в формате uuid v4. Если не указан, то vps будет привязана к проекту по умолчанию
+    string project_id = 2;
+}
+
+message BindProjectResponse {
+    // Результат запроса
+    oneof result {
+        // Результат запроса: информация о VPS
+        VpsInfo vps = 1;
+
+        // Результат запроса: ошибка при изменении привязки к проекту
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Описание ошибки
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR = 0;
+
+            // Доступ к VPS заблокирован
+            SERVICE_DISABLED = 2;
+
+            // Проект не найден или недоступен
+            PROJECT_NOT_FOUND = 3;
+        }
+    }
 }
 
 message ChangePinnedRequest {
