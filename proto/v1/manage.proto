@@ -1824,7 +1824,7 @@ message SoftwareInstallInfo {
     uint32 id = 1;
 
     // Дополнительные переменные для установки
-    map<string, string> variable = 2;
+    map<string,string> variable = 2;
 }
 
 message UnarchiveRequest {
