@@ -686,7 +686,7 @@ message GetListRequest {
     // Пример: ["ip:192.168", "display_name:test", "ui_pinned=true"]
     //
     // Поддерживаемые операторы: ["=", ":"].
-    // Поддерживаемые поля для фильтрации: ["display_name", "ip", "ui_pinned", "region", "region_name_short"].
+    // Поддерживаемые поля для фильтрации: ["id", "display_name", "ui_pinned", "project_id", "ip", "region", "region_short_name"].
     repeated string filter = 3;
 
     // Логический оператор комбинирования фильтров (необязательное поле):
