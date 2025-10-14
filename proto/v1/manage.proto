@@ -686,19 +686,8 @@ message GetListRequest {
     // Пример: ["ip:192.168", "display_name:test", "ui_pinned=true"]
     //
     // Поддерживаемые операторы: ["=", ":"].
-    // Поддерживаемые поля для фильтрации: ["id", "display_name", "ui_pinned", "project_id", "ip", "region", "region_short_name"].
-    repeated string filter = 3;
-
-    // Логический оператор комбинирования фильтров (необязательное поле):
-    // Определяет способ объединения условий фильтрации из массива `filter`:
-    // - "AND" — логическое И (все условия должны выполняться одновременно, значение по умолчанию)
-    // - "OR" — логическое ИЛИ (достаточно выполнения хотя бы одного условия)
-    //
-    // Пример: filter_operator="OR" при filter=["ip:192.168", "display_name:test"]
-    // вернет VPS, у которых либо IP содержит "192.168", либо имя содержит "test".
-    //
-    // Поддерживаемые значения: ["AND", "OR"].
-    string filter_operator = 5;
+    // Поддерживаемые поля для фильтрации: ["id", "display_name", "ui_pinned", "project_id", "ip", "region.id"].
+    string filter = 3;
 
     // Сортировка по полям:
     // Каждый элемент массива представляет отдельное условие сортировки в формате `<field>SPACE<direction>`, где:
@@ -710,7 +699,7 @@ message GetListRequest {
     // Пример: ["date_create desc"]
     //
     // Поддерживаемые поля для сортировки: ["date_create"]
-    repeated string sort = 4;
+    string sort = 4;
 }
 
 message GetListResponse {
