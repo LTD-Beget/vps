@@ -166,7 +166,9 @@ message RemoveIpAddressResponse {
     }
 }
 
-message GetNetworkInfoRequest {}
+message GetNetworkInfoRequest {
+    string filter = 1;
+}
 
 message GetNetworkInfoResponse {
     // Основные публичные IP-адреса серверов
