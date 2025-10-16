@@ -92,6 +92,7 @@ message GetBackupFileListResponse {
 }
 
 message GetAvailableCopiesRequest {
+    string filter = 1;
 }
 
 message GetAvailableCopiesResponse {

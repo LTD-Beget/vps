@@ -273,6 +273,9 @@ message Snapshot {
     // Имя VPS
     string vps_name = 3;
 
+    // Существует ли VPS
+    bool vps_exists = 13;
+
     // Дата создания снапшота в формате W3C
     string date_create = 4;
 
