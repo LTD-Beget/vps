@@ -96,6 +96,9 @@ message CopyInfo {
     // ПО, которое было установлено на момент создания резервной копии
     structures.InstalledSoftwareInfo installed_software = 8;
 
+    // Существует ли VPS
+    bool vps_exists = 10;
+
     message Configuration {
         // Количество ядер процессора
         uint32 cpu_count = 1;
