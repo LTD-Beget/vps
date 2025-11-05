@@ -54,7 +54,7 @@ service ManageService {
     //
     // Поддерживаемые поля для фильтрации: `id`, `display_name`, `region`, `ui_pinned`, `project_id`, `ip_address`
     //
-    // **Сортировка :**
+    // **Сортировка:**
     //
     // Формат сортировки описан в разделе "Фильтрация и сортировка" описания API.
     // Пример: `date_create desc`
