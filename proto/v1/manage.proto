@@ -49,7 +49,7 @@ service ManageService {
     //
     // **Фильтрация:**
     //
-    // Формат фильтра описан в разделе "Фильтрация и сортировка" описания API.
+    // Формат фильтра описан в разделе "Фильтрация и сортировка" описания API.\
     // Пример: `display_name : "test" AND (region = "ru1" OR region = "ru2")`
     //
     // Поддерживаемые поля для фильтрации: `id`, `display_name`, `region`, `ui_pinned`, `project_id`, `ip_address`
