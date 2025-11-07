@@ -263,9 +263,6 @@ message RemovePrivateNetworkResponse {
         enum Code {
             // Внутренняя ошибка сервера
             INTERNAL_ERROR = 0;
-
-            // Приватная сеть не найдена
-            NETWORK_NOT_FOUND = 1;
         }
     }
 }
