@@ -40,6 +40,12 @@ service SshKeyService {
         };
     }
 
+    // Обновить SSH-ключ
+    //
+    // Обновляет имеющийся на аккаунте публичный SSH-ключ.
+    //
+    // Для получения доступных идентификаторов SSH-ключей `id` необходимо использовать метод
+    // "Получить список публичных SSH-ключей" из API "Облачные серверы".
     rpc update(UpdateRequest) returns (UpdateResponse) {
         option (google.api.http) = {
             put: "/v1/vps/sshKey/{id}"
