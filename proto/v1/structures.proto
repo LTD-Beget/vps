@@ -12,6 +12,9 @@ message SshKeyInfo {
 
     // Отпечаток сохраненного публичного ключа
     string fingerprint = 3;
+
+    // Список идентификаторов VPS (в формате uuid v4), к которым прикреплен этот ключ
+    repeated string vps_id = 4;
 }
 
 message IpInfo {

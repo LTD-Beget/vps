@@ -1266,6 +1266,9 @@ message AttachSshKeyResponse {
 
             // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
+
+            // Не удалось добавить ключ в гостевую ОС
+            GUEST_OS_KEY_MANAGE_FAILED = 2;
         }
     }
 }
@@ -1301,6 +1304,9 @@ message DetachSshKeyResponse {
 
             // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
+
+            // Не удалось удалить ключ из гостевой ОС
+            GUEST_OS_KEY_MANAGE_FAILED = 2;
         }
     }
 }
@@ -1333,6 +1339,9 @@ message ResetPasswordResponse {
 
             // Пользователю заблокирован доступ к управлению VPS
             SERVICE_DISABLED = 1;
+            
+            // Не удалось сменить пароль в гостевой системе, необходимо перезагрузить VPS
+            GUEST_OS_RESET_PASSWORD_FAILED = 2;
         }
     }
 }
