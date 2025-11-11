@@ -14,9 +14,9 @@ service SshKeyService {
     // Добавляет новый публичными SSH-ключ на аккаунт.
     rpc add(AddRequest) returns (AddResponse) {
         option (google.api.http) = {
-			post: "/v1/vps/sshKey"
-			body: "*"
-		};
+            post: "/v1/vps/sshKey"
+            body: "*"
+        };
     }
 
     // Получить список SSH-ключей
@@ -24,8 +24,8 @@ service SshKeyService {
     // Возвращает список добавленных на аккаунт публичных SSH-ключей.
     rpc getAll(GetAllRequest) returns (GetAllResponse) {
         option (google.api.http) = {
-			get: "/v1/vps/sshKey"
-		};
+            get: "/v1/vps/sshKey"
+        };
     }
 
     // Удалить SSH-ключ
@@ -36,8 +36,15 @@ service SshKeyService {
     // "Получить список публичных SSH-ключей" из API "Облачные серверы".
     rpc remove(RemoveRequest) returns (RemoveResponse) {
         option (google.api.http) = {
-			delete: "/v1/vps/sshKey/{id}"
-		};
+            delete: "/v1/vps/sshKey/{id}"
+        };
+    }
+
+    rpc update(UpdateRequest) returns (UpdateResponse) {
+        option (google.api.http) = {
+            put: "/v1/vps/sshKey/{id}"
+            body: "*"
+        };
     }
 }
 
@@ -120,6 +127,40 @@ message RemoveResponse {
 
             // В данный момент ключ используется в VPS
             KEY_IN_USE = 1;
+        }
+    }
+}
+
+message UpdateRequest {
+    // Идентификатор SSH-ключа
+    uint32 id = 1;
+    // Имя ключа
+    string name = 2;
+}
+
+message UpdateResponse {
+    // Результат запроса
+    oneof result {
+        // Результат запроса: информация о SSH-ключе
+        structures.SshKeyInfo key = 1;
+
+        // Результат запроса: произошла ошибка во время удаления SSH-ключа
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Описание ошибки
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка
+            INTERNAL_ERROR = 0;
+
+            // Имя SSH-ключа невалидно
+            INVALID_NAME = 1;
         }
     }
 }
