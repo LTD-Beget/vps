@@ -926,6 +926,9 @@ message RemoveVpsResponse {
 
             // Доступ к VPS заблокирован
             SERVICE_DISABLED = 2;
+
+            // VPS уже удаляется
+            ALREADY_REMOVING = 3;
         }
     }
 }
