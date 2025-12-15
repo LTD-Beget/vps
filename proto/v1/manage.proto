@@ -52,14 +52,14 @@ service ManageService {
     // Формат фильтра описан в разделе "Фильтрация и сортировка" описания API.\
     // Пример: `display_name : "test" AND (region = "ru1" OR region = "ru2")`
     //
-    // Поддерживаемые поля для фильтрации: `id`, `display_name`, `region`, `ui_pinned`, `project_id`, `ip_address`
+    // Поддерживаемые поля для фильтрации: `id`, `display_name`, `description`, `slug`, `region`, `ui_pinned`, `project_id`, `ip`
     //
     // **Сортировка:**
     //
     // Формат сортировки описан в разделе "Фильтрация и сортировка" описания API.\
     // Пример: `date_create desc`
     //
-    // Поддерживаемые поля для сортировки: `date_create`
+    // Поддерживаемые поля для сортировки: `date_create`, `display_name`
     rpc getList (GetListRequest) returns (GetListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/list"
