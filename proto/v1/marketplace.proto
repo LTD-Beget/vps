@@ -196,4 +196,7 @@ message SoftwareInfo {
 
     // Информация о лицензировании ПО
     repeated structures.SoftwareLicense license = 22;
+
+    // Доступна ли установка
+    bool is_available = 23;
 }
