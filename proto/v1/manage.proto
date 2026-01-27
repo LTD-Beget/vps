@@ -647,6 +647,12 @@ message CreateVpsResponse {
 
             // Недостаточно дискового пространства для создания VPS
             NOT_ENOUGH_SPACE = 22;
+
+            // ПО временно недоступно
+            SOFTWARE_TEMPORARY_UNAVAILABLE = 23;
+
+            // Регион VPS не совпадает с регионом образа
+            IMAGE_REGION_MISMATCH = 24;
         }
 
         message SoftwareVariableError {
