@@ -59,7 +59,7 @@ service ManageService {
     // Формат сортировки описан в разделе "Фильтрация и сортировка" описания API.\
     // Пример: `date_create desc`
     //
-    // Поддерживаемые поля для сортировки: `date_create`, `display_name`
+    // Поддерживаемые поля для сортировки: `date_create`, `display_name`, `display_rank`
     rpc getList (GetListRequest) returns (GetListResponse) {
         option (google.api.http) = {
             get: "/v1/vps/server/list"
@@ -550,6 +550,12 @@ message CreateVpsRequest {
 
     // Идентификатор проекта в формате uuid v4. Если не указан, то vps будет привязана к проекту по умолчанию
     string project_id = 20;
+
+    // Ранг сервера, после которого будет размещен сервер в интерфейсе как закреплённый
+    string ui_pinned_after_rank = 21;
+
+    // Ранг сервера, до которого будет размещен сервер в интерфейсе как закреплённый
+    string ui_pinned_before_rank = 22;
 }
 
 
@@ -1505,6 +1511,9 @@ message VpsInfo {
         // Источник для диска сервера: идентификатор образа
         string image_id = 36;
     }
+
+    // Ранг сортировки для отображения, заполняется только при использовании сортировки по рангу или изменении ранга
+    string display_rank = 37;
 }
 
 // Текущий статус Vps
@@ -1954,6 +1963,12 @@ message ChangePinnedRequest {
     string id = 1;
     // Отображение сервера в интерфейсе как закреплённого
     bool ui_pinned = 2;
+
+    // Ранг сервера, после которого будет перемещён перемещаемый сервер в интерфейсе как закреплённый
+    string after_rank = 3;
+    
+    // Ранг сервера, до которого будет перемещён перемещаемый сервер в интерфейсе как закреплённый
+    string before_rank = 4;
 }
 
 message ChangePinnedResponse {
