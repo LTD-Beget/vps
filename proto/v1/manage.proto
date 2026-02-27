@@ -1900,29 +1900,26 @@ message PublicInterface {
         // Зарезервировать новый public IPv4.
         AllocateNewPublicIp allocate_new = 1;
         // Использовать уже принадлежащий пользователю public IPv4.
-        ExistingPublicIp existing = 2;
+        UseExistingPublicIp existing = 2;
     }
 
     message AllocateNewPublicIp {
     }
 
-    message ExistingPublicIp {
+    message UseExistingPublicIp {
         // Обязательный IP-адрес пользователя.
         string address = 1;
     }
 }
 
 message PrivateInterface {
-    oneof network_target {
-        // Сеть выбирается сервером автоматически.
-        DefaultPrivateNetwork default_network = 1;
-    }
+    string network_id = 1;
 
     oneof ip {
         // Выбрать свободный IP в private network.
-        AllocateNewPrivateIp allocate_new = 10;
+        AllocateNewPrivateIp allocate_new = 2;
         // Использовать конкретный IP в private network.
-        SpecificPrivateIp specific = 11;
+        AllocateSpecificPrivateIp specific = 3;
     }
 
     message DefaultPrivateNetwork {
@@ -1931,7 +1928,7 @@ message PrivateInterface {
     message AllocateNewPrivateIp {
     }
 
-    message SpecificPrivateIp {
+    message AllocateSpecificPrivateIp {
         // Обязательный IP-адрес в private network.
         string address = 1;
     }
