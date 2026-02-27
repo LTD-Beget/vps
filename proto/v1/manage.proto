@@ -666,7 +666,7 @@ message CreateVpsResponse {
             // existing_ip не принадлежит пользователю
             ADDRESS_NOT_OWNED = 25;
 
-            // Передано >1 public/private ip на этапе create
+            // Передано >1 public/private интерфейса на этапе create
             MULTIPLE_IPS_NOT_SUPPORTED_YET = 26;
 
             // Переданы и private_networks, и network_interfaces
