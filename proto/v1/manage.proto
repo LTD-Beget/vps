@@ -1684,6 +1684,12 @@ message DetachIpAddressResponse {
 
             // Произошла ошибка при удалении дополнительного IP адреса внутри гостевой ОС
             GUEST_OS_REMOVE_IP_ADDRESS_FAILED = 1;
+
+            // Нельзя отвязать последний ip адрес vps.
+            CANNOT_DETACH_LAST_IP_ADDRESS = 2;
+
+            // IP адрес не принадлежит vps.
+            IP_NOT_BELONGS_TO_VPS = 3;
         }
     }
 }
