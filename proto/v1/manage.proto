@@ -144,6 +144,7 @@ service ManageService {
     rpc removeVps (RemoveVpsRequest) returns (RemoveVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/remove"
+            body: "*"
         };
     }
 
