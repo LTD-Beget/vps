@@ -144,6 +144,7 @@ service ManageService {
     rpc removeVps (RemoveVpsRequest) returns (RemoveVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/remove"
+            body: "*"
         };
     }
 
@@ -925,6 +926,17 @@ message ResetVpsResponse {
 message RemoveVpsRequest {
     // Идентификатор VPS, в формате uuid v4
     string id = 1;
+
+    // Действие с внешними IP-адресами при удалении VPS
+    IpAction ip_action = 2;
+
+    enum IpAction {
+        // Удалить IP безвозвратно (поведение по умолчанию)
+        DELETE = 0;
+
+        // Открепить от VPS, оставить на аккаунте
+        RELEASE = 1;
+    }
 }
 
 message RemoveVpsResponse {
@@ -959,6 +971,9 @@ message RemoveVpsResponse {
 
             // Из VPS создается образ
             IMAGE_EXPORT_IN_PROGRESS = 4;
+
+            // Превышен лимит IP-адресов на аккаунт (при попытке отвязать IP)
+            IP_LIMIT_EXCEEDED = 5;
         }
     }
 }
