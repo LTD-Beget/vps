@@ -1793,6 +1793,9 @@ message DetachFromPrivateNetworkResponse {
 
             // Произошла ошибка при попытке внести изменения в конфигурацию адаптеров в гостевой ОС
             GUEST_OS_ERROR = 1;
+
+            // Нельзя отвязать последний ip адрес vps.
+            CANNOT_DETACH_LAST_IP_ADDRESS = 2;
         }
     }
 }
