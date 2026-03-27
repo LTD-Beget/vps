@@ -1883,6 +1883,9 @@ message GetFileManagerSettingsResponse {
 
             // Доступ к серверу по ssh для Beget запрещен
             SSH_ACCESS_NOT_ALLOWED = 1;
+
+            // Доступ к серверу по ssh требует наличия публичного IP-адреса
+            SSH_ACCESS_REQUIRES_PUBLIC_IP_ADDRESS = 2;
         }
     }
 }
