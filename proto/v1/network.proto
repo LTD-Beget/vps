@@ -210,7 +210,7 @@ message GetLimitsRequest {
 
 message GetLimitsResponse {
     // Лимиты текущего аккаунта
-    repeated structures.CustomerLimitInfo limit = 1;
+    repeated structures.CustomerLimitInfo limits = 1;
 }
 
 message CreatePrivateNetworkRequest {
