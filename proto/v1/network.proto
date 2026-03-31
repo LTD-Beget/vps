@@ -49,6 +49,15 @@ service NetworkService {
         };
     }
 
+    // Получить лимиты аккаунта
+    //
+    // Возвращает сведения о лимитах текущего аккаунта, связанных с сетью.
+    rpc getLimits(GetLimitsRequest) returns (GetLimitsResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/network/limits"
+        };
+    }
+
     // Создать приватную сеть
     //
     // Создаёт новую приватную сеть для аккаунта.
@@ -194,6 +203,14 @@ message GetNetworkInfoResponse {
 
     // Приватные сети пользователя
     repeated structures.PrivateNetwork private_network = 3;
+}
+
+message GetLimitsRequest {
+}
+
+message GetLimitsResponse {
+    // Лимиты текущего аккаунта
+    repeated structures.CustomerLimitInfo limit = 1;
 }
 
 message CreatePrivateNetworkRequest {
