@@ -199,4 +199,7 @@ message SoftwareInfo {
 
     // Доступна ли установка
     bool is_available = 23;
+
+    // Требуется ли ПО публичный IP
+    bool requires_public_ip = 24;
 }
