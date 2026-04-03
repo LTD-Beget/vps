@@ -181,8 +181,8 @@ message RemoveIpAddressResponse {
             // IP адрес используется активной лицензией.
             IP_ADDRESS_HAS_ACTIVE_LICENSE = 3;
 
-            // IP адрес нельзя отвязать, пока связанное ПО не установлено.
-            IP_ADDRESS_HAS_NOT_INSTALLED_SOFTWARE = 4;
+            // IP адрес нельзя отвязать, пока связанное ПО ожидает завершения установки.
+            IP_ADDRESS_HAS_PENDING_SOFTWARE = 4;
         }
     }
 }
