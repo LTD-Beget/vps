@@ -1708,6 +1708,9 @@ message DetachIpAddressResponse {
 
             // IP адрес используется активной лицензией.
             IP_ADDRESS_HAS_ACTIVE_LICENSE = 4;
+
+            // IP адрес нельзя отвязать, пока связанное ПО не установлено.
+            IP_ADDRESS_HAS_NOT_INSTALLED_SOFTWARE = 5;
         }
     }
 }
