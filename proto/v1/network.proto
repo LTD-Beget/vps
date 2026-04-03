@@ -177,6 +177,12 @@ message RemoveIpAddressResponse {
 
             // Нельзя отвязать последний ip адрес vps.
             CANNOT_DETACH_LAST_IP_ADDRESS = 2;
+
+            // IP адрес используется активной лицензией.
+            IP_ADDRESS_HAS_ACTIVE_LICENSE = 3;
+
+            // IP адрес нельзя отвязать, пока связанное ПО ожидает завершения установки.
+            IP_ADDRESS_HAS_PENDING_SOFTWARE = 4;
         }
     }
 }
