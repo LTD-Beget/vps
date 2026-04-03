@@ -1705,6 +1705,9 @@ message DetachIpAddressResponse {
 
             // IP адрес не принадлежит vps.
             IP_NOT_BELONGS_TO_VPS = 3;
+
+            // IP адрес используется активной лицензией.
+            IP_ADDRESS_HAS_ACTIVE_LICENSE = 4;
         }
     }
 }
