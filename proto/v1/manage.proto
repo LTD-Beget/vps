@@ -530,7 +530,8 @@ message CreateVpsRequest {
     // Открыть доступ к VPS файловому менеджеру
     bool beget_ssh_access_allowed = 8;
 
-    // Legacy: приватные сети, оставлено для обратной совместимости
+    // Legacy: приватные сети, оставлено для обратной совместимости.
+    // Нельзя использовать вместе с network_interfaces.
     repeated PrivateNetworkInfo private_networks = 12 [deprecated = true];
 
     // Слаг, который вернется в ответе в VpsInfo (необязательное поле).
@@ -559,7 +560,7 @@ message CreateVpsRequest {
     string ui_pinned_before_rank = 22;
 
     // Унифицированный формат сетевых интерфейсов.
-    // Нельзя указывать вместе с private_networks.
+    // Нельзя использовать вместе с private_networks.
     repeated NetworkInterface network_interfaces = 23;
 }
 
