@@ -144,6 +144,7 @@ service ManageService {
     rpc removeVps (RemoveVpsRequest) returns (RemoveVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/remove"
+            body: "*"
         };
     }
 
@@ -529,8 +530,9 @@ message CreateVpsRequest {
     // Открыть доступ к VPS файловому менеджеру
     bool beget_ssh_access_allowed = 8;
 
-    // Приватные сети, к которым необходимо подключить VPS (необязательное поле)
-    repeated PrivateNetworkInfo private_networks = 12;
+    // Legacy: приватные сети, оставлено для обратной совместимости.
+    // Нельзя использовать вместе с network_interfaces.
+    repeated PrivateNetworkInfo private_networks = 12 [deprecated = true];
 
     // Слаг, который вернется в ответе в VpsInfo (необязательное поле).
     string link_slug = 14;
@@ -556,6 +558,10 @@ message CreateVpsRequest {
 
     // Ранг сервера, до которого будет размещен сервер в интерфейсе как закреплённый
     string ui_pinned_before_rank = 22;
+
+    // Унифицированный формат сетевых интерфейсов.
+    // Нельзя использовать вместе с private_networks.
+    repeated NetworkInterface network_interfaces = 23;
 }
 
 
@@ -659,6 +665,18 @@ message CreateVpsResponse {
 
             // Регион VPS не совпадает с регионом образа
             IMAGE_REGION_MISMATCH = 24;
+
+            // existing_ip не принадлежит пользователю
+            ADDRESS_NOT_OWNED = 25;
+
+            // Передано >1 public/private интерфейса на этапе create
+            MULTIPLE_IPS_NOT_SUPPORTED_YET = 26;
+
+            // Переданы и private_networks, и network_interfaces
+            CONFLICTING_NETWORK_FIELDS = 27;
+
+            // Неподдерживаемая версия IP
+            UNSUPPORTED_IP_VERSION = 28;
         }
 
         message SoftwareVariableError {
@@ -910,6 +928,17 @@ message ResetVpsResponse {
 message RemoveVpsRequest {
     // Идентификатор VPS, в формате uuid v4
     string id = 1;
+
+    // Действие с внешними IP-адресами при удалении VPS
+    IpAction ip_action = 2;
+
+    enum IpAction {
+        // Удалить IP безвозвратно (поведение по умолчанию)
+        DELETE = 0;
+
+        // Открепить от VPS, оставить на аккаунте
+        RELEASE = 1;
+    }
 }
 
 message RemoveVpsResponse {
@@ -944,6 +973,9 @@ message RemoveVpsResponse {
 
             // Из VPS создается образ
             IMAGE_EXPORT_IN_PROGRESS = 4;
+
+            // Превышен лимит IP-адресов на аккаунт (при попытке отвязать IP)
+            IP_LIMIT_EXCEEDED = 5;
         }
     }
 }
@@ -1669,6 +1701,18 @@ message DetachIpAddressResponse {
 
             // Произошла ошибка при удалении дополнительного IP адреса внутри гостевой ОС
             GUEST_OS_REMOVE_IP_ADDRESS_FAILED = 1;
+
+            // Нельзя отвязать последний ip адрес vps.
+            CANNOT_DETACH_LAST_IP_ADDRESS = 2;
+
+            // IP адрес не принадлежит vps.
+            IP_NOT_BELONGS_TO_VPS = 3;
+
+            // IP адрес используется активной лицензией.
+            IP_ADDRESS_HAS_ACTIVE_LICENSE = 4;
+
+            // IP адрес нельзя отвязать, пока связанное ПО ожидает завершения установки.
+            IP_ADDRESS_HAS_PENDING_SOFTWARE = 5;
         }
     }
 }
@@ -1757,6 +1801,9 @@ message DetachFromPrivateNetworkResponse {
 
             // Произошла ошибка при попытке внести изменения в конфигурацию адаптеров в гостевой ОС
             GUEST_OS_ERROR = 1;
+
+            // Нельзя отвязать последний ip адрес vps.
+            CANNOT_DETACH_LAST_IP_ADDRESS = 2;
         }
     }
 }
@@ -1844,6 +1891,9 @@ message GetFileManagerSettingsResponse {
 
             // Доступ к серверу по ssh для Beget запрещен
             SSH_ACCESS_NOT_ALLOWED = 1;
+
+            // Доступ к серверу по ssh требует наличия публичного IP-адреса
+            SSH_ACCESS_REQUIRES_PUBLIC_IP_ADDRESS = 2;
         }
     }
 }
@@ -1871,6 +1921,52 @@ message PrivateNetworkInfo {
     string id = 1;
     // Желаемый ip-адрес. Если пустая строка, то выберется случайный
     string address = 2;
+}
+
+message NetworkInterface {
+    oneof interface {
+        PublicInterface public = 1;
+        PrivateInterface private = 2;
+    }
+}
+
+message PublicInterface {
+    oneof ip {
+        // Зарезервировать новый public IPv4.
+        AllocateNewPublicIp allocate_new = 1;
+        // Использовать уже принадлежащий пользователю public IPv4.
+        UseExistingPublicIp existing = 2;
+    }
+
+    message AllocateNewPublicIp {
+    }
+
+    message UseExistingPublicIp {
+        // Обязательный IP-адрес пользователя.
+        string address = 1;
+    }
+}
+
+message PrivateInterface {
+    string network_id = 1;
+
+    oneof ip {
+        // Выбрать свободный IP в private network.
+        AllocateNewPrivateIp allocate_new = 2;
+        // Использовать конкретный IP в private network.
+        AllocateSpecificPrivateIp specific = 3;
+    }
+
+    message DefaultPrivateNetwork {
+    }
+
+    message AllocateNewPrivateIp {
+    }
+
+    message AllocateSpecificPrivateIp {
+        // Обязательный IP-адрес в private network.
+        string address = 1;
+    }
 }
 
 
@@ -1966,7 +2062,7 @@ message ChangePinnedRequest {
 
     // Ранг сервера, после которого будет перемещён перемещаемый сервер в интерфейсе как закреплённый
     string after_rank = 3;
-    
+
     // Ранг сервера, до которого будет перемещён перемещаемый сервер в интерфейсе как закреплённый
     string before_rank = 4;
 }

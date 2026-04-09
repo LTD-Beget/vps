@@ -152,6 +152,9 @@ message RestoreFileResponse {
 
             // Регион резервной копии не соответствует региону сервера
             REGION_MISMATCH = 5;
+
+            // Восстановление без выключения VPS недоступно для серверов без публичного IP
+            LIVE_RESTORE_WITHOUT_PUBLIC_IP_NOT_SUPPORTED = 6;
         }
     }
 }
