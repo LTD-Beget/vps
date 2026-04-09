@@ -558,7 +558,8 @@ message CreateVpsRequest {
     // Ранг сервера, до которого будет размещен сервер в интерфейсе как закреплённый
     string ui_pinned_before_rank = 22;
 
-    // Унифицированный формат сетевых интерфейсов
+    // Унифицированный формат сетевых интерфейсов.
+    // Нельзя указывать вместе с private_networks.
     repeated NetworkInterface network_interfaces = 23;
 }
 
