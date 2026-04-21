@@ -142,6 +142,9 @@ message OrderIpAddressResponse {
 
             // Регион VPS не соответствует региону IP-адреса
             REGION_MISMATCH = 4;
+
+            // Превышен лимит операций с публичными IP-адресами
+            RATE_LIMIT_ERROR = 5;
         }
     }
 }
