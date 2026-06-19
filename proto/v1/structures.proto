@@ -17,6 +17,12 @@ message SshKeyInfo {
     repeated string vps_id = 4;
 }
 
+// Версия IP
+enum AddressFamily {
+    IP_V4 = 0;
+    IP_V6 = 1;
+}
+
 message IpInfo {
     // Основной IP-адрес VPS
     string ip = 1;

@@ -99,16 +99,21 @@ message OrderIpAddressRequest {
     // Если не передать region, то адрес будет выделен в регионе 'ru1'.
     // Если переданы оба параметра (id и region), то region должен соответствовать региону VPS.
     string region = 2;
+
+    // Версия IP-адреса.
+    // По-умолчанию IPv4.
+    // IPv6 доступен только в ru1.
+    structures.AddressFamily address_family = 3;
 }
 
 message OrderIpAddressResponse {
     // [УСТАРЕЛО]. Результат запроса
     oneof result {
         // [УСТАРЕЛО]. Результат запроса: IP-адрес
-        string ip_address = 1;
+        string ip_address = 1 [deprecated = true];
 
         // [УСТАРЕЛО]. Результат запроса: произошла ошибка при заказе публичного IP-адреса
-        Error error = 2;
+        Error error = 2 [deprecated = true];
     }
 
     // Результат запроса
@@ -142,6 +147,9 @@ message OrderIpAddressResponse {
 
             // Регион VPS не соответствует региону IP-адреса
             REGION_MISMATCH = 4;
+
+            // Резервирование IPv6 недоступно в текущем регионе.
+            IP_V6_UNAVAILABLE = 5;
         }
     }
 }
