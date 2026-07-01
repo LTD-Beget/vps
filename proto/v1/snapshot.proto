@@ -155,11 +155,23 @@ message CreateCalculatorRequest {
 }
 
 message CreateCalculatorResponse {
+    // Стоимость снапшота за один час в рублях
+    double price_hour = 4;
+
+    // Стоимость одного Гб за один час в рублях
+    double price_hour_gb = 5;
+
     // Стоимость снапшота за один день в рублях
     double price_day = 1;
 
     // Стоимость одного Гб за один день в рублях
     double price_day_gb = 2;
+
+    // Стоимость снапшота за один месяц в рублях
+    double price_month = 6;
+
+    // Стоимость одного Гб за один месяц в рублях
+    double price_month_gb = 7;
 
     // Количество Гб у данной VPS
     uint32 size = 3;
@@ -293,6 +305,9 @@ message Snapshot {
 
     // Стоимость снапшота за один день в рублях
     double price_day = 10;
+
+    // Стоимость снапшота за один час в рублях
+    double price_hour = 14;
 
     // Локация, в которой доступен снапшот
     string region = 12;
