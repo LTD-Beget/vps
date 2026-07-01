@@ -202,4 +202,7 @@ message SoftwareInfo {
 
     // Требуется ли ПО публичный IP
     bool requires_public_ip = 24;
+
+    // Поддерживает ли ПО установку на IPv6-only VPS
+    bool allowed_ipv6_only = 25;
 }
