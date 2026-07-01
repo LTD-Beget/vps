@@ -90,6 +90,9 @@ message GetCalculationResponse {
 
     // Стоимость полученной конфигурации в месяц
     double price_month = 4;
+
+    // Стоимость полученной конфигурации в час
+    double price_hour = 5;
   }
 
   message Error {

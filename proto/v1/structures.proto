@@ -381,6 +381,7 @@ message SoftwareLicenseBillingType {
     oneof info {
         Daily daily = 1;
         Monthly monthly = 2;
+        Hourly hourly = 3;
     }
 
     // Посуточный тип лицензирования
@@ -394,6 +395,15 @@ message SoftwareLicenseBillingType {
     message Monthly {
         // Стоимость лицензии в месяц
         uint32 price_month = 1;
+    }
+
+    message Hourly {
+        // Стоимость лицензии в час
+        double price_hour = 1;
+        // Стоимость лицензии в сутки (для удобства пользователя)
+        double price_day = 2;
+        // Стоимость лицензии в месяц (для удобства пользователя)
+        uint32 price_month = 3;
     }
 }
 

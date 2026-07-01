@@ -1619,6 +1619,9 @@ message VpsConfiguration {
     // Цена в месяц
     double price_month = 7;
 
+    // Цена в час
+    double price_hour = 14;
+
     // Доступен ли для заказа пользователем
     bool available = 8;
 
