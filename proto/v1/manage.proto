@@ -1672,6 +1672,9 @@ message AttachIpAddressResponse {
 
             // Регион VPS не соответствует региону IP-адреса
             REGION_MISMATCH = 2;
+
+            // Превышен лимит добавления IPv6-адресов
+            IPV6_LIMIT_REACHED = 3;
         }
     }
 }
