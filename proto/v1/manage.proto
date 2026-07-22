@@ -1672,6 +1672,9 @@ message AttachIpAddressResponse {
 
             // Регион VPS не соответствует региону IP-адреса
             REGION_MISMATCH = 2;
+
+            // Превышен лимит добавления IPv6-адресов
+            IPV6_LIMIT_REACHED = 3;
         }
     }
 }
@@ -1935,13 +1938,15 @@ message NetworkInterface {
 
 message PublicInterface {
     oneof ip {
-        // Зарезервировать новый public IPv4.
+        // Зарезервировать новый публичный IPv4/IPv6.
         AllocateNewPublicIp allocate_new = 1;
-        // Использовать уже принадлежащий пользователю public IPv4.
+        // Использовать уже принадлежащий пользователю публичный IPv4/IPv6.
         UseExistingPublicIp existing = 2;
     }
 
     message AllocateNewPublicIp {
+        // Версия IP-адреса для резервирования.
+        structures.AddressFamily address_family = 1;
     }
 
     message UseExistingPublicIp {
@@ -1954,9 +1959,9 @@ message PrivateInterface {
     string network_id = 1;
 
     oneof ip {
-        // Выбрать свободный IP в private network.
+        // Выбрать свободный IP в приватной сети.
         AllocateNewPrivateIp allocate_new = 2;
-        // Использовать конкретный IP в private network.
+        // Использовать конкретный IP в приватной сети.
         AllocateSpecificPrivateIp specific = 3;
     }
 
@@ -1967,7 +1972,7 @@ message PrivateInterface {
     }
 
     message AllocateSpecificPrivateIp {
-        // Обязательный IP-адрес в private network.
+        // Обязательный IP-адрес в приватной сети.
         string address = 1;
     }
 }
