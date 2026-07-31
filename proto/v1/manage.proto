@@ -562,6 +562,13 @@ message CreateVpsRequest {
     // Унифицированный формат сетевых интерфейсов.
     // Нельзя использовать вместе с private_networks.
     repeated NetworkInterface network_interfaces = 23;
+
+    NetworkDrive network_drive = 24;
+
+    message NetworkDrive {
+        // Идентификатор сетевого диска в формате uuid v4
+        string id = 1;
+    }
 }
 
 
@@ -677,6 +684,18 @@ message CreateVpsResponse {
 
             // Неподдерживаемая версия IP
             UNSUPPORTED_IP_VERSION = 28;
+
+            // Сетевой диск уже подключен к другому ресурсу
+            NETWORK_DRIVE_ALREADY_MOUNTED_TO_ANOTHER_RESOURCE = 29;
+
+            // Сетевой диск и ресурс расположены в разных регионах
+            NETWORK_DRIVE_REGION_MISMATCH = 30;
+
+            // Операции с сетевым диском недоступны
+            NETWORK_DRIVE_SERVICE_DISABLED = 31;
+
+            // Сетевой диск не найден
+            NETWORK_DRIVE_NOT_FOUND = 32;
         }
 
         message SoftwareVariableError {
