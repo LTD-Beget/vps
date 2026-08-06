@@ -467,8 +467,8 @@ message NetworkDiskSpec {
 
 message DiskConfiguration {
     // Дополнительные локальные диски, которые нужно создать
-    repeated LocalDiskSpec local_disks = 1;
+    repeated LocalDiskSpec local_disk = 1;
 
     // Сетевые диски, которые нужно подключить
-    repeated NetworkDiskSpec network_disks = 2;
+    repeated NetworkDiskSpec network_disk = 2;
 }
