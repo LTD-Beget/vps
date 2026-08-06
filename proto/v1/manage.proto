@@ -563,8 +563,8 @@ message CreateVpsRequest {
     // Нельзя использовать вместе с private_networks.
     repeated NetworkInterface network_interfaces = 23;
 
-    // Список UUID сетевых дисков, которые будут подключены к серверу после создания
-    repeated string network_disk_uuid = 24;
+    // Конфигурация дисков, которые будут созданы или подключены к серверу после создания
+    structures.DiskConfiguration disk_configuration = 24;
 }
 
 

@@ -454,3 +454,21 @@ message RegionInfo {
     // Отображаемое короткое имя региона
     string short_name = 7;
 }
+
+message LocalDiskSpec {
+    // Размер дополнительного локального диска в Мб
+    uint64 size_mb = 1;
+}
+
+message NetworkDiskSpec {
+    // UUID существующего сетевого диска
+    string uuid = 1;
+}
+
+message DiskConfiguration {
+    // Дополнительные локальные диски, которые нужно создать
+    repeated LocalDiskSpec local_disks = 1;
+
+    // Сетевые диски, которые нужно подключить
+    repeated NetworkDiskSpec network_disks = 2;
+}
