@@ -562,6 +562,9 @@ message CreateVpsRequest {
     // Унифицированный формат сетевых интерфейсов.
     // Нельзя использовать вместе с private_networks.
     repeated NetworkInterface network_interfaces = 23;
+
+    // Конфигурация дисков, которые будут созданы или подключены к серверу после создания
+    repeated structures.DiskConfiguration disk_configuration = 24;
 }
 
 

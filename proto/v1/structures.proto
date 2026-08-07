@@ -454,3 +454,16 @@ message RegionInfo {
     // Отображаемое короткое имя региона
     string short_name = 7;
 }
+
+message NetworkDiskSpec {
+    // UUID существующего сетевого диска
+    string uuid = 1;
+}
+
+message DiskConfiguration {
+    // Дополнительные диски
+    oneof spec {
+        // Дополнительные диски: сетевой диск
+        NetworkDiskSpec network_disk = 1;
+    }
+}
