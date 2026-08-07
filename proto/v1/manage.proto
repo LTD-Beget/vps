@@ -564,7 +564,7 @@ message CreateVpsRequest {
     repeated NetworkInterface network_interfaces = 23;
 
     // Конфигурация дисков, которые будут созданы или подключены к серверу после создания
-    structures.DiskConfiguration disk_configuration = 24;
+    repeated structures.DiskConfiguration disk_configuration = 24;
 }
 
 
