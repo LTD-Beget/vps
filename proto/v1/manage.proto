@@ -562,6 +562,9 @@ message CreateVpsRequest {
     // Унифицированный формат сетевых интерфейсов.
     // Нельзя использовать вместе с private_networks.
     repeated NetworkInterface network_interfaces = 23;
+
+    // Конфигурация дисков, которые будут созданы или подключены к серверу после создания
+    repeated structures.DiskConfiguration disk_configuration = 24;
 }
 
 
@@ -1546,6 +1549,9 @@ message VpsInfo {
 
     // Ранг сортировки для отображения, заполняется только при использовании сортировки по рангу или изменении ранга
     string display_rank = 37;
+
+    // Флаги доступности различных операций для данной VPS.
+    structures.VpsFeatureFlags feature_flags = 38;
 }
 
 // Текущий статус Vps
