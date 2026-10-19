@@ -472,7 +472,9 @@ message VpsFeatureFlags {
     // Сетевой диск может быть прикреплен без предварительных условий.
     bool network_disk_immediate_attach_allowed = 1;
 
-    // Сетевой диск может быть прикреплен, но для этого VPS
-    // будет предварительно мигрирована на другой хост.
+    // Сетевой диск может быть прикреплен после онлайн миграции VPS на другой хост.
     bool network_disk_migration_attach_allowed = 2;
+
+    // Сетевой диск может быть прикреплен после офлайн миграции VPS на другой хост.
+    bool network_disk_offline_migration_attach_allowed = 3;
 }
