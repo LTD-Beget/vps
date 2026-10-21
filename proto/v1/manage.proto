@@ -108,6 +108,7 @@ service ManageService {
     rpc stopVps (StopVpsRequest) returns (StopVpsResponse) {
         option (google.api.http) = {
             post: "/v1/vps/server/{id}/stop"
+            body: "*"
         };
     }
 
