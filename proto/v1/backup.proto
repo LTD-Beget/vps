@@ -73,6 +73,312 @@ service BackupService {
             body: "*"
         };
     }
+
+    // Рассчитать стоимость политики бэкапов
+    //
+    // Возвращает оценку стоимости хранения копий диска по заданному расписанию
+    // и правилам хранения. Оценка сверху от размера диска в конфигурации VPS.
+    rpc getBackupPolicyCalculator(GetBackupPolicyCalculatorRequest) returns (GetBackupPolicyCalculatorResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/backup/disk/{disk_id}/policy/calculator"
+            body: "*"
+        };
+    }
+
+    // Получить политику бэкапов диска
+    rpc getBackupPolicy(GetBackupPolicyRequest) returns (GetBackupPolicyResponse) {
+        option (google.api.http) = {
+            get: "/v1/vps/backup/disk/{disk_id}/policy"
+        };
+    }
+
+    // Создать или изменить политику бэкапов диска
+    //
+    // Включение политики является платным действием.
+    rpc updateBackupPolicy(UpdateBackupPolicyRequest) returns (UpdateBackupPolicyResponse) {
+        option (google.api.http) = {
+            put: "/v1/vps/backup/disk/{disk_id}/policy"
+            body: "*"
+        };
+    }
+
+    // Отключить политику бэкапов диска
+    //
+    // Новые копии перестают создаваться, существующие удаляются по правилам хранения.
+    rpc deleteBackupPolicy(DeleteBackupPolicyRequest) returns (DeleteBackupPolicyResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/backup/disk/{disk_id}/policy"
+        };
+    }
+
+    // Создать ручную копию диска
+    rpc createBackupCopy(CreateBackupCopyRequest) returns (CreateBackupCopyResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/backup/disk/{disk_id}/copy"
+            body: "*"
+        };
+    }
+
+    // Защитить копию от автоматического удаления или снять защиту
+    rpc pinBackupCopy(PinBackupCopyRequest) returns (PinBackupCopyResponse) {
+        option (google.api.http) = {
+            post: "/v1/vps/backup/copy/{copy_id}/pin"
+            body: "*"
+        };
+    }
+
+    // Удалить дисковую копию
+    rpc deleteBackupCopy(DeleteBackupCopyRequest) returns (DeleteBackupCopyResponse) {
+        option (google.api.http) = {
+            delete: "/v1/vps/backup/copy/{copy_id}"
+        };
+    }
+}
+
+// Расписание создания копий
+// Часовой пояс МСК. Выбранный час означает окно запуска [hour, hour+1),
+// конкретный момент старта внутри окна выбирается автоматически
+message BackupSchedule {
+    oneof kind {
+        // Каждые N часов
+        HourlySchedule hourly = 1;
+
+        // Каждые N дней в заданный час
+        IntervalSchedule interval = 2;
+
+        // По дням недели со своим часом у каждого дня
+        WeeklySchedule weekly = 3;
+    }
+}
+
+message HourlySchedule {
+    // Интервал в часах, от 3 до 23
+    uint32 every_n_hours = 1;
+}
+
+message IntervalSchedule {
+    // Интервал в днях, от 1 до 7
+    uint32 every_n_days = 1;
+
+    // Час запуска, 0-23 МСК
+    uint32 hour_of_day = 2;
+}
+
+message WeeklySchedule {
+    repeated WeekdaySlot slots = 1;
+}
+
+message WeekdaySlot {
+    // День недели
+    Weekday day = 1;
+
+    // Час запуска, 0-23 МСК
+    uint32 hour_of_day = 2;
+}
+
+// День недели
+enum Weekday {
+    WEEKDAY_UNSPECIFIED = 0;
+    MONDAY = 1;
+    TUESDAY = 2;
+    WEDNESDAY = 3;
+    THURSDAY = 4;
+    FRIDAY = 5;
+    SATURDAY = 6;
+    SUNDAY = 7;
+}
+
+// Правила хранения копий
+// Повторяют штатные корзины prune PBS и транслируются в него один в один
+// Семантика union: копия хранится, пока подходит хотя бы под одно правило,
+// внутри периода остаётся самая свежая копия
+message BackupRetention {
+    // Хранить последние N копий, 0 = все
+    uint32 keep_last = 1;
+
+    // Дополнительно хранить по одной копии за каждый из последних N дней, 0 = не хранить
+    uint32 keep_daily = 2;
+
+    // Дополнительно хранить по одной копии за каждую из последних N недель, 0 = не хранить
+    uint32 keep_weekly = 3;
+
+    // Дополнительно хранить по одной копии за каждый из последних N месяцев
+    // Максимум 6 (полугодовой потолок), значения выше отклоняются с INVALID_RETENTION
+    uint32 keep_monthly = 4;
+}
+
+// Политика бэкапов диска
+message BackupPolicy {
+    // Идентификатор диска (uuid)
+    string disk_id = 1;
+
+    // Расписание
+    BackupSchedule schedule = 2;
+
+    // Правила хранения
+    BackupRetention retention = 3;
+
+    // Окно ближайшего запуска в RFC3339
+    TimeWindow next_run_window = 4;
+
+    // Оценка стоимости хранения в сутки, рубли
+    string price_day = 5;
+
+    // Дата последней готовой копии в RFC3339
+    string last_copy_at = 6;
+}
+
+message TimeWindow {
+    string start = 1;
+    string end = 2;
+}
+
+message GetBackupPolicyCalculatorRequest {
+    // Идентификатор диска (uuid)
+    string disk_id = 1;
+
+    BackupSchedule schedule = 2;
+    BackupRetention retention = 3;
+}
+
+message GetBackupPolicyCalculatorResponse {
+    // Размер диска в ГБ (provisioned)
+    uint32 disk_size_gb = 1;
+
+    // Ставка за ГБ в месяц, рубли
+    string price_per_gb_month = 2;
+
+    // Оценка стоимости хранения, рубли
+    string price_hour = 3;
+    string price_day = 4;
+    string price_month = 5;
+
+    // Ожидаемое число хранимых копий, участвующее в оценке
+    uint32 expected_copies = 6;
+}
+
+message GetBackupPolicyRequest {
+    // Идентификатор диска (uuid)
+    string disk_id = 1;
+}
+
+message GetBackupPolicyResponse {
+    // Политика отсутствует, если бэкапы не подключены
+    BackupPolicy policy = 1;
+}
+
+message UpdateBackupPolicyRequest {
+    // Идентификатор диска (uuid)
+    string disk_id = 1;
+
+    BackupSchedule schedule = 2;
+    BackupRetention retention = 3;
+}
+
+message UpdateBackupPolicyResponse {
+    oneof result {
+        BackupPolicy policy = 1;
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Недостаточно средств для включения
+            INSUFFICIENT_FUNDS = 1;
+
+            // Некорректное расписание (пустой weekly, час вне 0-23, интервал вне диапазона)
+            INVALID_SCHEDULE = 2;
+
+            // Некорректный retention (keep-monthly больше 6)
+            INVALID_RETENTION = 3;
+
+            // Диск не поддерживается (не локальный загрузочный)
+            UNSUPPORTED_DISK = 4;
+
+            // Политика для диска уже существует у другого владельца сценария не бывает,
+            // один диск входит только в одну политику
+            POLICY_CONFLICT = 5;
+        }
+    }
+}
+
+message DeleteBackupPolicyRequest {
+    // Идентификатор диска (uuid)
+    string disk_id = 1;
+}
+
+message DeleteBackupPolicyResponse {
+    // Остаточное число копий, которые продолжат жить по правилам хранения
+    uint32 remaining_copies = 1;
+}
+
+message CreateBackupCopyRequest {
+    // Идентификатор диска (uuid)
+    string disk_id = 1;
+
+    // Защитить копию от автоматического удаления
+    // Значение выставляется клиентом осознанно, умолчаний на стороне API нет
+    bool is_protected = 2;
+}
+
+message CreateBackupCopyResponse {
+    oneof result {
+        structures.CopyInfo copy = 1;
+        Error error = 2;
+    }
+
+    message Error {
+        // Код ошибки
+        Code code = 1;
+
+        // Сообщение об ошибке
+        string message = 2;
+
+        enum Code {
+            // Внутренняя ошибка сервера
+            INTERNAL_ERROR = 0;
+
+            // Недостаточно средств
+            INSUFFICIENT_FUNDS = 1;
+
+            // Диск не поддерживается (не локальный загрузочный)
+            UNSUPPORTED_DISK = 2;
+
+            // На диске уже есть активная копия (PENDING или PROCESSING)
+            ALREADY_IN_PROGRESS = 3;
+        }
+    }
+}
+
+message PinBackupCopyRequest {
+    // Идентификатор копии
+    uint64 copy_id = 1;
+
+    // Установить или снять защиту
+    bool protected = 2;
+}
+
+message PinBackupCopyResponse {
+    structures.CopyInfo copy = 1;
+}
+
+message DeleteBackupCopyRequest {
+    // Идентификатор копии
+    uint64 copy_id = 1;
+}
+
+message DeleteBackupCopyResponse {
+    // Признак успешного удаления
+    bool success = 1;
 }
 
 message GetBackupFileListRequest {
@@ -196,6 +502,15 @@ message RestoreServerResponse {
 
             // Регион резервной копии не соответствует региону сервера
             REGION_MISMATCH = 3;
+
+            // Копия ещё не готова (не COMPLETED)
+            COPY_NOT_COMPLETED = 4;
+
+            // Владелец копии не совпадает с клиентом целевого сервера
+            CUSTOMER_MISMATCH = 5;
+
+            // Целевой сервер не найден
+            TARGET_VPS_NOT_FOUND = 6;
         }
     }
 }

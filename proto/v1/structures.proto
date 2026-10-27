@@ -105,6 +105,20 @@ message CopyInfo {
     // ПО, которое было установлено на момент создания резервной копии
     structures.InstalledSoftwareInfo installed_software = 8;
 
+    // Тип резервной копии
+    // У записей, созданных до появления типов, значение COPY_TYPE_UNSPECIFIED,
+    // оно эквивалентно FILE
+    CopyType type = 10;
+
+    // Детали, специфичные для типа копии
+    oneof details {
+        // Детали файловой копии
+        FileCopyDetails file = 11;
+
+        // Детали дисковой копии по политике
+        ScheduledDiskCopyDetails disk = 12;
+    }
+
     message Configuration {
         // Количество ядер процессора
         uint32 cpu_count = 1;
@@ -201,7 +215,67 @@ message OrderInfo {
 
         // Восстановление
         RESTORE = 1;
+
+        // Создание ручной дисковой копии
+        CREATE_MANUAL_COPY = 2;
+
+        // Удаление дисковой копии
+        DELETE_COPY = 3;
     }
+}
+
+// Тип резервной копии
+enum CopyType {
+    // Не указан, трактуется как FILE
+    COPY_TYPE_UNSPECIFIED = 0;
+
+    // Файловая копия (существующие автоматические бэкапы)
+    FILE = 1;
+
+    // Дисковая копия по платной политике
+    SCHEDULED_DISK = 2;
+}
+
+// Детали файловой копии
+message FileCopyDetails {
+    // Зарезервировано, полей нет: существующее поведение файловых копий не меняется
+}
+
+// Детали дисковой копии по политике
+message ScheduledDiskCopyDetails {
+    // Статус копии
+    ScheduledDiskCopyStatus status = 1;
+
+    // Диск-источник копии (uuid)
+    string disk_id = 2;
+
+    // Копия создана вручную кнопкой, а не расписанием
+    bool manual = 3;
+
+    // Копия защищена от автоматического удаления (protected на PBS)
+    bool is_protected = 4;
+
+    // Копия принадлежит удалённой VPS (клиент выбрал «оставлять резервные копии»)
+    bool vps_removed = 5;
+
+    // Имя удалённой VPS, заполнено при vps_removed = true
+    string removed_vps_name = 6;
+}
+
+// Статус дисковой копии
+// Статусы ERROR и CANCELED намеренно отсутствуют: такие копии фильтруются
+// на бэкенде и клиентам не возвращаются
+enum ScheduledDiskCopyStatus {
+    SCHEDULED_DISK_COPY_STATUS_UNSPECIFIED = 0;
+
+    // В очереди на создание
+    PENDING = 1;
+
+    // Создаётся
+    PROCESSING = 2;
+
+    // Готова
+    COMPLETED = 3;
 }
 
 message PrivateNetwork {
