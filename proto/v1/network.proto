@@ -150,6 +150,9 @@ message OrderIpAddressResponse {
 
             // Резервирование IPv6 недоступно в текущем регионе.
             IP_V6_UNAVAILABLE = 5;
+
+            // Пользователь заблокирован
+            CUSTOMER_BLOCKED = 6;
         }
     }
 }
