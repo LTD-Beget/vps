@@ -145,6 +145,9 @@ message CreateResponse {
 
             // В данном статусе VPS невозможно создать снапшот (VPS не в статусе running/stopped)
             UNSUITABLE_VPS_STATUS = 3;
+
+            // Сервис создания снапшотов временно недоступен
+            SERVICE_UNAVAILABLE = 4;
         }
     }
 }
