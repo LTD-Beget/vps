@@ -1623,11 +1623,20 @@ message VpsConfiguration {
     // Цена в день
     double price_day = 6;
 
+    // Полная цена в день без учёта скидки
+    double full_price_day = 15;
+
     // Цена в месяц
     double price_month = 7;
 
+    // Полная цена в месяц без учёта скидки
+    double full_price_month = 16;
+
     // Цена в час
     double price_hour = 14;
+
+    // Полная цена в час без учёта скидки
+    double full_price_hour = 17;
 
     // Доступен ли для заказа пользователем
     bool available = 8;
